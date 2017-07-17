@@ -1,0 +1,11 @@
+{
+    "name": "sahakavatar/console",
+    "description": "Console package description",
+    "authors": [
+        {
+            "name": "Eduard",
+            "email": "edo.terakyan@gmail.com"
+        }
+    ],
+    "require": {}
+}
