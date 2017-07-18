@@ -1,4 +1,4 @@
-<?php namespace App\Modules\Console\Http\Controllers;
+<?php namespace Sahakavatar\Console\Http\Controllers;
 
 use App\Core\CmsItemReader;
 use App\Core\CmsItemRegister;

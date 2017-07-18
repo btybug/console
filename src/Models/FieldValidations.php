@@ -6,7 +6,7 @@
  * Time: 1:26 PM
  */
 
-namespace App\Modules\Console\Models;
+namespace Sahakavatar\Console\Models;
 
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Console\Providers;
+namespace Sahakavatar\Console\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -60,7 +60,7 @@ class RouteServiceProvider extends ServiceProvider
                 'prefix' => 'admin/console',
                 'namespace' => $this->namespace,
             ], function ($router) {
-                require module_path('console', 'Routes/web.php');
+                require __DIR__.'/../Routes/web.php';
             });
         });
     }
@@ -79,7 +79,7 @@ class RouteServiceProvider extends ServiceProvider
             'namespace'  => $this->namespace,
             'prefix'     => 'api',
         ], function ($router) {
-            require module_path('console', 'Routes/api.php');
+            require __DIR__.'/../Routes/api.php';
         });
     }
 }

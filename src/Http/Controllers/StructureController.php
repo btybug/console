@@ -9,7 +9,7 @@
  *
  */
 
-namespace App\Modules\Console\Http\Controllers;
+namespace Sahakavatar\Console\Http\Controllers;
 
 use App\Core\CmsItemReader;
 use App\helpers\helpers;

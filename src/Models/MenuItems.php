@@ -6,7 +6,7 @@
  * Time: 1:24 PM
  */
 
-namespace App\Modules\Console\Models;
+namespace Sahakavatar\Console\Models;
 
 use App\Modules\Modules\Models\AdminPages;
 use Illuminate\Database\Eloquent\Model;

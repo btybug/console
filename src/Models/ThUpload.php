@@ -9,7 +9,7 @@
  *
  */
 
-namespace App\Modules\Console\Models;
+namespace Sahakavatar\Console\Models;
 
 use Illuminate\Http\Request;
 use App\helpers\helpers;

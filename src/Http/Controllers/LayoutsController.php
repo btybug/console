@@ -16,7 +16,7 @@
  * Time: 9:35 PM
  */
 
-namespace App\Modules\Console\Http\Controllers;
+namespace Sahakavatar\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContentLayouts\ContentLayouts;
