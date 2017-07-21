@@ -14,8 +14,8 @@ namespace Sahakavatar\Console\Http\Controllers;
 use App\helpers\helpers;
 use App\Http\Controllers\Controller;
 use App\Models\ExtraModules\Structures;
-use App\Models\Menus\Menu;
-use App\Modules\Modules\Models\AdminPages;
+use Sahakavatar\Console\Models\Menu;
+use Sahakavatar\Modules\Models\AdminPages;
 use File;
 use Illuminate\Http\Request;
 
