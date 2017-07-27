@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('cms::layouts.admin')
 @section('content')
     <div class="row">
         <a href="{!! url('admin/console/structure/pages') !!}"><div class="pages col-md-5">Pages</div></a>

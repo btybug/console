@@ -8,7 +8,7 @@
 
 namespace Sahakavatar\Console\Models;
 
-use App\Modules\Modules\Models\AdminPages;
+use Sahakavatar\Console\Models\AdminPages;
 use Illuminate\Database\Eloquent\Model;
 
 class MenuItems extends Model
@@ -22,11 +22,11 @@ class MenuItems extends Model
     protected $fillable = array('id','menu_id','role_id','parent_id','page_id','title','url','icon','sort','created_at','updated_at');
 
     public function menu(){
-        return $this->belongsTo('App\Modules\Console\Models\Menu','menu_id','id');
+        return $this->belongsTo('Sahakavatar\Console\Models\Menu','menu_id','id');
     }
 
     public function childs(){
-        return $this->hasMany('App\Modules\Console\Models\MenuItems','parent_id','id');
+        return $this->hasMany('Sahakavatar\Console\Models\MenuItems','parent_id','id');
     }
 
     public static function registerFromAdminPages($pages,$type = 'plugin',$parent = null){

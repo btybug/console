@@ -18,22 +18,22 @@ class Menu extends Model
     protected $guarded = array('id');
 
     public function adminPage() {
-        return $this->belongsTo('App\Modules\Modules\Models\AdminPages');
+        return $this->belongsTo('Sahakavatar\Console\Models\AdminPages');
     }
 
     public function creator(){
-        return $this->belongsTo('App\Modules\Users\User','creator_id','id');
+        return $this->belongsTo('Sahakavatar\User\User','creator_id','id');
     }
 
     public function items(){
-        return $this->hasMany('App\Modules\Console\Models\MenuItems','menu_id','id');
+        return $this->hasMany('Sahakavatar\Console\Models\MenuItems','menu_id','id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent(){
-        return $this->belongsTo('App\Modules\Create\Models\MenuItems', 'parent_id');
+        return $this->belongsTo('Sahakavatar\Console\Models\MenuItems', 'parent_id');
     }
 
     /**
@@ -41,7 +41,7 @@ class Menu extends Model
      */
     public function childs()
     {
-        return $this->hasMany('App\Modules\Create\Models\MenuItems', 'parent_id');
+        return $this->hasMany('Sahakavatar\Console\Models\MenuItems', 'parent_id');
     }
 
     public static function registerFromAdminPages($pages,$type = 'plugin',$parent = null){
@@ -63,40 +63,6 @@ class Menu extends Model
         }
 
         return false;
-    }
-
-    public static function makeJson($items,$parent = true){
-        $array = [];
-
-        if(count($items)){
-            foreach($items as $item){
-                if($parent){
-                    $array['menuitem'][$item->id] = [
-                        'pagegroup' => $item->title,
-                        'title' => $item->title,
-                        'url' => $item->url,
-                        'id' => $item->id,
-                    ];
-
-                    if(count($item->childs)){
-                        $array['menuitem'][$item->id]['children'] = self::makeJson($item->childs,false);
-                    }
-                }else{
-                    $array[$item->id] = [
-                        'pagegroup' => $item->title,
-                        'title' => $item->title,
-                        'url' => $item->url,
-                        'id' => $item->id,
-                    ];
-
-                    if(count($item->childs)){
-                        $array[$item->id]['children'] = self::makeJson($item->childs,false);
-                    }
-                }
-            }
-        }
-
-        return $array;
     }
 
     public static function saveFromJson($items,$menu,$role,$parent = 0)

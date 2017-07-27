@@ -12,7 +12,7 @@
 namespace Sahakavatar\Console\Http\Controllers;
 
 use App\Core\CmsItemRegister;
-use App\helpers\helpers;
+use Sahakavatar\Cms\Helpers\helpers;
 use App\Http\Controllers\Controller;
 use App\Models\ContentLayouts\ContentLayouts;
 use App\Models\Templates\Units;

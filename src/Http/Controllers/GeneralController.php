@@ -11,11 +11,10 @@
 
 namespace Sahakavatar\Console\Http\Controllers;
 
-use App\helpers\dbhelper;
-use App\helpers\helpers;
+use Sahakavatar\Cms\Helpers\helpers;
 use App\Http\Controllers\Controller;
 use App\Modules\Modules\Models\AdminPages;
-use App\Repositories\AdminsettingRepository as Settings;
+use Sahakavatar\Settings\Repository\AdminsettingRepository as Settings;
 use File;
 use Illuminate\Http\Request;
 

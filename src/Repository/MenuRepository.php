@@ -14,12 +14,19 @@ use Sahakavatar\Console\Models\Menu;
 
 class MenuRepository extends GeneralRepository
 {
-    /**
-     * Page constructor.
-     */
-    public function __construct()
+
+    public function model()
     {
-        $this->model = new Menu();
+        return new Menu();
     }
 
+    public function getWhereNotPlugins()
+    {
+        return $this->model->where('type', '!=', 'plugin')->get();
+    }
+
+    public function getWhereNotPluginsFirst()
+    {
+        return $this->model->where('type', '!=', 'plugin')->first();
+    }
 }

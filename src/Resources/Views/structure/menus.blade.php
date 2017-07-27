@@ -1,4 +1,4 @@
-@extends('layouts.mTabs',['index'=>'structure_console'])
+@extends('cms::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
     {!! HTML::style('app/Modules/Uploads/Resources/assets/css/new-store.css') !!}
     <div class="row">
@@ -174,8 +174,7 @@
         </div>
     </div>
 
-    @include('resources::assests.deleteModal',['title'=>'Delete Widget'])
-    @include('_partials.delete_modal')
+    @include('cms::_partials.delete_modal')
 @stop
 @section('CSS')
     {!! HTML::style('/resources/assets/js/bootstrap-select/css/bootstrap-select.min.css') !!}

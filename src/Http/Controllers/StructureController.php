@@ -11,24 +11,28 @@
 
 namespace Sahakavatar\Console\Http\Controllers;
 
-use App\Core\CmsItemReader;
-use App\helpers\helpers;
 use App\Http\Controllers\Controller;
-use App\Models\AdminPages;
-use App\Models\ContentLayouts\ContentLayouts;
-use App\Models\ExtraModules\Structures;
-use App\Models\Fields;
-use App\Models\FormEntries;
-use App\Models\Forms;
-use App\Models\Templates\Units;
-use App\Modules\Console\Models\FieldValidations;
-use App\Modules\Console\Models\Menu;
-use App\Modules\Console\Models\MenuItem;
-use App\Modules\Users\Models\Roles;
-use App\Repositories\AdminsettingRepository as Settings;
-use DB;
-use File;
 use Illuminate\Http\Request;
+use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
+use Sahakavatar\Cms\Models\ExtraModules\Structures;
+use Sahakavatar\Cms\Services\CmsItemReader;
+use Sahakavatar\Console\Http\Requests\Account\FieldCreateRequest;
+use Sahakavatar\Console\Http\Requests\Account\FormCreateRequest;
+use Sahakavatar\Console\Http\Requests\Account\FormSettingsUpdateRequest;
+use Sahakavatar\Console\Http\Requests\Account\MenuCreateRequest;
+use Sahakavatar\Console\Http\Requests\Account\MenuDeleteRequest;
+use Sahakavatar\Console\Http\Requests\Account\MenuEditRequest;
+use Sahakavatar\Console\Http\Requests\Account\PageEditRequest;
+use Sahakavatar\Console\Http\Requests\Account\SavePageSettingsRequest;
+use Sahakavatar\Console\Repository\AdminPagesRepository;
+use Sahakavatar\Console\Repository\FieldsRepository;
+use Sahakavatar\Console\Repository\FormsRepository;
+use Sahakavatar\Console\Repository\MenuRepository;
+use Sahakavatar\Console\Services\FieldValidationService;
+use Sahakavatar\Console\Services\FormService;
+use Sahakavatar\Console\Services\StructureService;
+use Sahakavatar\Settings\Repository\AdminsettingRepository;
+use Sahakavatar\User\Repository\RoleRepository;
 
 /**
  * Class ModulesController
@@ -36,70 +40,30 @@ use Illuminate\Http\Request;
  */
 class StructureController extends Controller
 {
-    /**
-     * @var helpers
-     */
-    public $helper;
-    /**
-     * @var mixed
-     */
-    public $up;
-    /**
-     * @var mixed
-     */
-    public $mp;
-    /**
-     * @var
-     */
-    public $upplugin;
-    public $fieldValidation;
-    public $settings;
-    public $unitTypes, $specialTypes;
-    /**
-     * @var Module
-     */
-    protected $modules;
-
-    /**
-     * ModulesController constructor.
-     * @param Module $module
-     * @param Upload $upload
-     * @param validateUpl $v
-     */
-    public function __construct(FieldValidations $fieldValidations, Settings $settings)
-    {
-        $this->helper = new helpers();
-        $this->settings = $settings;
-        $this->up = config('paths.modules_upl');
-        $this->mp = config('paths.extra_modules');
-        $this->unitTypes = @json_decode(File::get(config('paths.unit_path') . 'configFieldUnitTypes.json'), 1)['types'];
-        $this->specialTypes = @json_decode(File::get(config('paths.unit_path') . 'configSpecialUnitTypes.json'), 1)['types'];
-        $this->fieldValidation = $fieldValidations;
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function getIndex()
     {
         return view('console::structure.index');
     }
 
-    public function getTables()
+    public function getTables(
+        StructureService $structureService
+    )
     {
-        $tables = DB::connection()->getDoctrineSchemaManager()->listTableNames();
+
+        $tables = $structureService->getTables();
         return view('console::structure.tables', compact(['tables']));
     }
 
-    public function getPages(Request $request)
+    public function getPages(
+        Request $request,
+        AdminPagesRepository $adminPagesRepository
+    )
     {
-//        \Artisan::call('pages:optimise');
-        $pageID = $request->get('page');
-        $pageGrouped = AdminPages::where('parent_id', 0)->groupBy('module_id')->get();
-        if ($pageID) {
-            $page = AdminPages::find($pageID);
+        $pageGrouped = $adminPagesRepository->getGroupedWithModule();
+        if ($request->page) {
+            $page = $adminPagesRepository->find($request->page);
         } else {
-            $page = AdminPages::first();
+            $page = $adminPagesRepository->first();
         }
 
         if ($page && !$page->layout_id) $page->layout_id = 0;
@@ -107,107 +71,87 @@ class StructureController extends Controller
         return view('console::structure.pages', compact(['pageGrouped', 'page']));
     }
 
-    public function postEdit(Request $request)
+    public function postEdit(
+        PageEditRequest $request,
+        AdminPagesRepository $adminPagesRepository
+    )
     {
         $data = $request->except('_token', 'type', 'tags', 'classify');
-        $validator = \Validator::make($data, [
-            'id' => 'exists:admin_pages,id',
-            'title' => 'required',
-            'url' => 'sometimes|unique:admin_pages,url,' . $data['id']
-        ]);
-
-        if ($validator->fails()) return redirect()->back()->withErrors($validator->errors());
-
         if (isset($data['url'])) {
             (starts_with($data['url'], '/')) ? false : $data['url'] = "/" . $data['url'];
         }
 
-        $page = AdminPages::find($data['id']);
-        if (!$page) return redirect()->back()->with('message', 'Page Not Found!!!');
-
-        $page->update($data);
+        $adminPagesRepository->update($data['id'], $data);
         return redirect()->back()->with('message', 'Successfully Updated Page');
     }
 
-    public function getMenus(Request $request)
+    public function getMenus(
+        Request $request,
+        MenuRepository $menuRepository,
+        StructureService $structureService,
+        RoleRepository $roleRepository
+    )
     {
-        $id = $request->get('p');
-        $menus = Menu::where('type', '!=', 'plugin')->get();
-        $roles = Roles::all();
-        $menu = null;
-
-        if (count($menus) && $id) {
-            $menu = Menu::find($id);
-        } elseif (count($menus)) {
-            $menu = Menu::where('type', '!=', 'plugin')->first();
-        }
-//        $pages = AdminPages::where('module_id','console')->where('parent_id',0)->get();
-//        Menu::registerFromAdminPages($pages);
+        $slug = $request->p;
+        $menus = $menuRepository->getWhereNotPlugins();
+        $roles = $roleRepository->getAll();
+        $menu = $structureService->getMenuByRequestOrFirst($request, $menuRepository);
 
         return view('console::structure.menus', compact('menus', 'roles', 'menu', 'slug'));
     }
 
-    public function postMenuCreate(Request $request)
+    public function postMenuCreate(
+        MenuCreateRequest $request,
+        MenuRepository $menuRepository
+    )
     {
-        $data = $request->all();
-        $v = \Validator::make($data, ['name' => "required"]);
-
-        if ($v->fails()) return back()->withInput()->withErrors($v->messages());
-
-        $menu = Menu::create([
-            'name' => $data['name'],
+        $menuRepository->create([
+            'name' => $request->name,
             'creator_id' => \Auth::id(),
             'type' => 'custom',
         ]);
 
-        if ($menu) return back()->with('message', "menu successfully created");
-
-        return back()->with('message', "menu not created");
+        return back()->with('message', "menu successfully created");
     }
 
-    public function postDelete(Request $request)
+    public function postDelete(
+        MenuDeleteRequest $request,
+        MenuRepository $menuRepository
+    )
     {
-        $id = $request->slug;
-        $success = false;
-        if ($menu = Menu::find($id)) $success = $menu->delete();
-
+        $success = $menuRepository->delete();
         return \Response::json(['success' => $success, 'url' => url('admin/console/structure/menus')]);
     }
 
-    public function getMenuEdit($id, $slug, Request $request)
+    public function getMenuEdit(
+        $id, $slug,
+        MenuRepository $menuRepository,
+        AdminPagesRepository $adminPagesRepository,
+        RoleRepository $roleRepository,
+        StructureService $structureService
+    )
     {
+        $menu = $menuRepository->findOrFail($id);
+        $page = $adminPagesRepository->first();
+        $pageGrouped = $adminPagesRepository->getGroupedWithModule();
+        $role = $roleRepository->findBy('slug', $slug);
 
-        $menu = Menu::find($id);
-        $page = AdminPages::first();
-        $pageGrouped = AdminPages::groupBy('module_id')->get();
-        $role = Roles::where('slug', $slug)->first();
+        $data = $structureService->getMenuItems($menu, $role);
 
-        if ($menu) {
-            $items = $menu->items()->where('role_id', $role->id)->where('parent_id', 0)->get();
-            $data = json_encode(Menu::makeJson($items), true);
-
-            return view('console::structure.menu_edit', compact(['pageGrouped', 'page', 'slug', 'data', 'menu']));
-        } else {
-            abort('404');
-        }
+        return view('console::structure.menu_edit', compact(['pageGrouped', 'page', 'slug', 'data', 'menu']));
     }
 
-    public function postMenuEdit($id, $slug, Request $request)
+    public function postMenuEdit(
+        $id, $slug,
+        MenuEditRequest $request,
+        StructureService $structureService,
+        MenuRepository $menuRepository,
+        RoleRepository $roleRepository
+    )
     {
-        $menu = Menu::find($id);
-        $role = Roles::where('slug', $slug)->first();
-
-        if ($menu && $role) {
-            $menu->items()->delete();
-            $json_data = json_decode($request->json_data, true);
-
-            if (isset($json_data['menuitem']) && count($json_data['menuitem'])) {
-                Menu::saveFromJson($json_data['menuitem'], $menu, $role);
-
-                return redirect()->back()->with('message', "Menu Updated successfully");
-            }
-
-        }
+        $menu = $menuRepository->find($id);
+        $role = $roleRepository->findBy('slug', $slug);
+        $structureService->editMenu($menu, $role, $request);
 
         return redirect()->to('admin/console/structure/menus');
     }
@@ -227,74 +171,48 @@ class StructureController extends Controller
         return view('console::structure.settings');
     }
 
-    public function getPagePreview($page_id, Request $request)
+    public function getPagePreview(
+        $page_id,
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $layout = $request->get('pl');
-        $page = AdminPages::find($page_id);
-        $url = null;
-        if (!$page) return redirect()->back();
-
-        if (!str_contains($page->url, '{param}')) $url = $page->url;
-
-        $layouts = ContentLayouts::findByType('section')->pluck("name", "slug");
-        // $html = \View::make("ContentLayouts.$layout.$layout")->with(['settings'=>$this->options])->render();
-        $lay = ContentLayouts::findVariation($layout);
-
-        if (!$lay) {
-            return view('console::structure.page-preview', ['data' => compact(['page_id', 'layout', 'page', 'url', 'layouts'])]);
-        }
-
-        $view['view'] = "console::structure.page-preview";
-        $view['variation'] = $lay;
-        $data = explode('.', $layout);
-        return ContentLayouts::find($data[0])->renderSettings($view, compact(['page_id', 'layout', 'page', 'url', 'layouts']));
+        return $structureService->getPagePreview($page_id, $request);
     }
 
-    public function postSavePageSettings($page_id, Request $request)
+    public function postSavePageSettings(
+        $page_id,
+        SavePageSettingsRequest $pageSettingsRequest,
+        StructureService $structureService
+    )
     {
-        $data = $request->except(['pl', 'image']);
-        $layout_id = $request->get('layout_id');
-        $page = AdminPages::find($page_id);
-
-        if ($layout_id && !ContentLayouts::findVariation($layout_id)) return \Response::json(['error' => true, 'message' => 'Page Section not found  !!!']);
-        $data['page_id'] = $page_id;
-
-        $v = \Validator::make($data, ['page_id' => "exists:admin_pages,id"]);
-
-        if ($v->fails()) return \Response::json(['error' => true, 'message' => $v->messages()]);
-
-        if ($page) {
-            $page->settings = (!empty($data)) ? json_encode($data, true) : null;
-            $page->layout_id = $layout_id;
-            $page->save();
-
-            return \Response::json(['error' => false, 'message' => 'Page Layout settings Successfully assigned', 'module' => $page->module_id]);
-        }
-
-        return \Response::json(['error' => true, 'message' => 'Page not found  !!!']);
+        $page = $structureService->postPagePreview($page_id, $pageSettingsRequest);
+        return \Response::json(['error' => false, 'message' => 'Page Layout settings Successfully assigned', 'module' => $page->module_id]);
     }
 
-    public function postPageData(Request $request)
+    public function postPageData(
+        Request $request,
+        AdminPagesRepository $adminPagesRepository
+    )
     {
-        $id = $request->get('id');
-        $page = AdminPages::find($id);
+        $page = $adminPagesRepository->findOrFail($request->id);
         $layout = ContentLayouts::findVariation($page->layout_id);
-        if ($page) {
-            $html = view('console::structure._partials.page_data', compact(['page']))->render();
-            return \Response::json(['error' => false, 'html' => $html, 'page' => $page, 'value' => ($layout) ? $layout->id : 0]);
-        }
+        $html = view('console::structure._partials.page_data', compact(['page']))->render();
 
-        return \Response::json(['error' => true]);
+        return \Response::json(['error' => false, 'html' => $html, 'page' => $page, 'value' => ($layout) ? $layout->id : 0]);
     }
 
-    public function getForms(FieldValidations $fieldValidations)
+    public function getForms(
+        FormsRepository $formsRepository
+    )
     {
-        $forms = Forms::where('type', 'new')->get();
+        $forms = $formsRepository->getBy('type', 'new');
         return view('console::structure.forms', compact('forms'));
     }
 
     public function getCreateForm(Request $request)
     {
+        //TODO when modules will ready
         $form_slug = uniqid();
         $builders = [];
         $modules = Structures::getBuilderModules()->toArray();
@@ -322,234 +240,100 @@ class StructureController extends Controller
         return view('console::structure.create-form', compact(['form_slug', 'builders', 'form_type', 'fields_type', 'fieldJson', 'file', 'slug']));
     }
 
-    public function getAddFieldModal(Request $request)
+    public function getAddFieldModal(
+        Request $request,
+        FormsRepository $formsRepository,
+        FieldsRepository $fieldsRepository,
+        StructureService $structureService
+    )
     {
-        $slug = $request->get('p');
-        $form = Forms::where('type', 'new')->where('created_by', 'core')->where('id', $request->slug)->first();
-        if ($form) {
-            $fields = Fields::where('form_group', $form->fields_type)->get();
-            //$units = CmsItemReader::getAllGearsByType('units')->where('place', 'backend')->where('main_type', 'special_fields')->where('type',$form->fields_type)->run();
-            if ($slug) {
-                $field = Fields::where('form_group', $form->fields_type)
-                    ->where('slug', $slug)
-                    ->first();
-            } elseif (count($fields)) {
-                $field = Fields::where('form_group', $form->fields_type)
-                    ->first();
-            }
-
-            $html = \View::make('console::structure._partials.add_field_modal', compact(['fields', 'field']))->render();
-            return \Response::json(['html' => $html]);
-        }
-
-        return \Response::json(['error' => true], 500);
+        $form = $formsRepository->getNewCoreFormsBySlug($request->slug);
+        return $structureService->getAddFieldModal($request->slug, $form, $fieldsRepository);
     }
 
-    public function getUnitFieldModal(Request $request)
+    public function getUnitFieldModal(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $slug = $request->get('p');
-        $type = $request->get('type', 'general_fields');
-        $mainType = 'text';
-        $types = [];
-        $ui_elemements = null;
-        $model = null;
-        $unit = null;
-        if (count($this->unitTypes)) {
-            foreach ($this->unitTypes as $unitType) {
-                $types[$unitType['foldername']] = $unitType['title'];
-            }
-
-            $main_type = $this->unitTypes[0]['foldername'];
-            if ($type) {
-                $main_type = $type;
-            }
-
-            $ui_elemements = CmsItemReader::getAllGearsByType('units')->where('place', 'backend')->where('main_type', 'general_fields')->run();
-            $specialElements = CmsItemReader::getAllGearsByType('units')->where('place', 'backend')->where('main_type', 'special_fields')->run();
-
-            if ($slug) {
-                $unit = CmsItemReader::getAllGearsByType('units')
-                    ->where('place', 'backend')
-                    ->where('main_type', 'general_fields')
-                    ->where('slug', $slug)
-                    ->first();
-
-                $specialUnit = CmsItemReader::getAllGearsByType('units')
-                    ->where('place', 'backend')
-                    ->where('main_type', 'special_fields')
-                    ->where('slug', $slug)
-                    ->first();
-            } elseif (count($ui_elemements)) {
-                $unit = CmsItemReader::getAllGearsByType('units')
-                    ->where('place', 'backend')
-                    ->where('main_type', 'general_fields')
-                    ->first();
-
-                $specialUnit = CmsItemReader::getAllGearsByType('units')
-                    ->where('place', 'backend')
-                    ->where('main_type', 'special_fields')
-                    ->first();
-            }
-            $variations = $unit->variations();
-
-        }
-        $html = \View::make('console::structure._partials.add_field', compact(['ui_elemements', 'types', 'unit', 'type', 'specialElements', 'specialUnit', 'mainType', 'variations', 'model']))->render();
+        $html = $structureService->getUnitFieldModal($request);
         return \Response::json(['html' => $html]);
     }
 
-    public function getUnitEditFieldModal(Request $request)
+    public function getUnitEditFieldModal(
+        Request $request,
+        StructureService $structureService
+    )
     {
         $data = $request->all();
-
-        $form = Forms::where('type', 'new')->where('created_by', 'core')->where('id', $request->master_slug)->first();
-        $slug = explode('.', $request->uislug);
-        if (count($slug)) {
-            $units = CmsItemReader::getAllGearsByType('units')->where('place', 'backend')->where('type', $form->fields_type)->run();
-            $uiUnit = CmsItemReader::getAllGearsByType('units')
-                ->where('place', 'frontend')
-                ->where('type', 'component')
-                ->where('slug', array_first($slug))
-                ->first();
-
-            $inputSlug = explode('.', $request->inputslug);
-            if (count($inputSlug)) {
-                $unit = CmsItemReader::getAllGearsByType('units')
-                    ->where('place', 'backend')
-                    ->where('main_type', 'special_fields')
-                    ->where('slug', array_first($inputSlug))
-                    ->first();
-            }
-
-            $variations = ($unit) ? $unit->variations() : [];
-        }
-        $model = $request->get('generaltab', []);
-        $html = view('console::structure._partials.add_field', compact(['units', 'unit', 'type', 'variations', 'model', 'uiUnit', 'data', 'form']))->render();
-
+        $html = $structureService->getUnitEditFieldModal($data);
         return \Response::json(['html' => $html]);
     }
 
 
-    public function getAvailableFieldsModal(Request $request)
+    public function getAvailableFieldsModal(
+        Request $request,
+        FieldsRepository $fieldsRepository
+    )
     {
         $success = false;
         $fields = [];
         if ($request->fields_type) {
-            $fields = Fields::where('table_name', $request->fields_type)->where('status', Fields::ACTIVE)->get()->toArray();
+            $fields = $fieldsRepository->getByTableNameAndActive($request->fields_type)->toArray();
             $success = true;
         }
 
         return \Response::json(['success' => $success, 'fields' => $fields]);
     }
 
-    public function getUnitVariations(Request $request)
+    public function getUnitVariations(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $variations = null;
-        $unit = CmsItemReader::getAllGearsByType('units')
-            ->where('place', 'backend')
-            ->where('slug', $request->slug)
-            ->first();
-        if ($unit) {
-            if ($unit->main_type == 'general_fields') {
-                foreach ($this->unitTypes as $unitType) {
-                    $types[$unitType['foldername']] = $unitType['title'];
-                }
-            } else {
-                foreach ($this->specialTypes as $unitType) {
-                    $types[$unitType['foldername']] = $unitType['title'];
-                }
-            }
-
-            $variations = count($unit->variations()) ? $unit->variations() : null;
-        }
-        $html = \View::make('console::structure._partials.variation_list', compact(['variations', 'unit', 'types']))->render();
+        $html = $structureService->getUnitVariations($request);
         return \Response::json(['html' => $html]);
     }
 
-    public function getUnitSettingsPage(Request $request)
+    public function getUnitSettingsPage(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $settings = null;
-        $type = null;
-        $slug = explode('.', $request->unit_id);
-
-        if (count($slug)) {
-            $unit = CmsItemReader::getAllGearsByType('units')
-                ->where('main_type', 'general_fields')
-                ->where('slug', array_first($slug))
-                ->first();
-            if ($unit) {
-                $units = CmsItemReader::getAllGearsByType('units')
-                    ->where('main_type', 'general_fields')
-                    ->where('type', $unit->type)
-                    ->run();
-                $type = $unit->type;
-                $validationRules = $this->fieldValidation->getRules();
-                $variations = count($unit->variations()) ? $unit->variations() : null;
-
-                $settings = view("console::backend.gears.fields.types.$type", compact(['validationRules', 'units', 'variations', 'unit']))->render();
-            }
-        }
-
-        return \Response::json(['settings' => $settings, 'type' => $type]);
+        $data = $structureService->getUnitSettingsPage($request);
+        return \Response::json(['settings' => $data['settings'], 'type' => $data['type']]);
     }
 
-    public function getComponentSettings(Request $request)
+    public function getComponentSettings(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $slug = explode('.', $request->slug);
-        if (count($slug)) {
-            $unit = CmsItemReader::getAllGearsByType('units')
-                ->where('type', 'component')
-                ->where('slug', array_first($slug))
-                ->first();
-            if ($unit) {
-                $html = $unit->render();
-                $settings = $unit->renderSettings();
-                return \Response::json(['settings' => $settings, 'html' => $html, 'error' => false]);
-            }
-        }
-        return \Response::json(['error' => true]);
+        return $structureService->getComponentSettings($request);
     }
 
-    public function getUnitVariationField(Request $request)
+    public function getUnitVariationField(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $slug = explode('.', $request->slug);
-        if (count($slug)) {
-            $unit = CmsItemReader::getAllGearsByType('units')
-                ->where('slug', array_first($slug))
-                ->first();
-            if ($unit) {
-                $blade = \File::get("$unit->path" . DS . "$unit->main_file");
-                return \Response::json(['html' => BBRenderUnits($request->slug), 'blade' => $blade, 'options' => $unit->options, 'error' => false]);
-            }
-        }
-        return \Response::json(['message' => 'wrong message', 'error' => true]);
+        return $structureService->getUnitVariationField($request);
     }
 
-    public function getUnitVariationSettings(Request $request)
+    public function getUnitVariationSettings(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $slug = explode('.', $request->id);
-        if (count($slug)) {
-            $tpl = CmsItemReader::getAllGearsByType('units')
-                ->where('slug', array_first($slug))
-                ->first();
-            if ($tpl) {
-                $html = view('console::backend.gears.fields._partials.variation_list_settings', compact(['tpl']))->render();
-                return \Response::json(['html' => $html, 'error' => false]);
-            }
-        }
-        return \Response::json(['message' => 'wrong message', 'error' => true]);
-
+        return $structureService->getUnitVariationSettings($request);
     }
 
-    public function getCreateField()
+    public function getCreateField(
+        AdminsettingRepository $adminsettingRepository
+    )
     {
-        $types = [];
-        $defaultFieldHtml = $this->settings->getSettings('setting_system', 'default_field_html');
-        if (count($this->unitTypes)) {
-            foreach ($this->unitTypes as $unitType) {
-                $types[$unitType['foldername']] = $unitType['title'];
-            }
-        }
-        return view('console::structure.create_field', compact('types', 'defaultFieldHtml'));
+        $defaultFieldHtml = $adminsettingRepository->getSettings('setting_system', 'default_field_html');
+        return view('console::structure.create_field', compact('defaultFieldHtml'));
     }
 
     public function getCreateFieldNew()
@@ -557,123 +341,61 @@ class StructureController extends Controller
         return view('console::structure.create_field_studio');
     }
 
-    public function getFields()
+    public function getFields(
+        FieldsRepository $fieldsRepository
+    )
     {
-        $fields = Fields::all();
+        $fields = $fieldsRepository->getAll();
         return view('console::structure.fields', compact(['fields']));
     }
 
-    public function getEditForms()
+    public function getEditForms(
+        FormsRepository $formsRepository
+    )
     {
-        $forms = Forms::where('type', 'edit')->get();
+        $forms = $formsRepository->getBy('type', 'edit');
         return view('console::structure.edit_forms', compact(['forms']));
     }
 
-    public function postCreateField(Request $request)
+    public function postCreateField(
+        FieldCreateRequest $request,
+        StructureService $structureService
+    )
     {
-        $data = $request->except('_token');
-        $v = \Validator::make(
-            $data,
-            [
-                'name' => "required",
-                'table_name' => "required",
-                'column_name' => "required",
-                'unit' => 'required'
-            ]
-        );
-        if ($v->fails()) return redirect()->back()->withInput()->withErrors($v->messages());
-        $dataToSave = [
-            'name' => $data['name'],
-            'slug' => uniqid(),
-            'table_name' => $data['table_name'],
-            'column_name' => $data['column_name'],
-            'created_by' => \Auth::id(),
-            'structured_by' => 'custom',
-            'unit' => $data['unit'] != '' ? $data['unit'] : NULL,
-            'label' => $data['label'] != '' ? $data['label'] : NULL,
-            'placeholder' => $data['placeholder'] != '' ? $data['placeholder'] : NULL,
-            'icon' => $data['icon'] != '' ? $data['icon'] : NULL,
-            'tooltip' => $data['tooltip'] != '' ? $data['tooltip'] : NULL,
-            'custom_html' => $data['custom_html'] != '' ? $data['custom_html'] : NULL,
-            'field_html' => $data['field_html'] != '' ? $data['field_html'] : 'no',
-            'second_table' => isset($data['second_table']) && $data['second_table'] != '' ? $data['second_table'] : NULL,
-            'second_column' => isset($data['second_column']) && $data['second_column'] != '' ? $data['second_column'] : NULL,
-            'required' => $data['required'],
-            'visibility' => $data['visibility'],
-            'default_value' => $data['default_value'] != '' ? $data['default_value'] : NULL,
-            'available_for_users' => $data['available_for_users'],
-            'before_save' => $data['before_save'],
-        ];
-        $dataToSave['json_data'] = json_encode($dataToSave, true);
-//        if($data['custom_field_html'] != 'no') {
-//            $dataToSave['custom_html'] = $data['custom_field_html'];
-//        }
-        Fields::create($dataToSave);
-
+        $structureService->saveField($request->except('_token'));
         return redirect('admin/console/structure/fields')->with('message', 'Field created');
     }
 
-    public function getEditField(Request $request)
+    public function getEditField(
+        Request $request,
+        FieldsRepository $fieldsRepository,
+        FieldValidationService $fieldValidationService
+    )
     {
-        $field = Fields::findOrFail($request->id);
-        $types = [];
-        if (count($this->unitTypes)) {
-            foreach ($this->unitTypes as $unitType) {
-                $types[$unitType['foldername']] = $unitType['title'];
-            }
-        }
+        $field = $fieldsRepository->findOrFail($request->id);
         $unitSlug = explode('.', $field->unit)[0];
         $unit = CmsItemReader::getAllGearsByType('units')
             ->where('slug', $unitSlug)
             ->first();
-
-        $validation = new FieldValidations();
-        $rule = $validation->getBaseValidationRulse($field->table_name, $field->column_name);
-        return view('console::structure.edit_field', compact(['field', 'types', 'unit','rule']));
+        $rule = $fieldValidationService->getBaseValidationRulse($field->table_name, $field->column_name);
+        return view('console::structure.edit_field', compact(['field', 'unit', 'rule']));
     }
 
-    public function postEditField($id, Request $request)
+    public function postEditField(
+        $id,
+        FieldCreateRequest $request,
+        FieldsRepository $fieldsRepository,
+        StructureService $structureService
+    )
     {
         $data = $request->except(['_token']);
-        $field = Fields::findOrFail($id);
-
+        $field = $fieldsRepository->findOrFail($id);
         if ($field->structured_by != 'custom') {
             $field->update(['json_data' => $request->get('settings', null), 'unit' => $request->get('unit', null)]);
             return redirect('admin/console/structure/fields')->with('message', 'Field Updated');
         }
 
-        $v = \Validator::make(
-            $data,
-            [
-                'name' => "required",
-                'table_name' => "required",
-                'column_name' => "required",
-                'unit' => 'required'
-            ]
-        );
-
-        if ($v->fails()) return redirect()->back()->withInput()->withErrors($v->messages());
-
-        $field->update([
-            'name' => $data['name'],
-            'table_name' => $data['table_name'],
-            'column_name' => $data['column_name'],
-            'json_data' => $data['settings'],
-            'unit' => $data['unit'] != '' ? $data['unit'] : NULL,
-            'label' => $data['label'] != '' ? $data['label'] : NULL,
-            'placeholder' => $data['placeholder'] != '' ? $data['placeholder'] : NULL,
-            'icon' => $data['icon'] != '' ? $data['icon'] : NULL,
-            'tooltip' => $data['tooltip'] != '' ? $data['tooltip'] : NULL,
-            'custom_html' => $data['custom_html'] != '' ? $data['custom_html'] : NULL,
-            'field_html' => $data['field_html'] != '' ? $data['field_html'] : 'no',
-            'second_table' => isset($data['second_table']) && $data['second_table'] != '' ? $data['second_table'] : NULL,
-            'second_column' => isset($data['second_column']) && $data['second_column'] != '' ? $data['second_column'] : NULL,
-            'required' => $data['required'],
-            'visibility' => $data['visibility'],
-            'default_value' => $data['default_value'] != '' ? $data['default_value'] : NULL,
-            'available_for_users' => $data['available_for_users'],
-            'before_save' => $data['before_save'],
-        ]);
+        $structureService->fieldUpdate($data, $field);
 
         return redirect('admin/console/structure/fields')->with('message', 'Field Updated');
     }
@@ -684,57 +406,28 @@ class StructureController extends Controller
         return view('console::structure.advanced');
     }
 
-    public function getUnitRender(Request $request)
+    public function getUnitRender(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $html = null;
-        $slug = explode('.', $request->slug);
-
-        if (count($slug)) {
-            $unit = CmsItemReader::getAllGearsByType('units')
-                ->where('type', 'component')
-                ->where('slug', array_first($slug))
-                ->first();
-            if ($unit) $html = $unit->render();
-        }
-
-        return \Response::json(['html' => $html]);
+        return $structureService->getComponentSettings($request);
     }
 
-    public function postSaveForm(Request $request)
+    public function postSaveForm(
+        FormCreateRequest $request,
+        StructureService $structureService
+    )
     {
         $data = $request->except('_token');
-        $v = \Validator::make(
-            $data,
-            [
-                'name' => "required",
-                'form_type' => 'required',
-                'fields_type' => 'required',
-                'form_builder' => 'required',
-                'blade' => 'required',
-                'fields' => 'required',
-            ]
-        );
-
-        if ($v->fails()) return redirect()->back()->withInput()->withErrors($v->messages());
-
-        $form = new Forms();
-        $form->slug = uniqid();
-        $form->settings = $data['settings'];
-        $form->name = $data['name'];
-        $form->type = "edit";
-        $form->created_by = "custom";
-        $form->fields_type = $data['fields_type'];
-        $form->form_builder = $data['form_builder'];
-        $form->form_type = $data['form_type'];
-        if ($form->save()) {
-            Forms::generateBlade($form->id, $data['blade']);
-        }
+        $structureService->createForm($data);
 
         return redirect()->to('/admin/console/structure/edit-forms')->with('message', 'Form Successfully created');
     }
 
     public function getFormEdit($id, Request $request)
     {
+        //TODO when Modules ready
         $file = null;
         $form = Forms::findOrFail($id);
         $fields = $form->getFields(true);
@@ -765,268 +458,180 @@ class StructureController extends Controller
         return view('console::structure.edit-form', compact(['form', 'blade', 'fields', 'bladeRendered', 'builders', 'file', 'fieldJson']));
     }
 
-    public function getDefaultHtml()
+    public function getDefaultHtml(
+        StructureService $structureService
+    )
     {
-        $defaultFieldHtml = $this->settings->getSettings('setting_system', 'default_field_html');
-        $variationId = $defaultFieldHtml->val;
-        $settings = Units::findByVariation($variationId)->renderSettings();
-        $variation = Units::findVariation($variationId)->toArray();
-        $unit = Units::findByVariation($variationId)->render($variation);
-        return \Response::json([
-            'html' => $unit,
-            'settings' => htmlentities($settings)
-        ]);
+        $data = $structureService->getDefaultHtml();
+        return \Response::json($data);
     }
 
-    public function getCustomHtml(Request $request)
+    public function getCustomHtml(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $variationId = $request->slug;
-        $settings = Units::findByVariation($variationId)->renderSettings();
-        $variation = Units::findVariation($variationId)->toArray();
-        $unit = Units::findByVariation($variationId)->render($variation);
-        return \Response::json([
-            'html' => $unit,
-            'settings' => htmlentities($settings)
-        ]);
+        $data = $structureService->getCustomHtml($request);
+        return \Response::json($data);
     }
 
-    public function getSavedHtmlType(Request $request)
+    public function getSavedHtmlType(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $renderType = $html = null;
-        $form = Forms::find($request->get('id'));
-        $field = Fields::where('slug', $request->slug)->first();
-
-        if ($form) {
-            $form_type = $form->form_type;
-        } elseif ($request->get('form_type')) {
-            $form_type = $request->get('form_type');
-        } else {
-            return \Response::json(['error' => true]);
-        }
-
-        if (!$field) return \Response::json(['error' => true]);
-
-        if ($form_type == 'user') {
-            if ($field->available_for_users == 1) {
-                $html = BBField(['slug' => $request->slug]);
-                $renderType = 'render';
-            } elseif ($field->available_for_users == 2) {
-                $html = BBFieldHidden(['slug' => $request->slug]);
-                $renderType = 'hidden';
-            } elseif ($field->available_for_users == 3) {
-                $renderType = 'no_render';
-            }
-        } else {
-            if ($field->visibility) {
-                $html = BBField(['slug' => $request->slug]);
-                $renderType = 'render';
-            } else {
-                $html = BBFieldHidden(['slug' => $request->slug]);
-                $renderType = 'hidden';
-            }
-        }
-
-
-        return \Response::json([
-            'field' => $field->toArray(),
-            'html' => $html,
-            'type' => $renderType,
-            'error' => false
-        ]);
+        $data = $structureService->getSavedHtmlType($request);
+        return \Response::json($data);
     }
 
-    public function postChangeFieldStatus(Request $request)
+    public function postChangeFieldStatus(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $status = $request->status == 'true' ? 1 : 0;
-        $field = Fields::where('slug', $request->slug)->first();
-        $field->status = $status;
-        $success = $field->save() ? true : false;
+        $success = $structureService->postChangeFieldStatus($request);
         return \Response::json([
             'success' => $success
         ]);
     }
 
-    public function postFormEdit($id, Request $request)
+    public function postFormEdit(
+        $id,
+        Request $request,
+        FormsRepository $formsRepository,
+        FormService $formService
+    )
     {
         $data = $request->all();
-        $form = Forms::findOrFail($id);
-        $response = $form->validateColumns($data['fields']);
+        $form = $formsRepository->findOrFail($id);
+        $response = $formService->validateColumns($form->id, $data['fields']);
 
         if ($response['error']) {
-            if ($request->ajax()) {
-                return \Response::json([
-                    'error' => true,
-                    'message' => $response['message']
-                ]);
-            } else {
-                return redirect()->back()->with('message', $response['message']);
-            }
+            return redirect()->back()->with('message', $response['message']);
         }
 
         $form->update($request->except('fields', 'blade', 'token', 'blade_rendered', 'new_builder'));
-        Forms::syncFields($form->id, $data['fields']);
-        Forms::generateBlade($form->id, $data['blade']);
+        $formService->syncFields($form->id, $data['fields']);
+        $formService->generateBlade($form->id, $data['blade']);
 
-        if ($request->ajax()) {
-            $builder = Structures::find($request->get('new_builder'));
-            if ($builder && \File::exists(base_path($builder->path . DS . 'views' . DS . $builder->builder . '.blade.php'))) {
-                $file = view("$builder->namespace::" . $builder->builder, compact(['form']))->render();
-                return \Response::json([
-                    'error' => false,
-                    'fields' => $form->getFields(true),
-                    'builder' => $file
-                ]);
-            } else {
-                return \Response::json([
-                    'error' => true,
-                    'message' => 'Data is kept, but new builder not found'
-                ]);
-            }
+
+        if ($form->type == 'new') {
+            return redirect()->to('/admin/console/structure/forms')->with('message', 'Form successfully edited');
         } else {
-            if ($form->type == 'new') {
-                return redirect()->to('/admin/console/structure/forms')->with('message', 'Form successfully edited');
-            } else {
-                return redirect()->to('/admin/console/structure/edit-forms')->with('message', 'Form successfully edited');
-            }
-
+            return redirect()->to('/admin/console/structure/edit-forms')->with('message', 'Form successfully edited');
         }
     }
 
-    public function postBuilder(Request $request)
+    public function postNewBuilder(
+        $id,
+        Request $request,
+        FormsRepository $formsRepository,
+        FormService $formService,
+        StructureService $structureService
+    )
     {
-        $slug = $request->get('slug');
-        $builder = Structures::find($slug);
+        $data = $request->all();
+        $form = $formsRepository->findOrFail($id);
+        $response = $formService->validateColumns($form->id, $data['fields']);
 
-        if ($builder && \File::exists(base_path($builder->path . DS . 'views' . DS . $builder->builder . '.blade.php'))) {
-            $form = Forms::find($request->get('form'));
-            $file = view("$builder->namespace::" . $builder->builder, compact(['form']))->render();
-            if (isset($builder->js) && count($builder->js)) {
-                foreach ($builder->js as $js) {
-                    \Eventy::action('my.scripts', url('app/ExtraModules/' . $builder->namespace . '/views/js/' . $js));
-                }
-            }
+        if ($response['error']) return \Response::json(['error' => true, 'message' => $response['message']]);
+        $data = $structureService->postNewBuilder($request, $id);
 
-
-            return \Response::json([
-                'error' => false,
-                'builder' => $file
-            ]);
-        }
-
-        return \Response::json([
-            'error' => true
-        ]);
+        return \Response::json($data);
     }
 
-    public function getFormSettings($id)
+    public function postBuilder(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $form = Forms::findOrFail($id);
-        if ($form->form_type == 'user') {
-            $fields = Fields::where('table_name', $form->fields_type)->where('status', Fields::ACTIVE)->where('available_for_users', '!=', 0)->get();
-        } else {
-            $fields = Fields::where('table_name', $form->fields_type)->where('status', Fields::ACTIVE)->get();
-        }
+        $data = $structureService->postBuilder($request);
 
+        return \Response::json($data);
+    }
+
+    public function getFormSettings(
+        $id,
+        FormsRepository $formsRepository,
+        StructureService $structureService
+    )
+    {
+        $form = $formsRepository->findOrFail($id);
+        $fields = $structureService->getFieldsByFormType($form);
         $settings = json_decode($form->settings, true);
+
         return view('console::structure.form-settings', compact(['form', 'fields', 'settings']));
     }
 
-    public function postFormSettings($id, Request $request)
+    public function postFormSettings(
+        $id,
+        FormSettingsUpdateRequest $request,
+        FormsRepository $formsRepository
+    )
     {
-        $data = $request->all();
-
-        $form = Forms::findOrFail($id);
-
-        $v = \Validator::make(
-            $data,
-            [
-                'fields_type' => "required",
-                'form_type' => "required",
-            ]
-        );
-        if ($v->fails()) return redirect()->back()->withInput()->withErrors($v->messages());
-
-        $settings = json_encode($request->only('message', 'is_ajax','event'));
-
-        $form->update([
-            'fields_type' => $data['fields_type'],
-            'form_type' => $data['form_type'],
+        $settings = json_encode($request->only('message', 'is_ajax', 'event'));
+        $formsRepository->update($id, [
+            'fields_type' => $request->fields_type,
+            'form_type' => $request->form_type,
             'settings' => $settings
         ]);
 
         return redirect()->to('/admin/console/structure/forms')->with('message', 'Settings saved successfully');
     }
 
-    public function postAvailableFields(Request $request)
+    public function postAvailableFields(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $table = $request->get('table');
-
-        $fields = Fields::where('table_name', $table)->get();
-
-        $html = view('console::structure._partials.available_fields', compact('fields'))->render();
-
+        $html = $structureService->postAvailableFields($request->table);
         return \Response::json([
             'error' => false,
             'html' => $html
         ]);
     }
 
-    public function getFormEntries($id)
+    public function getFormEntries(
+        $id,
+        FormsRepository $formsRepository
+    )
     {
-        $form = Forms::findOrFail($id);
-        $entries = $form->entries;
-
-        return view('console::structure.entries', compact('form', 'entries'));
+        $form = $formsRepository->findOrFail($id);
+        return view('console::structure.entries')->with(['form' => $form, 'entries' => $form->entries]);
     }
 
-    public function postGetEntryData(Request $request)
+    public function postGetEntryData(
+        Request $request,
+        StructureService $structureService
+    )
     {
-        $id = $request->get('id');
-
-        $entry = FormEntries::findOrFail($id);
-
-        ($entry->data) ? $data = unserialize($entry->data) : $data = [];
-
-        if (count($data)) {
-            $html = view('console::structure._partials.entry', compact('data'))->render();
-            return \Response::json(['error' => false, 'html' => $html]);
-        }
-
-        return \Response::json(['error' => 'true']);
+        $data = $structureService->getEntryData($request);
+        return \Response::json($data);
     }
 
-    public function getEditForm($id, Request $request)
+    public function getEditForm(
+        $id,
+        Request $request,
+        FormsRepository $formsRepository,
+        FormService $formService,
+        StructureService $structureService,
+        FieldsRepository $fieldsRepository
+    )
     {
-        $file = null;
-        $form = Forms::where('id', $id)->where('type', 'edit')->first();
-
-        if (!$form) abort(404);
-
-        $fields = $form->getFields(true);
-        $blade = $form->renderBlade();
-        $bladeRendered = $form->render();
+        $form = $formsRepository->findOrFail($id);
+        $fields = $formService->getFields(true);
+        $blade = $formService->renderBlade($id);
+        $bladeRendered = $form->render($id);
+        //TODO get Modules from new system
         $modules = Structures::getBuilderModules()->toArray();
-        $builders = [];
-        if (count($modules)) {
-            foreach ($modules as $builder) {
-                $builders[$builder->slug] = $builder->name;
-            }
-        }
-
-        $form->form_builder = $slug = $request->get('slug', $form->form_builder);
-        $builder = Structures::find($slug);
-
-        if ($builder && \File::exists(base_path($builder->path . DS . 'views' . DS . $builder->builder . '.blade.php'))) {
-            $file = view("$builder->namespace::" . $builder->builder, compact(['form']))->render();
-        }
-
+        $data = $structureService->getBuilders($modules, $form, $request);
 
         if ($form->form_type == 'user') {
-            $fieldJson = json_encode(Fields::where('table_name', $form->fields_type)->where('status', Fields::ACTIVE)->where('available_for_users', '!=', 0)->get()->toArray());
+            $fieldJson = json_encode($fieldsRepository->getByTableNameActiveAndAvailablity($form->fields_type)->toArray());
         } else {
-            $fieldJson = json_encode(Fields::where('table_name', $form->fields_type)->where('status', Fields::ACTIVE)->get()->toArray());
+            $fieldJson = json_encode($fieldsRepository->getByTableNameAndActive($form->fields_type)->toArray());
         }
 
-        return view('console::structure.create-form', compact(['form', 'blade', 'fields', 'bladeRendered', 'builders', 'file', 'fieldJson', 'slug']));
+        return view('console::structure.create-form', compact(['form', 'blade', 'fields', 'bladeRendered', 'fieldJson']))->with($data);
     }
 }

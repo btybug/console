@@ -12,7 +12,7 @@
 namespace Sahakavatar\Console\Models;
 
 use Illuminate\Http\Request;
-use App\helpers\helpers;
+use Sahakavatar\Cms\Helpers\helpers;
 use App\Models\Templates\Units;
 use Zipper,File;
 
