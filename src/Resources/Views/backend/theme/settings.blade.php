@@ -1,4 +1,4 @@
-@extends('layouts.uiPreview')
+@extends('cms::layouts.uiPreview')
 
 @section('content')
 {!! BBbutton('styles','bodycontianerclass','Select Style',['class'=>'btn selectGrayBtn rightSelectBtn ','data-type'=>'container', 'data-filterclass' =>'body']) !!}

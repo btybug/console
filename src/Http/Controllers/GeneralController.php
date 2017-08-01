@@ -11,53 +11,24 @@
 
 namespace Sahakavatar\Console\Http\Controllers;
 
-use Sahakavatar\Cms\Helpers\helpers;
 use App\Http\Controllers\Controller;
-use App\Modules\Modules\Models\AdminPages;
-use Sahakavatar\Settings\Repository\AdminsettingRepository as Settings;
-use File;
 use Illuminate\Http\Request;
+use Sahakavatar\Console\Http\Requests\Account\GeneralSettingsRequest;
+use Sahakavatar\Console\Repository\AdminPagesRepository;
+use Sahakavatar\Settings\Repository\AdminsettingRepository;
 
-/**
- * Class SettingsController
- * @package App\Modules\Frontend\Http\Controllers
- */
 class GeneralController extends Controller
 {
-
-    /**
-     * @var dbhelper|null
-     */
-    private $dbhelper = null;
-    /**
-     * @var helpers|null
-     */
-    private $helpers = null;
-
-    /**
-     * @var Settings|null
-     */
-    private $settings = null;
-
-    /**
-     * SettingsController constructor.
-     * @param dbhelper $dbhelper
-     * @param Settings $settings
-     */
-    public function __construct (dbhelper $dbhelper, Settings $settings)
-    {
-        $this->dbhelper = $dbhelper;
-        $this->settings = $settings;
-        $this->helpers = new helpers();
-    }
-
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getIndex ()
+    public function getIndex(
+        AdminsettingRepository $adminsettingRepository,
+        AdminPagesRepository $adminPagesRepository
+    )
     {
-        $system = $this->settings->getSystemSettings();
-        $adminLoginPage = AdminPages::where('slug', 'admin-login')->first();
+        $system = $adminsettingRepository->getSystemSettings();
+        $adminLoginPage = $adminPagesRepository->findBy('slug', 'admin-login');
 
         return view('console::structure.settings', compact(['system', 'adminLoginPage']));
     }
@@ -66,31 +37,28 @@ class GeneralController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postSettings (Request $request)
+    public function postSettings(
+        GeneralSettingsRequest $request,
+        AdminPagesRepository $adminPagesRepository,
+        AdminsettingRepository $adminsettingRepository
+    )
     {
         $input = $request->except('_token');
-        $adminLoginPage = AdminPages::where('slug', 'admin-login')->first();
-        $v = \Validator::make($input, ['admin_login_url' => 'required|unique:admin_pages,url,'.$adminLoginPage->id]);
-
-        if ($v->fails()) return back()->withInput()->withErrors($v->messages());
-
-        if($adminLoginPage) {
-            $adminLoginPage->url = $request->admin_login_url;
-            $adminLoginPage->save();
-        }
-        $this->settings->updateSystemSettings($input);
-        $this->helpers->updatesession('System successfully saved');
-
+        $adminLoginPage = $adminPagesRepository->findBy('slug', 'admin-login');
+        $adminPagesRepository->update($adminLoginPage->id, [
+            'url' => $request->admin_login_url
+        ]);
+        $adminsettingRepository->updateSystemSettings($input);
         return redirect()->back();
     }
 
-    public function getValidations ()
+    public function getValidations()
     {
         $validations = BBGetAllValidations();
         return view('console::structure.general.validations', compact(['validations']));
     }
 
-    public function getTriggerEvents ()
+    public function getTriggerEvents()
     {
         return view('console::structure.general.trigger_events');
     }

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('cms::layouts.admin')
 @section('content')
 
 {!! HTML::style('appdata/app/Modules/Cloud/Resources/assets/css/new-store.css') !!}

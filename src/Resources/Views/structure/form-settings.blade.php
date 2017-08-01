@@ -1,4 +1,4 @@
-@extends( 'layouts.admin' )
+@extends( 'cms::layouts.admin' )
 @section( 'content' )
     <div class="row">
         {!! Form::model($form,['class' => 'form-horizontal']) !!}

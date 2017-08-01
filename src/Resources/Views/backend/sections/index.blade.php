@@ -1,4 +1,4 @@
-@extends('layouts.mTabs',['index'=>'backend_gears'])
+@extends('cms::layouts.mTabs',['index'=>'backend_gears'])
 @section('tab')
     {!! HTML::style('app/Modules/Uploads/Resources/assets/css/new-store.css') !!}
     <div class="row">
@@ -142,7 +142,7 @@
             </div>
         </div>
     </div>
-    @include('_partials.delete_modal')
+    @include('cms::_partials.delete_modal')
     @include('resources::assests.deleteModal',['title'=>'Delete Widget'])
 @stop
 @section('CSS')

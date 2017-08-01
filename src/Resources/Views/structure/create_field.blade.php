@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('cms::layouts.admin')
 @section('content')
     <div class="col-md-12" id="add-new-fields">
         {!! Form::open(['url'=>'/admin/console/structure/fields/new','class' => 'form-horizontal']) !!}

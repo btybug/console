@@ -1,53 +1,34 @@
 <?php namespace Sahakavatar\Console\Http\Controllers;
 
-use App\Core\CmsItemReader;
-use App\Core\CmsItemUploader;
+use Sahakavatar\Cms\Services\CmsItemReader;
+use Sahakavatar\Cms\Services\CmsItemUploader;
 use App\Http\Controllers\Controller;
-use App\Models\Templates\Sections;
-use App\Modules\Modules\Models\AdminPages;
-use File;
+use Sahakavatar\Cms\Models\Templates\Sections;
+use Sahakavatar\Console\Repository\AdminPagesRepository;
 use Illuminate\Http\Request;
-use Resources;
+use Sahakavatar\Console\Services\SectionsService;
 use View;
 
 
-/**
- * Class SectionsController
- * @package App\Modules\Console\Http\Controllers
- */
 class SectionsController extends Controller
 {
-
-    /**
-     * @var null
-     */
-    private $helpers = null;
-    private $upload;
-    /**
-     * SectionsController constructor.
-     */
-    public function __construct()
-    {
-        $this->upload = new CmsItemUploader('sections');
-    }
-
     /**
      * @param Request $request
      * @return View
      */
-    public function getIndex(Request $request)
+    public function getIndex(
+        Request $request
+    )
     {
         $slug = $request->get('p');
         $type = $request->get('type', 'horizontal');
         $types = Sections::getTypes();
         $variations = [];
         $current = null;
-
         $sections = CmsItemReader::getAllGearsByType('sections')
             ->where('place', 'backend')
             ->where('type', $type)
             ->run();
-
         if (count($sections) && $slug) {
             $current = CmsItemReader::getAllGearsByType('sections')
                 ->where('place', 'backend')
@@ -61,13 +42,14 @@ class SectionsController extends Controller
                 ->first();
         }
 
-        $variations = $current  ? $current->variations() : [];
+        $variations = $current ? $current->variations() : [];
         return view("console::backend.sections.index", compact(['types', 'unit', 'type', 'variations', 'sections', 'current']));
     }
 
 
-    public function getSettings(Request $request) {
-        if($request->slug) {
+    public function getSettings(Request $request)
+    {
+        if ($request->slug) {
             $view = Sections::renderLivePreview($request->slug);
             return $view ? $view : abort('404');
         } else {
@@ -78,13 +60,14 @@ class SectionsController extends Controller
     public function postSettings(Request $request)
     {
         $output = Sections::saveSettings($request->id, $request->itemname, $request->except(['_token', 'itemname']), $request->save);
-        $result =  $output ? ['html' => $output['html'], 'url' => url('/admin/console/backend/sections/settings', ['slug' => $output['slug']]), 'error' => false] : ['error' => true];
+        $result = $output ? ['html' => $output['html'], 'url' => url('/admin/console/backend/sections/settings', ['slug' => $output['slug']]), 'error' => false] : ['error' => true];
         return \Response::json($result);
     }
 
-    public function postDeleteVariation(Request $request) {
+    public function postDeleteVariation(Request $request)
+    {
         $result = false;
-        if($request->slug) {
+        if ($request->slug) {
             $result = Sections::deleteVariation($request->slug);
         }
         return \Response::json(['success' => $result]);
@@ -94,13 +77,14 @@ class SectionsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postDelete(Request $request) {
+    public function postDelete(Request $request)
+    {
         $slug = $request->get('slug');
         $section = CmsItemReader::getAllGearsByType('sections')
             ->where('place', 'backend')
             ->where('slug', $slug)
             ->first();
-        if($section) {
+        if ($section) {
             $deleted = $section->deleteGear();
             return \Response::json(['success' => $deleted, 'url' => url('/admin/uploads/sections/main-body')]);
         }
@@ -111,8 +95,9 @@ class SectionsController extends Controller
      * @param null $type
      * @return View
      */
-    public function unitPreviewIframe($id, $type = null) {
-        if(!$id) {
+    public function unitPreviewIframe($id, $type = null)
+    {
+        if (!$id) {
             abort('404');
         }
         $slug = explode('.', $id);
@@ -129,9 +114,12 @@ class SectionsController extends Controller
         return view('console::backend.sections._partials.section_preview', compact(['htmlBody', 'htmlSettings', 'settings', 'settings_json', 'id', 'section']));
     }
 
-    public function postUpload(Request $request)
+    public function postUpload(
+        Request $request,
+        SectionsService $sectionsService
+    )
     {
-        return $this->upload->run($request);
+        return $sectionsService->upload($request);
     }
 }
 

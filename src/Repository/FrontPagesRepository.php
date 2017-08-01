@@ -9,21 +9,20 @@
 namespace Sahakavatar\Console\Repository;
 
 use Sahakavatar\Cms\Repositories\GeneralRepository;
-use Sahakavatar\Console\Models\AdminPages;
+use Sahakavatar\Manage\Models\FrontendPage;
 
 /**
  * Class AdminPagesRepository
  * @package Sahakavatar\Console\Repository
  */
-class AdminPagesRepository extends GeneralRepository
+class FrontPagesRepository extends GeneralRepository
 {
-
     /**
      * @return AdminPages
      */
     public function model()
     {
-        return new AdminPages();
+        return new FrontendPage();
     }
 
     /**
@@ -31,18 +30,8 @@ class AdminPagesRepository extends GeneralRepository
      */
     public function getGroupedWithModule()
     {
-        return $this->model->where('parent_id', 0)->groupBy('module_id')->get();
+        return $this->model->where('parent_id', NULL)->groupBy("module_id")->get();
     }
-
-    /**
-     * @param $role
-     * @return mixed
-     */
-    public function getPermissionsByRole($role)
-    {
-        return $this->model()->permission_role()->where('role_id', $role->id)->first();
-    }
-
 
     public function getRolesByPage(int $id, bool $imploded = true)
     {
@@ -59,7 +48,6 @@ class AdminPagesRepository extends GeneralRepository
                     } else {
                         $pageRoles[] = $perm->role->slug;
                     }
-
                 }
 
                 if ($imploded) {
@@ -67,7 +55,6 @@ class AdminPagesRepository extends GeneralRepository
                 } else {
                     return $pageRoles;
                 }
-
             }
         }
         if ($imploded) {

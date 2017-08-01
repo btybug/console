@@ -3,7 +3,6 @@
 namespace Sahakavatar\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use File;
 use Illuminate\Http\Request;
 use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
 use Sahakavatar\Console\Services\BackendService;

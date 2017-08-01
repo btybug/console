@@ -1,56 +1,32 @@
 <?php namespace Sahakavatar\Console\Http\Controllers;
 
-use App\Core\CmsItemReader;
-use App\Core\CmsItemUploader;
 use App\Http\Controllers\Controller;
-use App\Models\Templates\Sections;
-use App\Models\ContentLayouts\ContentLayouts;
-use File;
 use Illuminate\Http\Request;
-use Resources;
+use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
+use Sahakavatar\Cms\Services\CmsItemReader;
+use Sahakavatar\Console\Services\PageSectionsService;
 use View;
 
 
 /**
- * Class SectionsController
- * @package App\Modules\Console\Http\Controllers
+ * Class PageSectionsController
+ * @package Sahakavatar\Console\Http\Controllers
  */
 class PageSectionsController extends Controller
 {
-
-    /**
-     * @var null
-     */
-    private $helpers = null;
-    /**
-     * @var CmsItemUploader
-     */
-    private $upload;
-
-    /**
-     * SectionsController constructor.
-     */
-    public function __construct()
-    {
-        $this->upload = new CmsItemUploader('page_sections');
-    }
-
     /**
      * @param Request $request
      * @return View
      */
-    public function getIndex(Request $request)
+    public function getIndex(
+        Request $request,
+        PageSectionsService $pageSectionsService
+    )
     {
-        $slug = $request->get('p', 0);
         $currentPageSection = null;
-        $pageSections = CmsItemReader::getAllGearsByType('page_sections')
-            ->where('place', 'backend')
-            ->run();
-        if ($slug) {
-            $currentPageSection = CmsItemReader::getAllGearsByType('page_sections')
-                ->where('place', 'backend')
-                ->where('slug', $slug)
-                ->first();
+        $pageSections = $pageSectionsService->getPageSections();
+        if ($request->p) {
+            $currentPageSection = $pageSectionsService->getPageSection($request->p);
         } else {
             if (count($pageSections)) {
                 $currentPageSection = CmsItemReader::getAllGearsByType('page_sections')
@@ -58,13 +34,10 @@ class PageSectionsController extends Controller
                     ->first();
             }
         }
-
         $variations = $currentPageSection ? $currentPageSection->variations() : [];
 
-        return view('console::backend.page_sections.index', compact(['pageSections', 'currentPageSection', 'variations', 'type']));
+        return view('console::backend.page_sections.index', compact(['pageSections', 'currentPageSection', 'variations']));
     }
-
-
     /**
      * @param $slug
      */
@@ -78,7 +51,6 @@ class PageSectionsController extends Controller
         }
 
     }
-
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -97,9 +69,10 @@ class PageSectionsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postDeleteVariation(Request $request) {
+    public function postDeleteVariation(Request $request)
+    {
         $result = false;
-        if($request->slug) {
+        if ($request->slug) {
             $result = ContentLayouts::deleteVariation($request->slug);
         }
         return \Response::json(['success' => $result]);
@@ -109,13 +82,14 @@ class PageSectionsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postDelete(Request $request) {
+    public function postDelete(Request $request)
+    {
         $slug = $request->get('slug');
         $pageSection = CmsItemReader::getAllGearsByType('page_sections')
             ->where('place', 'backend')
             ->where('slug', $slug)
             ->first();
-        if($pageSection) {
+        if ($pageSection) {
             $deleted = $pageSection->deleteGear();
             return \Response::json(['success' => $deleted, 'url' => url('/admin/uploads/gears/page-section')]);
         }
@@ -125,33 +99,25 @@ class PageSectionsController extends Controller
      * @param Request $request
      * @return array|\Illuminate\Http\JsonResponse|string
      */
-    public function postUpload(Request $request)
+    public function postUpload(
+        Request $request,
+        PageSectionsService $pageSectionsService
+    )
     {
-        return $this->upload->run($request);
+        return $pageSectionsService->upload($request);
     }
 
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postMakeActive(Request $request)
+    public function postMakeActive(
+        Request $request,
+        PageSectionsService $pageSectionsService
+    )
     {
         $data = $request->all();
-        $result = false;
-        if ($data['type'] == 'page_section') {
-            ContentLayouts::active()->makeInActive()->save();
-            $page_section = ContentLayouts::find($data['slug']);
-            if ($page_section) $result = $page_section->setAttributes("active", true)->save() ? false : true;
-            if (!ContentLayouts::activeVariation($data['slug'])) {
-                $main = $page_section->variations()[0];
-                $result = $main->setAttributes("active", true)->save() ? false : true;
-            }
-        } else if ($data['type'] == 'page_section_variation') {
-            ContentLayouts::activeVariation($data['slug'])->makeInActiveVariation()->save();
-            $pageSectionVariation = ContentLayouts::findVariation($data['slug']);
-            $pageSectionVariation->setAttributes('active', true);
-            $result = $pageSectionVariation->save() ? false : true;
-        }
+        $result = $pageSectionsService->postMakeActive($data);
         return \Response::json(['error' => $result]);
 
     }

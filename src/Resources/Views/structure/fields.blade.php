@@ -1,4 +1,4 @@
-@extends('layouts.mTabs',['index'=>'structure_console'])
+@extends('cms::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
     <div class="row m-b-10">
         <h3>All Fields</h3>

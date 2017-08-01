@@ -1,4 +1,4 @@
-@extends('layouts.mTabs',['index'=>'backend_gears'])
+@extends('cms::layouts.mTabs',['index'=>'backend_gears'])
 @section('tab')
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 admin_themes">

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('cms::layouts.admin')
 
 @section('content')
     {!! Form::open(['url'=>'/admin/templates/setting', 'id'=>'add_custome_page','files'=>true]) !!}

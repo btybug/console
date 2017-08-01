@@ -1,4 +1,4 @@
-@extends('layouts.mTabs',['index'=>'console_general'])
+@extends('cms::layouts.mTabs',['index'=>'console_general'])
 @section('tab')
 
     <div class="row">
