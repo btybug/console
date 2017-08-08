@@ -13,14 +13,14 @@ namespace Sahakavatar\Console\Http\Controllers;
 
 use Sahakavatar\Cms\Helpers\helpers;
 use App\Http\Controllers\Controller;
-use App\Models\ContentLayouts\ContentLayouts;
-use App\Models\Templates\Widgets;
+use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
+use Sahakavatar\Cms\Models\Widgets;
 use File;
 use Illuminate\Http\Request;
 
 /**
  * Class ModulesController
- * @package App\Modules\Modules\Http\Controllers
+ * @package Sahakavatar\Modules\Models\Http\Controllers
  */
 class LayoutController extends Controller
 {

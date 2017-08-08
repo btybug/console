@@ -35,8 +35,8 @@
 
 @stop
 @section('CSS')
-  {!! HTML::style('/resources/assets/css/preview-template.css') !!}
-  {!! HTML::style('/resources/assets/js/animate/css/animate.css') !!}
+  {!! HTML::style('css/preview-template.css') !!}
+  {!! HTML::style('js/animate/css/animate.css') !!}
     @foreach($model->css as $css)
         {!! HTML::style('/resources/views/ContentLayouts/'.$model->folder.'/css/'.$css) !!}
     @endforeach
@@ -45,5 +45,5 @@
     @foreach($model->js as $js)
         {!! HTML::style('/resources/views/ContentLayouts/'.$model->folder.'/js/'.$js) !!}
     @endforeach
-    {!! HTML::script('/resources/assets/js/UiElements/content-layout-settings.js') !!}
+    {!! HTML::script('js/UiElements/content-layout-settings.js') !!}
 @stop

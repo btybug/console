@@ -18,12 +18,12 @@
     @include('resources::assests.magicModal')
 @stop
 @section('CSS')
-    {!! HTML::style("resources/assets/css/core_styles.css") !!}
-    {!! HTML::style("resources/assets/css/builder-tool.css") !!}
+    {!! HTML::style("/css/core_styles.css") !!}
+    {!! HTML::style("/css/builder-tool.css") !!}
     {!! HTML::style("https://jqueryvalidation.org/files/demo/site-demos.css") !!}
 
-    {!! HTML::style('/resources/assets/css/preview-template.css') !!}
-    {!! HTML::style('/resources/assets/js/animate/css/animate.css') !!}
+    {!! HTML::style('css/preview-template.css') !!}
+    {!! HTML::style('js/animate/css/animate.css') !!}
     @if(isset($model->css) && $model->css)
         @foreach($model->css as $css)
             {!! HTML::style('/resources/views/layouts/themes/'.$model->folder.'/css/'.$css) !!}
@@ -34,9 +34,9 @@
 @stop
 @section('JS')
 
-    {!! HTML::script("resources/assets/js/UiElements/bb_styles.js?v.5") !!}
-    {!! HTML::script("resources/assets/js/UiElements/ui-preview-setting.js") !!}
-    {!! HTML::script("resources/assets/js/UiElements/ui-settings.js") !!}
+    {!! HTML::script("js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script("js/UiElements/ui-preview-setting.js") !!}
+    {!! HTML::script("js/UiElements/ui-settings.js") !!}
     {!! HTML::script("https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js") !!}
     {!! HTML::script("https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js") !!}
     @if(isset($model->js) && $model->js)
@@ -44,7 +44,7 @@
             {!! HTML::script('/resources/views/layouts/themes/'.$model->folder.'/js/'.$js) !!}
         @endforeach
     @endif
-    {!! HTML::script('/resources/assets/js/UiElements/content-layout-settings.js') !!}
+    {!! HTML::script('js/UiElements/content-layout-settings.js') !!}
     @yield('JS')
     @stack('javascript')
 @stop

@@ -13,7 +13,7 @@ namespace Sahakavatar\Console\Models;
 
 use Illuminate\Http\Request;
 use Sahakavatar\Cms\Helpers\helpers;
-use App\Models\Templates\Units;
+use Sahakavatar\Cms\Models\Templates\Units;
 use Zipper,File;
 
 class UnitUpload

@@ -2,7 +2,7 @@
 
 namespace Sahakavatar\Console\Models;
 
-//use App\Models\Templates\UiElements;
+//use Sahakavatar\Cms\Models\UiElements;
 use Illuminate\Database\Eloquent\Model;
 use Sahakavatar\User\Models\Roles;
 
@@ -214,7 +214,7 @@ class AdminPages extends Model
      */
     public function parent()
     {
-        return $this->belongsTo('App\Modules\Modules\Models\AdminPages', 'parent_id');
+        return $this->belongsTo('Sahakavatar\Modules\Models\Models\AdminPages', 'parent_id');
     }
 
     /**
@@ -222,7 +222,7 @@ class AdminPages extends Model
      */
     public function childs()
     {
-        return $this->hasMany('App\Modules\Modules\Models\AdminPages', 'parent_id');
+        return $this->hasMany('Sahakavatar\Modules\Models\Models\AdminPages', 'parent_id');
     }
 
     public function children()

@@ -1267,29 +1267,29 @@
     <!-- /.modal -->
 @section('CSS')
 
-    {!! HTML::style('/resources/assets/js/bootstrap-select/css/bootstrap-select.min.css') !!}
-    {!! HTML::style('/resources/assets/js/Bootstrap-Form-Builder3/assets/css/custom.css') !!}
-    {!! HTML::style('/resources/assets/js/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') !!}
-    {!! HTML::style('/resources/assets/js/bootstrap-touchspin/css/jquery.bootstrap-touchspin.css') !!}
-    {!! HTML::style('/resources/assets/js/bootstrap-star-rating/css/star-rating.css') !!}
-    {!! HTML::style('/resources/assets/js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') !!}
-    {!! HTML::style('/resources/assets/js/gridstack/css/gridstack.min.css') !!}
-    {!! HTML::style('/resources/assets/js/animate/css/animate.css') !!}
+    {!! HTML::style('js/bootstrap-select/css/bootstrap-select.min.css') !!}
+    {!! HTML::style('js/Bootstrap-Form-Builder3/assets/css/custom.css') !!}
+    {!! HTML::style('js/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') !!}
+    {!! HTML::style('js/bootstrap-touchspin/css/jquery.bootstrap-touchspin.css') !!}
+    {!! HTML::style('js/bootstrap-star-rating/css/star-rating.css') !!}
+    {!! HTML::style('js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') !!}
+    {!! HTML::style('js/gridstack/css/gridstack.min.css') !!}
+    {!! HTML::style('js/animate/css/animate.css') !!}
 
-    {!! HTML::style('/resources/assets/css/form-builder.css?v=4.82') !!}
+    {!! HTML::style('css/form-builder.css?v=4.82') !!}
     <style data-css="load"></style>
 @stop
 @section('JS')
-    {!! HTML::script('/resources/assets/js/bootstrap-select/js/bootstrap-select.min.js') !!}
+    {!! HTML::script('js/bootstrap-select/js/bootstrap-select.min.js') !!}
     {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js') !!}
-    {!! HTML::script('/resources/assets/js/gridstack/js/gridstack2.min.js') !!}
-    {!! HTML::script('/resources/assets/js/bootbox/js/bootbox.min.js') !!}
-    {!! HTML::script('/resources/assets/js/bootstrap-touchspin/js/jquery.bootstrap-touchspin.js') !!}
-    {!! HTML::script('/resources/assets/js/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') !!}
-    {!! HTML::script('/resources/assets/js/bootstrap-datetimepicker/js/moment.min.js') !!}
-    {!! HTML::script('/resources/assets/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') !!}
-    {!! HTML::script('/resources/assets/js/bootstrap-validator/js/validator.js') !!}
-    {!! HTML::script('/resources/assets/js/bootstrap-star-rating/js/star-rating.js') !!}
+    {!! HTML::script('js/gridstack/js/gridstack2.min.js') !!}
+    {!! HTML::script('js/bootbox/js/bootbox.min.js') !!}
+    {!! HTML::script('js/bootstrap-touchspin/js/jquery.bootstrap-touchspin.js') !!}
+    {!! HTML::script('js/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') !!}
+    {!! HTML::script('js/bootstrap-datetimepicker/js/moment.min.js') !!}
+    {!! HTML::script('js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') !!}
+    {!! HTML::script('js/bootstrap-validator/js/validator.js') !!}
+    {!! HTML::script('js/bootstrap-star-rating/js/star-rating.js') !!}
     <script>
         var form={!!$form_json or null!!};
 
@@ -1299,7 +1299,7 @@
         }
         console.log(form);
     </script>
-    {!! HTML::script('/resources/assets/js/form-builder.js?v=6.83') !!}
+    {!! HTML::script('js/form-builder.js?v=6.83') !!}
     <script>
         $("document").ready(function () {
 

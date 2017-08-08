@@ -8,7 +8,7 @@
 
 namespace Sahakavatar\Console\Models;
 
-use App\Modules\Modules\Models\AdminPages;
+use Sahakavatar\Modules\Models\Models\AdminPages;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model

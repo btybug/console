@@ -12,8 +12,8 @@
 namespace Sahakavatar\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\ContentLayouts\ContentLayouts;
-use App\Models\Templates\Widgets as UiElements;
+use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
+use Sahakavatar\Cms\Models\Widgets as UiElements;
 use App\Models\Themes\BackendTh;
 use App\Modules\Console\Models\ThUpload;
 use App\Modules\Console\Models\Validation as thValid;
@@ -29,7 +29,7 @@ use view;
 
 /**
  * Class ModulesController
- * @package App\Modules\Modules\Http\Controllers
+ * @package Sahakavatar\Modules\Models\Http\Controllers
  */
 class ThemeController extends Controller
 {

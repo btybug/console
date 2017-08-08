@@ -57,14 +57,14 @@
     </div>
 
     @include('resources::assests.magicModal')
-    @include('_partials.delete_modal')
+    @include('cms::_partials.delete_modal')
 @stop
 @section('CSS')
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 @stop
 @section('JS')
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    {!! HTML::script("resources/assets/js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script("js/UiElements/bb_styles.js?v.5") !!}
     <script>
         $(document).ready(function () {
             $.ajaxSetup({

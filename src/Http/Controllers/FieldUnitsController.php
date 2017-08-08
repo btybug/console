@@ -1,10 +1,10 @@
 <?php namespace Sahakavatar\Console\Http\Controllers;
 
-use App\Core\CmsItemReader;
-use App\Core\CmsItemRegister;
-use App\Core\CmsItemUploader;
+use Sahakavatar\Cms\Services\CmsItemReader;
+use Sahakavatar\Cms\Services\CmsItemRegister;
+use Sahakavatar\Cms\Services\CmsItemUploader;
 use App\Http\Controllers\Controller;
-use App\Models\Templates\Units;
+use Sahakavatar\Cms\Models\Templates\Units;
 use App\Modules\Resources\Models\Files\FileUpload;
 use App\Modules\Resources\Models\TemplateVariations as TemplateVariations;
 use App\Modules\Console\Models\UnitUpload;

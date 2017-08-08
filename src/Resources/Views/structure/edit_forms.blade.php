@@ -58,5 +58,5 @@
 
 @stop
 @section('JS')
-    {!! HTML::script("resources/assets/js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script("js/UiElements/bb_styles.js?v.5") !!}
 @stop

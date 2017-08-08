@@ -36,7 +36,7 @@ use Sahakavatar\User\Repository\RoleRepository;
 
 /**
  * Class ModulesController
- * @package App\Modules\Modules\Http\Controllers
+ * @package Sahakavatar\Modules\Models\Http\Controllers
  */
 class StructureController extends Controller
 {

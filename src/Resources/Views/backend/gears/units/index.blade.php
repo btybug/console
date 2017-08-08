@@ -137,11 +137,11 @@
         </div>
         </div>
 
-    @include('_partials.delete_modal')
+    @include('cms::_partials.delete_modal')
 
         @stop
         @section('CSS')
-            {!! HTML::style('/resources/assets/js/bootstrap-select/css/bootstrap-select.min.css') !!}
+            {!! HTML::style('js/bootstrap-select/css/bootstrap-select.min.css') !!}
             <style>
                 .child-tpl {
                     width: 95% !important;
@@ -158,8 +158,8 @@
             </style>
         @stop
         @section('JS')
-            {!! HTML::script('resources/assets/js/dropzone/js/dropzone.js') !!}
-            {!! HTML::script('/resources/assets/js/bootstrap-select/js/bootstrap-select.min.js') !!}
+            {!! HTML::script('js/dropzone/js/dropzone.js') !!}
+            {!! HTML::script('js/bootstrap-select/js/bootstrap-select.min.js') !!}
             <script>
                 Dropzone.options.myAwesomeDropzone = {
                     init: function() {

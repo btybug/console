@@ -97,12 +97,12 @@
 
     {!!HTML::style( '/resources/assets/css/create_pages.css' ) !!}
        {!!HTML::style( '/resources/assets/css/form-builder.css?v=4.89' ) !!}
-    {!! HTML::style("resources/assets/js/select2/css/select2.css") !!}
+    {!! HTML::style("/js/select2/css/select2.css") !!}
 @stop
 
 
 @section( 'JS' )
-    {!! HTML::script("resources/assets/js/select2/js/select2.js") !!}
+    {!! HTML::script("js/select2/js/select2.js") !!}
     <script>
 
         $(document).ready(function () {

@@ -11,27 +11,27 @@
 
 namespace Sahakavatar\Console\Http\Controllers;
 
-use App\Core\CmsItemRegister;
+use Sahakavatar\Cms\Services\CmsItemRegister;
 use Sahakavatar\Cms\Helpers\helpers;
 use App\Http\Controllers\Controller;
-use App\Models\ContentLayouts\ContentLayouts;
-use App\Models\Templates\Units;
-use App\Models\Templates\UnitsVariations;
+use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
+use Sahakavatar\Cms\Models\Templates\Units;
+use Sahakavatar\Cms\Models\Templates\UnitsVariations;
 use App\Modules\Console\Models\Asset;
 use App\Modules\Console\Models\Menu;
-use App\Modules\Modules\Models\AdminPages;
-use App\Modules\Modules\Models\Forms;
-use App\Modules\Modules\Models\Routes;
+use Sahakavatar\Modules\Models\Models\AdminPages;
+use Sahakavatar\Modules\Models\Models\Forms;
+use Sahakavatar\Modules\Models\Models\Routes;
 use App\Modules\Users\Models\PermissionRole;
 use App\Modules\Users\Models\Roles;
 use File;
 use Illuminate\Http\Request;
 use App\Models\ExtraModules\Structures;
-use App\Core\CmsItemReader;
+use Sahakavatar\Cms\Services\CmsItemReader;
 
 /**
  * Class ModulesController
- * @package App\Modules\Modules\Http\Controllers
+ * @package Sahakavatar\Modules\Models\Http\Controllers
  */
 class ModulesSettingsController extends Controller
 {

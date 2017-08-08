@@ -19,10 +19,10 @@
 namespace Sahakavatar\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\ContentLayouts\ContentLayouts;
-use App\Models\Templates\Units;
-use App\Models\Templates\Widgets;
-use App\Modules\Modules\Models\AdminPages;
+use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
+use Sahakavatar\Cms\Models\Templates\Units;
+use Sahakavatar\Cms\Models\Widgets;
+use Sahakavatar\Modules\Models\Models\AdminPages;
 use App\Modules\Resources\Models\LayoutUpload;
 use App\Modules\Resources\Models\Validation as thValid;
 use File;
