@@ -1,6 +1,7 @@
 {
     "name": "sahak.avatar/console",
     "description": "Console package description",
+    "type": "module",
     "authors": [
         {
             "name": "Eduard",
