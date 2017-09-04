@@ -14,7 +14,7 @@
  * Time: 3:40 PM
  */
 
-namespace Sahakavatar\Console\Http\Requests\Account;
+namespace Sahakavatar\Console\Http\Requests\Structure;
 
 use Sahakavatar\Cms\Http\Requests\Request;
 

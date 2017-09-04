@@ -297,7 +297,7 @@ class BackendTh
     protected function getCheckTheme(){
         $storage_path = storage_path('app/themes.json');
         if(! File::exists(storage_path('app/themes.json'))){
-            self::find(self::$default_theme)->setJsonFile();
+           // self::find(self::$default_theme)->setJsonFile();
         }
     }
 

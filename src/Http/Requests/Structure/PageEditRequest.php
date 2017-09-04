@@ -1,13 +1,6 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Ara Arakelyan
- * Date: 7/19/2017
- * Time: 3:40 PM
- */
-
-namespace Sahakavatar\Console\Http\Requests\Account;
+namespace Sahakavatar\Console\Http\Requests\Structure;
 
 use Sahakavatar\Cms\Http\Requests\Request;
 

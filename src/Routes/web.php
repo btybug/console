@@ -26,9 +26,14 @@ Route::group(['prefix' => 'general'], function () {
 
 Route::group(['prefix' => 'structure'], function () {
     Route::get('/', 'StructureController@getIndex');
-    Route::get('/pages', 'StructureController@getPages');
-    Route::post('/pages', 'StructureController@postEdit');
-    Route::post('/pages/get-data', 'StructureController@postPageData');
+    Route::group(['prefix' => 'pages'], function () {
+        Route::get('/', 'StructureController@getPages');
+        Route::get('/settings/{id}', 'StructureController@getPageSettings');
+        Route::post('/settings/{id}', 'StructureController@postPageSettings');
+        Route::post('/', 'StructureController@postEdit');
+        Route::post('/get-data', 'StructureController@postPageData');
+    });
+
 
     Route::get('/urls', 'StructureController@getUrls');
     Route::get('/classify', 'StructureController@getClassify');
@@ -187,7 +192,6 @@ Route::group(['prefix' => 'backend'], function () {
         Route::get('/', 'ThemeController@getIndex');
         Route::post('/make-active', 'ThemeController@postMakeActive');
         Route::get('/settings/{slug}', 'ThemeController@getSettings');
-//        Route::post('/settings/{slug}/{role}', 'ThemeController@postSettingsLive');
         Route::post('/settings/{slug}/{save?}', 'ThemeController@postThemeSettings');
         Route::post('/edit/live-save', 'ThemeController@postLiveSave');
         Route::post('/theme-edit/checkboxes', 'ThemeController@postEditCheckboxes');

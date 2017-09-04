@@ -13,6 +13,7 @@ namespace Sahakavatar\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
+use Sahakavatar\Cms\Models\Themes\Themes;
 use Sahakavatar\Cms\Models\Widgets as UiElements;
 use App\Models\Themes\BackendTh;
 use App\Modules\Console\Models\ThUpload;
@@ -25,58 +26,22 @@ use App\Modules\Create\Models\Menu;
 use App\Modules\Users\Models\Roles;
 use File;
 use Illuminate\Http\Request;
+use Sahakavatar\Console\Services\VersionsService;
 use view;
 
-/**
- * Class ModulesController
- * @package Sahakavatar\Modules\Models\Http\Controllers
- */
 class ThemeController extends Controller
 {
-
-    /**
-     * @var
-     */
-    public $thUpload;
-    public $lyUpload;
-    /**
-     * @var
-     */
-    public $validateUpl;
-    /**
-     * @var mixed
-     */
-    public $up;
-
-    /**
-     * BackendThemeController constructor.
-     * @param ThUpload $thUpload
-     * @param thValid $validateUpl
-     */
-    public function __construct(ThUpload $thUpload, LayoutUpload $lyUpload, thValid $validateUpl)
-    {
-        $this->thUpload = new $thUpload;
-        $this->lyUpload = $lyUpload;
-        $this->validateUpl = new $validateUpl;
-
-        $this->up = config('paths.backend_themes_upl');
-    }
-
     /**
      * @return view
      */
-    public function getIndex(Request $request)
+    public function getIndex(
+        Request $request,
+        VersionsService $themeService
+    )
     {
-        $p = $request->get('p', null);
-        $themes = BackendTh::all()->run();
-        if (count($themes) && !$p) {
-            $curentTheme = $themes[0];
-        }
-        if ($p) {
-            $curentTheme = BackendTh::find($p);
-        }
-        $roles = Roles::where('slug', '!=', 'user')->get();
-        return view("console::backend.theme.index", compact(['themes', 'curentTheme', 'roles']));
+        $themes = Themes::all();
+        $current = $themeService->getCurrent($themes,$request->p);
+        return view("console::backend.theme.index", compact(['themes', 'current']));
     }
 
     /**

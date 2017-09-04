@@ -19,11 +19,6 @@ class AdminPages extends Model
         'pagename' => 'required',
         'redirectto' => 'required_if:redirect,custom',
     ];
-    public static $child_statuses = [
-        'individual' => 'Individual design',
-        'inherit' => 'Inherit design',
-        'all' => 'All Same'
-    ];
     /**
      * @var
      */
@@ -176,7 +171,7 @@ class AdminPages extends Model
 
     public function permission_role()
     {
-        return $this->hasMany('App\Modules\Users\Models\PermissionRole', 'page_id', 'id');
+        return $this->hasMany('Sahakavatar\User\Models\PermissionRole', 'page_id', 'id');
     }
 
     public static function PagesByModulesParent($module)
@@ -214,7 +209,7 @@ class AdminPages extends Model
      */
     public function parent()
     {
-        return $this->belongsTo('Sahakavatar\Modules\Models\Models\AdminPages', 'parent_id');
+        return $this->belongsTo('Sahakavatar\Console\Models\AdminPages', 'parent_id');
     }
 
     /**
@@ -222,7 +217,7 @@ class AdminPages extends Model
      */
     public function childs()
     {
-        return $this->hasMany('Sahakavatar\Modules\Models\Models\AdminPages', 'parent_id');
+        return $this->hasMany('Sahakavatar\Console\Models\AdminPages', 'parent_id');
     }
 
     public function children()

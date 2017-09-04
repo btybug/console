@@ -2,6 +2,7 @@
     "name": "sahak.avatar/console",
     "description": "Console package description",
     "type": "module",
+    "route": "console",
     "authors": [
         {
             "name": "Eduard",

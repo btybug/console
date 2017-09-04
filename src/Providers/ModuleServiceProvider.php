@@ -60,16 +60,8 @@ class ModuleServiceProvider extends ServiceProvider
                     'url' => '/admin/console/backend/theme',
                 ],
                 [
-                    'title' => 'Layouts',
-                    'url' => '/admin/console/backend/layouts',
-                ],
-                [
                     'title' => 'Units',
                     'url' => '/admin/console/backend/units',
-                ],
-                [
-                    'title' => 'Views',
-                    'url' => '/admin/console/backend/views',
                 ],
             ],
             'backend_gears' => [

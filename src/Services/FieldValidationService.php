@@ -7,6 +7,7 @@
  */
 
 namespace Sahakavatar\Console\Services;
+use Avatar\Avatar\Repositories\Plugins;
 
 
 /**
@@ -44,6 +45,7 @@ class FieldValidationService
      */
     private $columnKey = ['UNI' => 'unique','PRI'=>'unique'];
 
+    private $plugins;
     /**
      * FieldValidations constructor.
      */
@@ -51,7 +53,6 @@ class FieldValidationService
     {
         $ds = DS;
         $this->db = env('DB_DATABASE');
-        $this->rules = json_decode(\File::get(app_path('Modules/Console/Validations/rules.json')), true);
     }
 
     /**
@@ -59,7 +60,10 @@ class FieldValidationService
      */
     public function getRules()
     {
-        return $this->rules;
+        $this->plugins = new Plugins();
+        $packages = $this->plugins->modules();
+        return json_decode(\File::get($packages->find('sahak.avatar/console')
+            ->getPath('/src/Validations/rules.json')), true);
     }
 
     /**

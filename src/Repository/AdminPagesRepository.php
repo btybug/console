@@ -17,7 +17,6 @@ use Sahakavatar\Console\Models\AdminPages;
  */
 class AdminPagesRepository extends GeneralRepository
 {
-
     /**
      * @return AdminPages
      */
@@ -75,5 +74,37 @@ class AdminPagesRepository extends GeneralRepository
         } else {
             return [];
         }
+    }
+
+    public function main(){
+        return $this->model()->main()->get();
+    }
+
+    public function PagesByModulesParent($module)
+    {
+        return self::model()->where('module_id', $module->slug)->where('parent_id', 0)->get();
+    }
+
+    public function parent(){
+        return $this->model()->parent;
+    }
+
+    public function childs(){
+        return $this->model()->childs;
+    }
+
+    public function parent_permission_role()
+    {
+        return $this->parent()->pepermission_role;
+    }
+
+    public function parent_permission_role_with_role($roleID)
+    {
+        return $this->parent_permission_role()->where('role_id', $roleID)->first();
+    }
+
+    public function getByUrl($url)
+    {
+        return $this->model()->where('url', $url)->orWhere('url', '/' . $url)->first();
     }
 }

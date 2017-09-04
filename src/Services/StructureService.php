@@ -11,8 +11,9 @@ use Sahakavatar\Console\Models\FormEntries;
 use Sahakavatar\Console\Repository\AdminPagesRepository;
 use Sahakavatar\Console\Repository\FieldsRepository;
 use Sahakavatar\Console\Repository\FormsRepository;
-use Sahakavatar\Console\Repository\MenuRepository;
+use Sahakavatar\Console\Repository\VersionsRepository;
 use Sahakavatar\Settings\Repository\AdminsettingRepository;
+use Sahakavatar\User\Repository\RoleRepository;
 
 /**
  * Class BackendService
@@ -24,7 +25,7 @@ class StructureService extends GeneralService
      * @var null
      */
     private $menu = null;
-    private $adminPages,$forms,$fields,$settingRepo,$formService,$formEntries;
+    private $adminPages,$forms,$fields,$settingRepo,$formService,$formEntries,$rolesRepo,$menuRepository;
     private $url = null;
     private $settings = null;
     private $type = null;
@@ -36,7 +37,9 @@ class StructureService extends GeneralService
         FieldsRepository $fieldsRepository,
         AdminsettingRepository $adminsettingRepository,
         FormService $formService,
-        FormEntries $formEntries
+        FormEntries $formEntries,
+        RoleRepository $roleRepository,
+        VersionsRepository $menuRepository
     )
     {
         $this->adminPages = $adminPagesRepository;
@@ -45,6 +48,8 @@ class StructureService extends GeneralService
         $this->settingRepo = $adminsettingRepository;
         $this->formService = $formService;
         $this->formEntries = $formEntries;
+        $this->rolesRepo = $roleRepository;
+        $this->menuRepository = $menuRepository;
     }
 
     /**
@@ -57,16 +62,16 @@ class StructureService extends GeneralService
 
     /**
      * @param $request
-     * @param MenuRepository $menuRepository
+     * @param VersionsRepository $menuRepository
      * @return mixed|null
      */
-    public function getMenuByRequestOrFirst($request, MenuRepository $menuRepository)
+    public function getMenuByRequestOrFirst($request)
     {
-        $menus = $menuRepository->getWhereNotPlugins();
+        $menus = $this->menuRepository->getWhereNotPlugins();
         if ($request->p) {
-            $this->menu = $menuRepository->find($request->p);
+            $this->menu = $this->menuRepository->find($request->p);
         } elseif (count($menus)) {
-            $this->menu = $menuRepository->getWhereNotPluginsFirst();
+            $this->menu = $this->menuRepository->getWhereNotPluginsFirst();
         }
 
         return $this->menu;
@@ -588,5 +593,29 @@ class StructureService extends GeneralService
         }
 
         return ['file' => $file, 'slug' => $slug, 'builder' => $builder];
+    }
+
+    public static function getAdminPagesChildStatues()
+    {
+        return [
+        'individual' => 'Individual design',
+        'inherit' => 'Inherit design',
+        'all' => 'All Same'
+        ];
+    }
+
+    public static function checkAccess($page_id, $role_slug)
+    {
+        if ($role_slug == SUPERADMIN) return true;
+
+        $page = self::$adminPages->find($page_id);
+
+        $role = self::$rolesRepo::where('slug', $role_slug)->first();
+        if ($page && $role) {
+            $access = $page->permission_role()->where('role_id', $role->id)->first();
+            if ($access) return true;
+        }
+
+        return false;
     }
 }

@@ -7,7 +7,7 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-namespace Sahakavatar\Console\Http\Requests\Account;
+namespace Sahakavatar\Console\Http\Requests\Structure;
 
 use Sahakavatar\Cms\Http\Requests\Request;
 

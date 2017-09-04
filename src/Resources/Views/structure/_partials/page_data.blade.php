@@ -35,7 +35,9 @@
                             <div class="row rows">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 row_inputs">
                                     <i class="fa fa-file-o" aria-hidden="true"></i><span class="labls">Children Pages</span>
-                                    {!! Form::select('child_status',Sahakavatar\Modules\Models\Models\AdminPages::$child_statuses,null,[]) !!}
+                                    {!! Form::select('child_status',
+                                        \Sahakavatar\Console\Services\StructureService::getAdminPagesChildStatues(),
+                                        null,[]) !!}
                                 </div>
                             </div>
                             <div class="row rows">
@@ -44,10 +46,10 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 row_inputs tagitinout">
                                     <input name="tags" class="hide tagitext"
-                                           data-allwotag="{!! \App\Modules\Users\Models\Roles::getRolesSeperetedWith() !!}"
+                                           data-allwotag="{!! $rolesData !!}"
                                            value="">
                                     <ul id="tagits" class="tagInputList"
-                                        data-allwotag="{!! \App\Modules\Users\Models\Roles::getRolesSeperetedWith() !!}"
+                                        data-allwotag="{!! $rolesData !!}"
                                         class="m-b-0 tagit ui-widget ui-widget-content ui-corner-all">
                                     </ul>
                                 </div>

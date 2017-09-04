@@ -4,7 +4,7 @@
         <article>
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
                 <div id="styles" class="panel_bd_styles">
-                    {!! hierarchyAdminPagesListWithModuleNameTest($pageGrouped) !!}
+                    {!! hierarchyAdminPagesListWithModuleName($pageGrouped) !!}
                 </div>
             </div>
 
@@ -21,7 +21,7 @@
     {!! HTML::style('css/tool-css.css?v=0.23') !!}
     {!! HTML::style('css/page.css?v=0.15') !!}
     {!! HTML::style('css/admin_pages.css') !!}
-    {!! HTML::style('js/tag-it/css/jquery.tagit.css') !!}
+    {!! HTML::style('css/jquery.tagit.css') !!}
     <style>
         .page_labels {
             overflow: hidden;
@@ -37,12 +37,12 @@
 
 @section('JS')
     {!! HTML::script('js/create_pages.js') !!}
-    {!! HTML::script("/resources/assets/js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script("js/UiElements/bb_styles.js?v.5") !!}
     {!! HTML::script('js/admin_pages.js') !!}
     {!! HTML::script('js/nestedSortable/jquery.mjs.nestedSortable.js') !!}
-    {!! HTML::script('js/bootbox/js/bootbox.min.js') !!}
+    {!! HTML::script('js/bootbox/bootbox.min.js') !!}
     {!! HTML::script('js/icon-plugin.js?v=0.4') !!}
-    {!! HTML::script('js/tag-it/js/tag-it.js') !!}
+    {!! HTML::script('js/tag-it/tag-it.js') !!}
     <script>
 
         $(document).ready(function () {

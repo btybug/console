@@ -1,6 +1,6 @@
 @extends('cms::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
-    {!! HTML::style('app/Modules/Uploads/Resources/assets/css/new-store.css') !!}
+    {!! HTML::style('css/new-store.css') !!}
     <div class="row">
 
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 cms_module_list">
@@ -90,7 +90,7 @@
 
             <div class="templates-list  m-t-20 m-b-10">
                 <div class="row m-b-10">
-                    {!! HTML::image('resources/assets/images/ajax-loader5.gif', 'a picture', array('class' => 'thumb img-loader hide')) !!}
+                    {!! HTML::image('images/ajax-loader5.gif', 'a picture', array('class' => 'thumb img-loader hide')) !!}
                     <div class="raw tpl-list">
                         @include('console::structure._partials.menu_roles')
                     </div>

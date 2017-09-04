@@ -15,24 +15,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
 use Sahakavatar\Cms\Models\ExtraModules\Structures;
+use Sahakavatar\Cms\Models\Routes;
 use Sahakavatar\Cms\Services\CmsItemReader;
-use Sahakavatar\Console\Http\Requests\Account\FieldCreateRequest;
-use Sahakavatar\Console\Http\Requests\Account\FormCreateRequest;
-use Sahakavatar\Console\Http\Requests\Account\FormSettingsUpdateRequest;
-use Sahakavatar\Console\Http\Requests\Account\MenuCreateRequest;
-use Sahakavatar\Console\Http\Requests\Account\MenuDeleteRequest;
-use Sahakavatar\Console\Http\Requests\Account\MenuEditRequest;
-use Sahakavatar\Console\Http\Requests\Account\PageEditRequest;
-use Sahakavatar\Console\Http\Requests\Account\SavePageSettingsRequest;
+use Sahakavatar\Console\Http\Requests\Structure\FieldCreateRequest;
+use Sahakavatar\Console\Http\Requests\Structure\FormCreateRequest;
+use Sahakavatar\Console\Http\Requests\Structure\FormSettingsUpdateRequest;
+use Sahakavatar\Console\Http\Requests\Structure\MenuCreateRequest;
+use Sahakavatar\Console\Http\Requests\Structure\MenuDeleteRequest;
+use Sahakavatar\Console\Http\Requests\Structure\MenuEditRequest;
+use Sahakavatar\Console\Http\Requests\Structure\PageEditRequest;
+use Sahakavatar\Console\Http\Requests\Structure\SavePageSettingsRequest;
 use Sahakavatar\Console\Repository\AdminPagesRepository;
 use Sahakavatar\Console\Repository\FieldsRepository;
 use Sahakavatar\Console\Repository\FormsRepository;
-use Sahakavatar\Console\Repository\MenuRepository;
+use Sahakavatar\Console\Repository\VersionsRepository;
 use Sahakavatar\Console\Services\FieldValidationService;
 use Sahakavatar\Console\Services\FormService;
 use Sahakavatar\Console\Services\StructureService;
 use Sahakavatar\Settings\Repository\AdminsettingRepository;
 use Sahakavatar\User\Repository\RoleRepository;
+use Sahakavatar\User\Services\RoleService;
+use Sahakavatar\User\Services\UserService;
 
 /**
  * Class ModulesController
@@ -49,16 +52,19 @@ class StructureController extends Controller
         StructureService $structureService
     )
     {
-
         $tables = $structureService->getTables();
         return view('console::structure.tables', compact(['tables']));
     }
 
     public function getPages(
         Request $request,
-        AdminPagesRepository $adminPagesRepository
+        AdminPagesRepository $adminPagesRepository,
+        RoleService $roleService,
+        Routes $routes
     )
     {
+
+//        dd(Routes::registerPages('sahak.avatar/framework'));
         $pageGrouped = $adminPagesRepository->getGroupedWithModule();
         if ($request->page) {
             $page = $adminPagesRepository->find($request->page);
@@ -68,26 +74,43 @@ class StructureController extends Controller
 
         if ($page && !$page->layout_id) $page->layout_id = 0;
 
-        return view('console::structure.pages', compact(['pageGrouped', 'page']));
+        $rolesData = $roleService->getRolesSeperetedWith();
+        return view('console::structure.pages.index', compact(['pageGrouped', 'page', 'rolesData']));
     }
 
-    public function postEdit(
+    public function getPageSettings(
+        Request $request,
+        AdminPagesRepository $adminPagesRepository,
+        UserService $userService
+    )
+    {
+        $id = $request->id;
+        $page = $adminPagesRepository->findOrFail($id);
+        $admins = $userService->getAdmins()->pluck('username', 'id')->toArray();
+        $tags = $page->tags;
+        $placeholders = '';
+        return view('console::structure.pages.settings', compact(['page', 'admins', 'tags', 'id', 'placeholders']));
+    }
+
+    public function postPageSettings(
+        $id,
         PageEditRequest $request,
         AdminPagesRepository $adminPagesRepository
     )
     {
-        $data = $request->except('_token', 'type', 'tags', 'classify');
+        $cotnentData = $request->only('header','header_unit','backend_page_section','placeholders');
+        $data = $request->except('_token', 'type', 'tags', 'classify','header','header_unit','backend_page_section','placeholders');
         if (isset($data['url'])) {
             (starts_with($data['url'], '/')) ? false : $data['url'] = "/" . $data['url'];
         }
-
-        $adminPagesRepository->update($data['id'], $data);
-        return redirect()->back()->with('message', 'Successfully Updated Page');
+        $data['settings'] = json_encode($cotnentData,true);
+        $adminPagesRepository->update($id, $data);
+        return redirect()->to('/admin/console/structure/pages')->with('message', 'Successfully Updated Page');
     }
 
     public function getMenus(
         Request $request,
-        MenuRepository $menuRepository,
+        VersionsRepository $menuRepository,
         StructureService $structureService,
         RoleRepository $roleRepository
     )
@@ -95,14 +118,14 @@ class StructureController extends Controller
         $slug = $request->p;
         $menus = $menuRepository->getWhereNotPlugins();
         $roles = $roleRepository->getAll();
-        $menu = $structureService->getMenuByRequestOrFirst($request, $menuRepository);
+        $menu = $structureService->getMenuByRequestOrFirst($request);
 
         return view('console::structure.menus', compact('menus', 'roles', 'menu', 'slug'));
     }
 
     public function postMenuCreate(
         MenuCreateRequest $request,
-        MenuRepository $menuRepository
+        VersionsRepository $menuRepository
     )
     {
         $menuRepository->create([
@@ -116,7 +139,7 @@ class StructureController extends Controller
 
     public function postDelete(
         MenuDeleteRequest $request,
-        MenuRepository $menuRepository
+        VersionsRepository $menuRepository
     )
     {
         $success = $menuRepository->delete();
@@ -125,7 +148,7 @@ class StructureController extends Controller
 
     public function getMenuEdit(
         $id, $slug,
-        MenuRepository $menuRepository,
+        VersionsRepository $menuRepository,
         AdminPagesRepository $adminPagesRepository,
         RoleRepository $roleRepository,
         StructureService $structureService
@@ -135,7 +158,6 @@ class StructureController extends Controller
         $page = $adminPagesRepository->first();
         $pageGrouped = $adminPagesRepository->getGroupedWithModule();
         $role = $roleRepository->findBy('slug', $slug);
-
         $data = $structureService->getMenuItems($menu, $role);
 
         return view('console::structure.menu_edit', compact(['pageGrouped', 'page', 'slug', 'data', 'menu']));
@@ -145,7 +167,7 @@ class StructureController extends Controller
         $id, $slug,
         MenuEditRequest $request,
         StructureService $structureService,
-        MenuRepository $menuRepository,
+        VersionsRepository $menuRepository,
         RoleRepository $roleRepository
     )
     {
