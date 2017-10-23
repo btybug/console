@@ -20,9 +20,6 @@ use Sahakavatar\Cms\Services\CmsItemReader;
 use Sahakavatar\Console\Http\Requests\Structure\FieldCreateRequest;
 use Sahakavatar\Console\Http\Requests\Structure\FormCreateRequest;
 use Sahakavatar\Console\Http\Requests\Structure\FormSettingsUpdateRequest;
-use Sahakavatar\Console\Http\Requests\Structure\MenuCreateRequest;
-use Sahakavatar\Console\Http\Requests\Structure\MenuDeleteRequest;
-use Sahakavatar\Console\Http\Requests\Structure\MenuEditRequest;
 use Sahakavatar\Console\Http\Requests\Structure\PageEditRequest;
 use Sahakavatar\Console\Http\Requests\Structure\SavePageSettingsRequest;
 use Sahakavatar\Console\Repository\AdminPagesRepository;
@@ -33,7 +30,6 @@ use Sahakavatar\Console\Services\FieldValidationService;
 use Sahakavatar\Console\Services\FormService;
 use Sahakavatar\Console\Services\StructureService;
 use Sahakavatar\Settings\Repository\AdminsettingRepository;
-use Sahakavatar\User\Repository\RoleRepository;
 use Sahakavatar\User\Services\RoleService;
 use Sahakavatar\User\Services\UserService;
 
@@ -98,84 +94,14 @@ class StructureController extends Controller
         AdminPagesRepository $adminPagesRepository
     )
     {
-        $cotnentData = $request->only('header','header_unit','backend_page_section','placeholders');
-        $data = $request->except('_token', 'type', 'tags', 'classify','header','header_unit','backend_page_section','placeholders');
+        $cotnentData = $request->only('header', 'header_unit', 'backend_page_section', 'placeholders');
+        $data = $request->except('_token', 'type', 'tags', 'classify', 'header', 'header_unit', 'backend_page_section', 'placeholders');
         if (isset($data['url'])) {
             (starts_with($data['url'], '/')) ? false : $data['url'] = "/" . $data['url'];
         }
-        $data['settings'] = json_encode($cotnentData,true);
+        $data['settings'] = json_encode($cotnentData, true);
         $adminPagesRepository->update($id, $data);
         return redirect()->to('/admin/console/structure/pages')->with('message', 'Successfully Updated Page');
-    }
-
-    public function getMenus(
-        Request $request,
-        VersionsRepository $menuRepository,
-        StructureService $structureService,
-        RoleRepository $roleRepository
-    )
-    {
-        $slug = $request->p;
-        $menus = $menuRepository->getWhereNotPlugins();
-        $roles = $roleRepository->getAll();
-        $menu = $structureService->getMenuByRequestOrFirst($request);
-
-        return view('console::structure.menus', compact('menus', 'roles', 'menu', 'slug'));
-    }
-
-    public function postMenuCreate(
-        MenuCreateRequest $request,
-        VersionsRepository $menuRepository
-    )
-    {
-        $menuRepository->create([
-            'name' => $request->name,
-            'creator_id' => \Auth::id(),
-            'type' => 'custom',
-        ]);
-
-        return back()->with('message', "menu successfully created");
-    }
-
-    public function postDelete(
-        MenuDeleteRequest $request,
-        VersionsRepository $menuRepository
-    )
-    {
-        $success = $menuRepository->delete();
-        return \Response::json(['success' => $success, 'url' => url('admin/console/structure/menus')]);
-    }
-
-    public function getMenuEdit(
-        $id, $slug,
-        VersionsRepository $menuRepository,
-        AdminPagesRepository $adminPagesRepository,
-        RoleRepository $roleRepository,
-        StructureService $structureService
-    )
-    {
-        $menu = $menuRepository->findOrFail($id);
-        $page = $adminPagesRepository->first();
-        $pageGrouped = $adminPagesRepository->getGroupedWithModule();
-        $role = $roleRepository->findBy('slug', $slug);
-        $data = $structureService->getMenuItems($menu, $role);
-
-        return view('console::structure.menu_edit', compact(['pageGrouped', 'page', 'slug', 'data', 'menu']));
-    }
-
-    public function postMenuEdit(
-        $id, $slug,
-        MenuEditRequest $request,
-        StructureService $structureService,
-        VersionsRepository $menuRepository,
-        RoleRepository $roleRepository
-    )
-    {
-        $menu = $menuRepository->find($id);
-        $role = $roleRepository->findBy('slug', $slug);
-        $structureService->editMenu($menu, $role, $request);
-
-        return redirect()->to('admin/console/structure/menus');
     }
 
     public function getClassify()

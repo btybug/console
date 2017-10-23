@@ -1,7 +1,7 @@
 @extends('cms::layouts.uiPreview')
 
 @section('content')
-{!! BBbutton('styles','bodycontianerclass','Select Style',['class'=>'btn selectGrayBtn rightSelectBtn ','data-type'=>'container', 'data-filterclass' =>'body']) !!}
+    {!! BBbutton('styles','bodycontianerclass','Select Style',['class'=>'btn selectGrayBtn rightSelectBtn ','data-type'=>'container', 'data-filterclass' =>'body']) !!}
     <div class="center-block" id="widget_container">
         {!! $html !!}
     </div>

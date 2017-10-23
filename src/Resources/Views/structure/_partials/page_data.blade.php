@@ -21,12 +21,14 @@
                         <div>
                             <div class="row rows">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 row_inputs">
-                                    <i class="fa fa-file-text" aria-hidden="true"></i><span class="labls">Page Name</span>
+                                    <i class="fa fa-file-text" aria-hidden="true"></i><span
+                                            class="labls">Page Name</span>
                                     {!! Form::text('title',null,['class' => 'page_name']) !!}
                                 </div>
 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 row_inputs">
-                                    <i class="fa fa-file-text" aria-hidden="true"></i><span class="labls">Page URL</span>
+                                    <i class="fa fa-file-text" aria-hidden="true"></i><span
+                                            class="labls">Page URL</span>
                                     <div class="page_address page_labels">{!! url($page->url) !!}</div>
                                 </div>
                             </div>
@@ -34,7 +36,8 @@
                             </div>
                             <div class="row rows">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 row_inputs">
-                                    <i class="fa fa-file-o" aria-hidden="true"></i><span class="labls">Children Pages</span>
+                                    <i class="fa fa-file-o" aria-hidden="true"></i><span
+                                            class="labls">Children Pages</span>
                                     {!! Form::select('child_status',
                                         \Sahakavatar\Console\Services\StructureService::getAdminPagesChildStatues(),
                                         null,[]) !!}
@@ -56,7 +59,8 @@
                             </div>
                             <div class="row rows">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 row_inputs ">
-                                    <i class="fa fa-file-o" aria-hidden="true"></i><span class="labls">redirect to</span>
+                                    <i class="fa fa-file-o" aria-hidden="true"></i><span
+                                            class="labls">redirect to</span>
                                     <input type="text" name="redirect_to" id="redirectto" value="">
                                 </div>
                             </div>

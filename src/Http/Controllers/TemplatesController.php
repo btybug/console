@@ -1,20 +1,16 @@
 <?php namespace Sahakavatar\Console\Http\Controllers;
 
-use Sahakavatar\Cms\Services\CmsItemReader;
-use Sahakavatar\Cms\Services\CmsItemRegister;
-use Sahakavatar\Cms\Services\CmsItemUploader;
 use App\Http\Controllers\Controller;
-use Sahakavatar\Cms\Models\BackendTpl as Templates;
-use Sahakavatar\Cms\Models\BackendTpl;
-use Sahakavatar\Cms\Models\Templates\Units;
-use App\Modules\Resources\Models\Files\FileUpload;
-use App\Modules\Resources\Models\TemplateVariations as TemplateVariations;
 use App\Modules\Console\Models\UnitUpload;
+use App\Modules\Resources\Models\Files\FileUpload;
 use App\Modules\Resources\Models\Validation as validateUpl;
 use File;
 use Illuminate\Http\Request;
 use Resources;
-use View;
+use Sahakavatar\Cms\Models\BackendTpl;
+use Sahakavatar\Cms\Models\BackendTpl as Templates;
+use Sahakavatar\Cms\Services\CmsItemReader;
+use Sahakavatar\Cms\Services\CmsItemUploader;
 
 
 class TemplatesController extends Controller
@@ -43,7 +39,7 @@ class TemplatesController extends Controller
     public function getIndex(Request $request)
     {
         $slug = $request->get('p');
-        $type = $request->get('type','header');
+        $type = $request->get('type', 'header');
         $types = [];
         $templates = null;
         $tpl = null;
@@ -64,7 +60,7 @@ class TemplatesController extends Controller
                     ->where('type', $type)
                     ->where('slug', $slug)
                     ->first();
-            } elseif(count($templates)) {
+            } elseif (count($templates)) {
                 $tpl = CmsItemReader::getAllGearsByType('templates')
                     ->where('place', 'backend')
                     ->where('type', $type)
@@ -73,13 +69,15 @@ class TemplatesController extends Controller
         }
         return view("console::backend.gears.tpl.index", compact(['templates', 'types', 'tpl', 'type']));
     }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postDeleteVariation(Request $request) {
+    public function postDeleteVariation(Request $request)
+    {
         $result = false;
-        if($request->slug) {
+        if ($request->slug) {
             $result = Templates::deleteVariation($request->slug);
         }
         return \Response::json(['success' => $result]);
@@ -97,23 +95,24 @@ class TemplatesController extends Controller
             ->where('place', 'backend')
             ->where('slug', $slug)
             ->first();
-        if($tpl) {
+        if ($tpl) {
             $deleted = $tpl->deleteGear();
             return \Response::json(['success' => $deleted, 'url' => url('/admin/console/backend/templates')]);
         }
     }
 
-    public function getSettings($id,Request $request) {
+    public function getSettings($id, Request $request)
+    {
         $slug = explode('.', $id);
         $ui = Templates::find($slug[0]);
-        if(!$ui) {
+        if (!$ui) {
             abort('404');
         }
         $variation = Templates::findVariation($id);
 //        if (!$variation) return redirect()->back();
         $ifrem = array();
         $settings = (isset($variation->settings) && $variation->settings) ? $variation->settings : [];
-        $ifrem['body'] = url('/admin/console/backend/templates/settings-iframe',$id);
+        $ifrem['body'] = url('/admin/console/backend/templates/settings-iframe', $id);
 
         return view('console::backend.gears.tpl.preview', compact(['ui', 'id', 'ifrem', 'settings', 'variation']));
     }
@@ -121,7 +120,7 @@ class TemplatesController extends Controller
     public function postSettings(Request $request)
     {
         $output = BackendTpl::saveSettings($request->id, $request->itemname, $request->except(['_token', 'itemname']), $request->save);
-        $result =  $output ? ['html' => $output['html'], 'url' => url('/admin/console/backend/templates/settings/' . $output['slug']), 'error' => false] : ['error' => true];
+        $result = $output ? ['html' => $output['html'], 'url' => url('/admin/console/backend/templates/settings/' . $output['slug']), 'error' => false] : ['error' => true];
         return \Response::json($result);
     }
 

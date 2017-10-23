@@ -95,7 +95,7 @@ class ModuleServiceProvider extends ServiceProvider
                     'url' => '/admin/console/backend/special-fields',
                     'icon' => 'fa fa-cub'
                 ]
-            ],'console_general' => [
+            ], 'console_general' => [
                 [
                     'title' => 'Validations',
                     'url' => '/admin/console/general',
@@ -112,6 +112,9 @@ class ModuleServiceProvider extends ServiceProvider
         \Eventy::action('add.validation', [
             'test' => 'Added from plugin'
         ]);
+
+        //TODO; remove when finish all
+//        \Sahakavatar\Cms\Models\Routes::registerPages('sahak.avatar/console');
     }
 
     /**

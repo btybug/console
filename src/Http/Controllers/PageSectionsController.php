@@ -38,6 +38,7 @@ class PageSectionsController extends Controller
 
         return view('console::backend.page_sections.index', compact(['pageSections', 'currentPageSection', 'variations']));
     }
+
     /**
      * @param $slug
      */
@@ -51,6 +52,7 @@ class PageSectionsController extends Controller
         }
 
     }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse

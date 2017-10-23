@@ -3,7 +3,8 @@
     <div class="row m-b-10">
         <h3>All Fields</h3>
         <div class="col-md-12">
-            <a href="{!! url('/admin/console/structure/fields/create') !!}" class="btn btn-primary"><i class="fa fa-plus"></i> Create New</a>
+            <a href="{!! url('/admin/console/structure/fields/create') !!}" class="btn btn-primary"><i
+                        class="fa fa-plus"></i> Create New</a>
         </div>
         <div class="col-md-12">
             <table class="table table-bordered">
@@ -39,13 +40,19 @@
                             </td>
                             <td>{!!"[field slug=$field->slug]"!!}</td>
                             <td>
-                                <input type="checkbox" @if($field->status){!! 'checked' !!} @endif data-toggle="toggle" data-slug="{!! $field->slug !!}" class="field-status" data-url="{!! url('/admin/console/structure/fields/change-status') !!}">
+                                <input type="checkbox" @if($field->status){!! 'checked' !!} @endif data-toggle="toggle"
+                                       data-slug="{!! $field->slug !!}" class="field-status"
+                                       data-url="{!! url('/admin/console/structure/fields/change-status') !!}">
 
-                                    <a href="{!! url('/admin/console/structure/fields/edit',[$field->id]) !!}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                <a href="{!! url('/admin/console/structure/fields/edit',[$field->id]) !!}"
+                                   class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 
                                 @if($field->structured_by == 'custom')
-                                    <a data-href="{!! url('/admin/modules/tables/field/delete') !!}" data-key="{!! isset($field) && isset($field->id) ? $field->id : '' !!}" data-type="Field"
-                                       class="{!! isset($field) && isset($field->id) ? 'delete-button' : 'delete-new-field' !!} btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                    <a data-href="{!! url('/admin/modules/tables/field/delete') !!}"
+                                       data-key="{!! isset($field) && isset($field->id) ? $field->id : '' !!}"
+                                       data-type="Field"
+                                       class="{!! isset($field) && isset($field->id) ? 'delete-button' : 'delete-new-field' !!} btn btn-danger"><i
+                                                class="fa fa-trash-o" aria-hidden="true"></i></a>
                                 @endif
                             </td>
                         </tr>
@@ -73,7 +80,7 @@
                 }
             });
 
-            $('body').on('change', '.field-status', function() {
+            $('body').on('change', '.field-status', function () {
                 console.debug($(this).prop('checked'));
                 $.ajax({
                     url: $(this).data('url'),
@@ -82,16 +89,16 @@
                         slug: $(this).data('slug'),
                         status: $(this).prop('checked')
                     }
-                }).done(function(data) {
-                    if(data.success) {
+                }).done(function (data) {
+                    if (data.success) {
                         location.reload();
                     }
-                }).fail(function() {
+                }).fail(function () {
                     alert('Could not change field status. Please try again');
                 });
             });
 
-            function sendajaxvar(url, data, success){
+            function sendajaxvar(url, data, success) {
                 $.ajax({
                     type: "post",
                     datatype: "json",
@@ -101,7 +108,7 @@
                         'X-CSRF-TOKEN': $("input[name='_token']").val()
                     },
                     success: function (data) {
-                        if(success){
+                        if (success) {
                             success(data);
                         }
                         return data;
@@ -109,9 +116,9 @@
                 });
             }
 
-           $('body').on('click','.add-new-fields',function () {
-               $("#add-new-fields").modal();
-           })
+            $('body').on('click', '.add-new-fields', function () {
+                $("#add-new-fields").modal();
+            })
 
 
         });

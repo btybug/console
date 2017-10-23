@@ -33,7 +33,8 @@ class SectionsService extends GeneralService
             ->run();
     }
 
-    public function getPageSection($slug){
+    public function getPageSection($slug)
+    {
         return CmsItemReader::getAllGearsByType('page_sections')
             ->where('place', 'backend')
             ->where('slug', $slug)

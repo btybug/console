@@ -1,17 +1,15 @@
 <?php namespace Sahakavatar\Console\Http\Controllers;
 
-use Sahakavatar\Cms\Services\CmsItemReader;
-use Sahakavatar\Cms\Services\CmsItemRegister;
-use Sahakavatar\Cms\Services\CmsItemUploader;
 use App\Http\Controllers\Controller;
-use Sahakavatar\Cms\Models\Templates\Units;
-use App\Modules\Resources\Models\Files\FileUpload;
-use App\Modules\Resources\Models\TemplateVariations as TemplateVariations;
 use App\Modules\Console\Models\UnitUpload;
+use App\Modules\Resources\Models\Files\FileUpload;
 use App\Modules\Resources\Models\Validation as validateUpl;
 use File;
 use Illuminate\Http\Request;
 use Resources;
+use Sahakavatar\Cms\Models\Templates\Units;
+use Sahakavatar\Cms\Services\CmsItemReader;
+use Sahakavatar\Cms\Services\CmsItemUploader;
 use View;
 
 

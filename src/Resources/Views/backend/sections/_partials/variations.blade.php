@@ -1,4 +1,5 @@
-<a href="{!! url('/admin/console/backend/sections/settings', $current->slug) !!}" id="viewType" class="col-xs-4 add_unit_variation">
+<a href="{!! url('/admin/console/backend/sections/settings', $current->slug) !!}" id="viewType"
+   class="col-xs-4 add_unit_variation">
     <div class="add_item_div">
         <i class="fa fa-plus" aria-hidden="true"></i>
         <p>Add </p>
@@ -15,7 +16,9 @@
                                 class="m-r-10"><i class="fa fa-pencil f-s-14"></i> </a></div>
                         @if(count($variations)>1)
                             <div>
-                                <a data-href="{!! url('/admin/console/backend/sections/delete-variation') !!}" data-key="{!! $variation->id !!}" data-type="Section Variation"  class="delete-button addons-delete delete_layout">
+                                <a data-href="{!! url('/admin/console/backend/sections/delete-variation') !!}"
+                                   data-key="{!! $variation->id !!}" data-type="Section Variation"
+                                   class="delete-button addons-delete delete_layout">
                                     <i class="fa fa-trash-o f-s-14 "></i>
                                 </a>
                             </div>
@@ -24,7 +27,7 @@
                 </div>
                 <div class=" templates-header ">
                     <span class=" templates-title text-center"><i class="fa fa-bars f-s-13 m-r-5"
-                                                                                  aria-hidden="true"></i> {!! $variation->title or $variation->id !!}</span>
+                                                                  aria-hidden="true"></i> {!! $variation->title or $variation->id !!}</span>
 
                 </div>
             </div>

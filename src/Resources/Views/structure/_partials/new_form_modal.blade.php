@@ -3,7 +3,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" id="myModalLabel">Create new form</h4>
             </div>
             <div class="modal-body">
@@ -12,9 +13,10 @@
                 <fieldset>
                     <!-- Text input-->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="name">Form name</label>  
+                        <label class="col-md-4 control-label" for="name">Form name</label>
                         <div class="col-md-4">
-                            <input id="form-name" name="name" type="text" placeholder="placeholder" class="form-control input-md">
+                            <input id="form-name" name="name" type="text" placeholder="placeholder"
+                                   class="form-control input-md">
                         </div>
                     </div>
                 </fieldset>

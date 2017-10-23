@@ -32,7 +32,7 @@ class GeneralSettingsRequest extends Request
     {
         if ($this->isMethod('POST')) {
             return [
-                'admin_login_url' => 'required|unique:admin_pages,url,'.$this->id
+                'admin_login_url' => 'required|unique:admin_pages,url,' . $this->id
             ];
         }
         return [];

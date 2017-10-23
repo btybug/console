@@ -1,10 +1,11 @@
 @extends('cms::layouts.mTabs',['index'=>'backend_console'])
-        <!-- Nav tabs -->
+<!-- Nav tabs -->
 @section('tab')
 
     <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-info btn-sm pull-right btnUploadWidgets m-r-15 m-b-15" type="button" data-toggle="modal"
+            <button class="btn btn-info btn-sm pull-right btnUploadWidgets m-r-15 m-b-15" type="button"
+                    data-toggle="modal"
                     data-target="#uploadfile">
                 <i class="fa fa-cloud-upload module_upload_icon"></i> <span class="upload_module_text">Upload</span>
             </button>
@@ -30,11 +31,13 @@
                                     </div>
                                     <p></p>
                                     <div class="input-daterange input-group" id="datepicker">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-calendar"></i></span>
                                         <input type="text" class="input-sm form-control" name="start_date"/>
                                         <span class="input-group-addon"> - </span>
                                         <input type="text" class="input-sm form-control" name="end_date"/>
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-calendar"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +134,10 @@
                 </li>
             </ul>
         </nav>
-        <div class="text-center"><button type="button" class="btn btn-lg btn-primary btnLoadmore"><em class="loadImg"></em> Load more</button></div>
+        <div class="text-center">
+            <button type="button" class="btn btn-lg btn-primary btnLoadmore"><em class="loadImg"></em> Load more
+            </button>
+        </div>
 
     </div>
 
@@ -139,7 +145,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Upload</h4>
                 </div>
                 <div class="modal-body">
@@ -175,14 +182,14 @@
     {!! HTML::script('/js/bootstrap-select/js/bootstrap-select.min.js') !!}
     <script>
         Dropzone.options.myAwesomeDropzone = {
-            init: function() {
-                this.on("success", function(file) {
+            init: function () {
+                this.on("success", function (file) {
                     location.reload();
                 });
             }
         };
 
-        function confirm_delete(data){
+        function confirm_delete(data) {
             var r = confirm("Are you sure !!!");
             if (r == true) {
                 var slug = $(data).data('slug');
@@ -190,8 +197,8 @@
                     url: '/admin/uploads/gears/units/delete',
                     data: {
                         slug: slug
-                    },headers: {
-                        'X-CSRF-TOKEN':$("input[name='_token']").val()
+                    }, headers: {
+                        'X-CSRF-TOKEN': $("input[name='_token']").val()
                     },
                     dataType: 'json',
                     success: function (data) {
@@ -204,24 +211,24 @@
 
         $(document).ready(function () {
 
-            $('body').on("change",".select-type",function(){
+            $('body').on("change", ".select-type", function () {
                 var val = $(this).val();
-                var url = window.location.pathname +"?type="+val;
+                var url = window.location.pathname + "?type=" + val;
 
                 window.location = url;
             });
 
-            $('.rightButtons a').click(function(e){
+            $('.rightButtons a').click(function (e) {
                 e.preventDefault();
                 $(this).addClass('active').siblings().removeClass('active');
             });
 
-            $('.btnListView').click(function(e){
+            $('.btnListView').click(function (e) {
                 e.preventDefault();
                 $('#viewType').addClass('listView');
             });
 
-            $('.btnGridView').click(function(e){
+            $('.btnGridView').click(function (e) {
                 e.preventDefault();
                 $('#viewType').removeClass('listView');
             });
@@ -229,10 +236,10 @@
 
             $('.selectpicker').selectpicker();
 
-            var p="{!! $_GET['p'] or null !!}";
+            var p = "{!! $_GET['p'] or null !!}";
 
-            if(p.length) {
-                $("a[main-type="+p+"]").click();
+            if (p.length) {
+                $("a[main-type=" + p + "]").click();
             }
 
         });

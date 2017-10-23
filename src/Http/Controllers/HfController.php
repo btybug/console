@@ -14,17 +14,10 @@ namespace Sahakavatar\Console\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use App\Models\Taxonomy;
-use Sahakavatar\Cms\Models\Templates;
-use Sahakavatar\Cms\Models\Templates as Tpl;
-use Sahakavatar\Cms\Models\TplVariations;
-use Sahakavatar\Cms\Models\UiElements;
 use App\Models\Themes\Themes;
 use App\Modules\Create\Models\Corepage;
 use App\Modules\Resources\Models\Validation as validateUpl;
 use App\Modules\Settings\Models\Template;
-
-use Sahakavatar\Cms\Helpers\helpers;
-
 use App\Modules\Settings\Models\TemplateVariations;
 use App\Modules\Settings\Models\TplUpload;
 use Datatables;
@@ -34,6 +27,10 @@ use Input;
 use Resources;
 use Sahakavatar\Cms\Helpers\helpers;
 use Sahakavatar\Cms\Helpers\helpers;
+use Sahakavatar\Cms\Helpers\helpers;
+use Sahakavatar\Cms\Models\Templates as Tpl;
+use Sahakavatar\Cms\Models\TplVariations;
+use Sahakavatar\Cms\Models\UiElements;
 use Session;
 use Validator;
 use View;

@@ -21,7 +21,6 @@
         </div>
 
 
-
         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 unit-box">
@@ -32,7 +31,8 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 template-search-box m-t-10 m-b-10">
                     <form class="form-horizontal">
                         <div class="form-group m-b-0  ">
-                            <label for="inputEmail3" class="control-label text-left"><i class="fa fa-sort-amount-desc"></i> Sort By</label>
+                            <label for="inputEmail3" class="control-label text-left"><i
+                                        class="fa fa-sort-amount-desc"></i> Sort By</label>
                             <select class="selectpicker" data-style="selectCatMenu" data-width="50%">
                                 <option>Recently Added</option>
                             </select>
@@ -89,7 +89,10 @@
                     </li>
                 </ul>
             </nav>
-            <div class="text-center"><button type="button" class="btn btn-lg btn-primary btnLoadmore"><em class="loadImg"></em> Load more</button></div>
+            <div class="text-center">
+                <button type="button" class="btn btn-lg btn-primary btnLoadmore"><em class="loadImg"></em> Load more
+                </button>
+            </div>
 
         </div>
     </div>
@@ -98,7 +101,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Upload</h4>
                 </div>
                 <div class="modal-body">
@@ -133,8 +137,8 @@
     {!! HTML::script('js/bootstrap-select/js/bootstrap-select.min.js') !!}
     <script>
         Dropzone.options.myAwesomeDropzone = {
-            init: function() {
-                this.on("success", function(file) {
+            init: function () {
+                this.on("success", function (file) {
                     location.reload();
 
                 });
@@ -143,24 +147,24 @@
 
         $(document).ready(function () {
 
-            $('body').on("change",".select-type",function(){
+            $('body').on("change", ".select-type", function () {
                 var val = $(this).val();
-                var url = window.location.pathname +"?type="+val;
+                var url = window.location.pathname + "?type=" + val;
 
                 window.location = url;
             });
 
-            $('.rightButtons a').click(function(e){
+            $('.rightButtons a').click(function (e) {
                 e.preventDefault();
                 $(this).addClass('active').siblings().removeClass('active');
             });
 
-            $('.btnListView').click(function(e){
+            $('.btnListView').click(function (e) {
                 e.preventDefault();
                 $('#viewType').addClass('listView');
             });
 
-            $('.btnGridView').click(function(e){
+            $('.btnGridView').click(function (e) {
                 e.preventDefault();
                 $('#viewType').removeClass('listView');
             });
@@ -168,7 +172,7 @@
 
             $('.selectpicker').selectpicker();
 
-            var p="{!! $_GET['p'] or null !!}";
+            var p = "{!! $_GET['p'] or null !!}";
 //            $('body').on('click','.del-tpl',function(){
 //                var slug = $(this).attr('slug');
 //                $.ajax({
@@ -244,8 +248,7 @@
 //                return false;
 //            });
 
-            $("a[main-type="+p+"]").click();
-
+            $("a[main-type=" + p + "]").click();
 
 
         });

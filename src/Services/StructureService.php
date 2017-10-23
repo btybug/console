@@ -5,13 +5,14 @@ namespace Sahakavatar\Console\Services;
 use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
 use Sahakavatar\Cms\Models\ExtraModules\Structures;
 use Sahakavatar\Cms\Models\Templates\Units;
+use Sahakavatar\Cms\Repositories\MenuRepository;
 use Sahakavatar\Cms\Services\CmsItemReader;
 use Sahakavatar\Cms\Services\GeneralService;
 use Sahakavatar\Console\Models\FormEntries;
 use Sahakavatar\Console\Repository\AdminPagesRepository;
 use Sahakavatar\Console\Repository\FieldsRepository;
 use Sahakavatar\Console\Repository\FormsRepository;
-use Sahakavatar\Console\Repository\VersionsRepository;
+use Sahakavatar\Framework\Repository\VersionsRepository;
 use Sahakavatar\Settings\Repository\AdminsettingRepository;
 use Sahakavatar\User\Repository\RoleRepository;
 
@@ -21,11 +22,12 @@ use Sahakavatar\User\Repository\RoleRepository;
  */
 class StructureService extends GeneralService
 {
+    private static $admin_pages, $roles_repo;
     /**
      * @var null
      */
     private $menu = null;
-    private $adminPages,$forms,$fields,$settingRepo,$formService,$formEntries,$rolesRepo,$menuRepository;
+    private $adminPages, $forms, $fields, $settingRepo, $formService, $formEntries, $rolesRepo, $menuRepository;
     private $url = null;
     private $settings = null;
     private $type = null;
@@ -39,17 +41,47 @@ class StructureService extends GeneralService
         FormService $formService,
         FormEntries $formEntries,
         RoleRepository $roleRepository,
-        VersionsRepository $menuRepository
+        MenuRepository $menuRepository
     )
     {
-        $this->adminPages = $adminPagesRepository;
+        self::$admin_pages = $this->adminPages = $adminPagesRepository;
         $this->forms = $formsRepository;
         $this->fields = $fieldsRepository;
         $this->settingRepo = $adminsettingRepository;
         $this->formService = $formService;
         $this->formEntries = $formEntries;
-        $this->rolesRepo = $roleRepository;
+        self::$roles_repo = $this->rolesRepo = $roleRepository;
         $this->menuRepository = $menuRepository;
+    }
+
+    public static function getAdminPagesChildStatues()
+    {
+        return [
+            'individual' => 'Individual design',
+            'inherit' => 'Inherit design',
+            'all' => 'All Same'
+        ];
+    }
+
+    public static function checkAccess($page_id, $role_slug)
+    {
+        if ($role_slug == SUPERADMIN) return true;
+        $page = self::$admin_pages->find($page_id);
+        $role = self::$roles_repo->findBy('slug', $role_slug);
+        if ($page && $role) {
+            $access = $page->permission_role->where('role_id', $role->id)->first();
+            if ($access) return true;
+        }
+
+        return false;
+    }
+
+    public static function AdminPagesParentPermissionWithRole($page_id, $role_id)
+    {
+        $adminPage = new AdminPagesRepository();
+        $result = $adminPage->find($page_id);
+        return $result->parent->permission_role()->where('role_id', $role_id)->first();
+
     }
 
     /**
@@ -187,12 +219,12 @@ class StructureService extends GeneralService
             compact(['page_id', 'layout', 'page', 'url', 'layouts']));
     }
 
-    public function postPagePreview($page_id,$request)
+    public function postPagePreview($page_id, $request)
     {
         $data = $request->except(['pl', 'image']);
         $layout_id = $request->get('layout_id');
         $data['page_id'] = $page_id;
-        return $this->adminPages->update($page_id,[
+        return $this->adminPages->update($page_id, [
             'settings' => (!empty($data)) ? json_encode($data, true) : null,
             'layout_id' => $layout_id
         ]);
@@ -325,7 +357,7 @@ class StructureService extends GeneralService
             }
         }
 
-        return ['type' => $this->type,'settings' => $this->settings];
+        return ['type' => $this->type, 'settings' => $this->settings];
     }
 
     public function getComponentSettings($request)
@@ -403,7 +435,8 @@ class StructureService extends GeneralService
         return $this->fields->create($dataToSave);
     }
 
-    public function fieldUpdate($data,$field){
+    public function fieldUpdate($data, $field)
+    {
         $field->update([
             'name' => $data['name'],
             'table_name' => $data['table_name'],
@@ -439,19 +472,20 @@ class StructureService extends GeneralService
             'created_by' => 'custom',
         ]);
 
-        if($form) {
+        if ($form) {
             $this->formService->generateBlade($form->id, $data['blade']);
         }
     }
 
-    public function getDefaultHtml(){
+    public function getDefaultHtml()
+    {
         $defaultFieldHtml = $this->settingRepo->getSettings('setting_system', 'default_field_html');
         $variationId = $defaultFieldHtml->val;
         $settings = Units::findByVariation($variationId)->renderSettings();
         $variation = Units::findVariation($variationId)->toArray();
         $unit = Units::findByVariation($variationId)->render($variation);
 
-        return ['html' => $unit,'settings' => htmlentities($settings)];
+        return ['html' => $unit, 'settings' => htmlentities($settings)];
     }
 
     public function getCustomHtml($request)
@@ -461,7 +495,7 @@ class StructureService extends GeneralService
         $variation = Units::findVariation($variationId)->toArray();
         $unit = Units::findByVariation($variationId)->render($variation);
 
-        return ['html' => $unit,'settings' => htmlentities($settings)];
+        return ['html' => $unit, 'settings' => htmlentities($settings)];
     }
 
     public function getSavedHtmlType($request)
@@ -499,29 +533,29 @@ class StructureService extends GeneralService
             }
         }
 
-        return ['field' => $field->toArray(),'html' => $this->html,'type' => $this->type,'error' => false];
+        return ['field' => $field->toArray(), 'html' => $this->html, 'type' => $this->type, 'error' => false];
     }
 
     public function postChangeFieldStatus($request)
     {
         $status = $request->status == 'true' ? 1 : 0;
         $field = $this->fields->findBy('slug', $request->slug);
-        $result = $this->fields->update($field->id,['status' => $status]);
+        $result = $this->fields->update($field->id, ['status' => $status]);
         return $result ? true : false;
     }
 
-    public function postNewBuilder($request,$id)
+    public function postNewBuilder($request, $id)
     {
-        $this->forms->update($id,$request->except('fields', 'blade', 'token', 'blade_rendered', 'new_builder'));
-        $this->formService->syncFields($id,$request->fields);
+        $this->forms->update($id, $request->except('fields', 'blade', 'token', 'blade_rendered', 'new_builder'));
+        $this->formService->syncFields($id, $request->fields);
         $this->formService->generateBlade($id, $request->blade);
 
         $builder = Structures::find($request->get('new_builder'));
         if ($builder && \File::exists(base_path($builder->path . DS . 'views' . DS . $builder->builder . '.blade.php'))) {
             $file = view("$builder->namespace::" . $builder->builder, compact(['form']))->render();
-            return ['error' => false,'fields' => $this->formService->getFields(true),'builder' => $file];
+            return ['error' => false, 'fields' => $this->formService->getFields(true), 'builder' => $file];
         } else {
-            return ['error' => true,'message' => 'Data is kept, but new builder not found'];
+            return ['error' => true, 'message' => 'Data is kept, but new builder not found'];
         }
     }
 
@@ -538,7 +572,7 @@ class StructureService extends GeneralService
                     \Eventy::action('my.scripts', url('app/ExtraModules/' . $builder->namespace . '/views/js/' . $js));
                 }
             }
-            return ['error' => false,'builder' => $file];
+            return ['error' => false, 'builder' => $file];
         }
 
         return ['error' => true];
@@ -575,7 +609,7 @@ class StructureService extends GeneralService
         return ['error' => true];
     }
 
-    public function getBuilders($modules,$form,$request)
+    public function getBuilders($modules, $form, $request)
     {
         $file = null;
         $builders = [];
@@ -593,29 +627,5 @@ class StructureService extends GeneralService
         }
 
         return ['file' => $file, 'slug' => $slug, 'builder' => $builder];
-    }
-
-    public static function getAdminPagesChildStatues()
-    {
-        return [
-        'individual' => 'Individual design',
-        'inherit' => 'Inherit design',
-        'all' => 'All Same'
-        ];
-    }
-
-    public static function checkAccess($page_id, $role_slug)
-    {
-        if ($role_slug == SUPERADMIN) return true;
-
-        $page = self::$adminPages->find($page_id);
-
-        $role = self::$rolesRepo::where('slug', $role_slug)->first();
-        if ($page && $role) {
-            $access = $page->permission_role()->where('role_id', $role->id)->first();
-            if ($access) return true;
-        }
-
-        return false;
     }
 }

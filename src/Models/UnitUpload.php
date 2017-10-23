@@ -11,10 +11,11 @@
 
 namespace Sahakavatar\Console\Models;
 
+use File;
 use Illuminate\Http\Request;
 use Sahakavatar\Cms\Helpers\helpers;
 use Sahakavatar\Cms\Models\Templates\Units;
-use Zipper,File;
+use Zipper;
 
 class UnitUpload
 {
@@ -111,7 +112,7 @@ class UnitUpload
             if ($response['error'])
                 return $response;
 
-            $this->dir = config('paths.unit_path') . DS . $this->folder ;
+            $this->dir = config('paths.unit_path') . DS . $this->folder;
             File::copyDirectory($this->uf . $this->folder, $this->dir);
 
             return $response;

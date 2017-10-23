@@ -9,12 +9,14 @@
                                 class="m-r-10"><i class="fa fa-pencil f-s-14"></i> </a></div>
                         @if($ui->default == 0)
                             <div>
-                                <a href="{!! url('admin/settings/pages-layout/delete',$ui->slug) !!}"  data-key="{!! $ui->slug !!}" type={!! $ui->type !!}""
-                                        main_type="{!! @$ui->main_type !!}" class="addons-delete delete_layout"><i
+                                <a href="{!! url('admin/settings/pages-layout/delete',$ui->slug) !!}"
+                                   data-key="{!! $ui->slug !!}" type={!! $ui->type !!}""
+                                   main_type="{!! @$ui->main_type !!}" class="addons-delete delete_layout"><i
                                             class="fa fa-trash-o f-s-14 "></i>
                                 </a>
                                 @if($ui->main_type == 'fields')
-                                    <a href="{!! url('admin/uploads/gears/make-default',[$ui->slug]) !!}" class="addons-delete"><i
+                                    <a href="{!! url('admin/uploads/gears/make-default',[$ui->slug]) !!}"
+                                       class="addons-delete"><i
                                                 class="fa fa-legal f-s-14 "></i></a>
                                 @endif
                             </div>
@@ -23,10 +25,11 @@
                 </div>
                 <div class=" templates-header ">
                     <span class=" templates-title text-center"><i class="fa fa-bars f-s-13 m-r-5"
-                                                                                  aria-hidden="true"></i> {!! $ui->title or $ui->slug !!}</span>
+                                                                  aria-hidden="true"></i> {!! $ui->title or $ui->slug !!}</span>
                     <div class=" templates-buttons text-center ">
                         <span class="authorColumn"><i class="fa fa-user author-icon" aria-hidden="true"></i>
-                        author,</span> <span class="dateColumn"><i class="fa fa-calendar calendar-icon" aria-hidden="true"></i> {!! BBgetDateFormat($ui->created_at) !!}</span>
+                        author,</span> <span class="dateColumn"><i class="fa fa-calendar calendar-icon"
+                                                                   aria-hidden="true"></i> {!! BBgetDateFormat($ui->created_at) !!}</span>
 
                     </div>
                 </div>

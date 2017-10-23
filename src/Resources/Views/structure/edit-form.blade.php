@@ -26,8 +26,8 @@
                       data-formfield="field">{!! $fields !!}</textarea> {!! Form::textarea('settings',null,['class' => 'form-control hide','data-formfield' => 'setting']) !!}
             <textarea hidden="hidden" name="blade_rendered" class="form-control hide"
                       data-formslug="bladerendered"></textarea>
-           {!! Form::close() !!}
-            
+            {!! Form::close() !!}
+
             <div data-formslug="slug" class="hide">
                 @if(! \Request::exists('slug'))
                     {!! $blade !!}
@@ -102,43 +102,43 @@
 
             </div>
         </div>
-        
-        
+
+
         <div id="fieldModalcustom" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Fields</h4>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Fields</h4>
+                    </div>
+                    <div class="modal-body">
+                        <textarea name="fieldjson" class="hide">{!! $fieldJson !!}</textarea>
+                        <div class="panel panel-default custompanel ">
+                            <div class="panel-heading">Available Field</div>
+                            <div class="panel-body  p-10">
+                                <div data-setting="fieldgroupcustom"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="panel panel-default custompanel m-t-10">
+                            <div class="panel-heading">Used Field</div>
+                            <div class="panel-body  p-10">
+                                <div data-setting="fieldgroupcustomused"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
-                <div class="modal-body" >
-               				<textarea name="fieldjson" class="hide">{!! $fieldJson !!}</textarea>
-                			<div class="panel panel-default custompanel ">
-							  <div class="panel-heading">Available Field</div>
-							  <div class="panel-body  p-10">
-							  			<div data-setting="fieldgroupcustom"></div>
-							  </div>
-							</div>
-							
-              				
-               				<div class="panel panel-default custompanel m-t-10">
-							  <div class="panel-heading">Used Field</div>
-							  <div class="panel-body  p-10">
-							  			<div data-setting="fieldgroupcustomused"></div>
-							  </div>
-							</div>
-               				
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+
             </div>
-
         </div>
-    </div>
-        
+
     </div>
     @include('resources::assests.magicModal')
 @stop
@@ -147,7 +147,7 @@
     {!!HTML::style( '/resources/assets/css/create_pages.css' ) !!}
     {!!HTML::style( '/resources/assets/js/bootstrap-select/css/bootstrap-select.min.css' ) !!}
     {!!HTML::style( '/resources/assets/css/form-builder.css?v=4.89' ) !!}
-    
+
     {!! HTML::style("/js/select2/css/select2.css") !!}
     <style>
         .btnCtrls {
@@ -164,10 +164,10 @@
         .bbfieldpalce {
             position: relative;
         }
-		
-		
-		
-		.zindex9999{ z-index: 10;}
+
+        .zindex9999 {
+            z-index: 10;
+        }
 
     </style>
 
@@ -178,31 +178,29 @@
 
     {!! HTML::script("js/UiElements/bb_styles.js") !!}
 
-   {!!HTML::script( '/resources/assets/js/bootstrap-select/js/bootstrap-select.min.js' ) !!}
+    {!!HTML::script( '/resources/assets/js/bootstrap-select/js/bootstrap-select.min.js' ) !!}
     {!!HTML::script( '/resources/assets/js/underscore-min.js' ) !!}
     {!!HTML::script( '/resources/assets/js/form-setting.js' ) !!}
-    
+
     {!! HTML::script("js/select2/js/select2.js") !!}
     <script>
         $(document).ready(function () {
-			
-		
-			
-			
-            var allowed_memberships = $('.allowed_memberships').select2({tags: true});
-			var allowMeber = $('#allowed_memberships_defaults').val();
-			if(allowMeber){
-				 var allowed_memberships_defaults = JSON.parse(allowMeber);
-				allowed_memberships.val(allowed_memberships_defaults).trigger("change");
-			}
-           
-			$('.select-builder').selectpicker();
-            
 
-            $("body").on('click','.allow_membership',function () {
-                if($('.allow_membership:checkbox:checked').length > 0){
+
+            var allowed_memberships = $('.allowed_memberships').select2({tags: true});
+            var allowMeber = $('#allowed_memberships_defaults').val();
+            if (allowMeber) {
+                var allowed_memberships_defaults = JSON.parse(allowMeber);
+                allowed_memberships.val(allowed_memberships_defaults).trigger("change");
+            }
+
+            $('.select-builder').selectpicker();
+
+
+            $("body").on('click', '.allow_membership', function () {
+                if ($('.allow_membership:checkbox:checked').length > 0) {
                     $('.memberships').removeClass('hide');
-                }else{
+                } else {
                     $('.memberships').addClass('hide');
                 }
             });
@@ -216,7 +214,7 @@
                     'form_builder': oldstduio,
                     'blade': $('[data-formslug="slug"]').val(),
                     'fields': $('[data-formfield="field"]').val(),
-					'settings': $('[data-formfield="setting"]').val()
+                    'settings': $('[data-formfield="setting"]').val()
                 }
                 $.ajax({
                     url: $('#formbuilderfrom').attr('url'),
@@ -229,10 +227,10 @@
                     success: function (data) {
                         if (!data.error) {
                             //here is builder
-                           // $('.select-builder').val(newbuilder);
-                           // $('[data-installbuilder]').html(data.builder);
-							loadbuidler(newbuilder);
-                            
+                            // $('.select-builder').val(newbuilder);
+                            // $('[data-installbuilder]').html(data.builder);
+                            loadbuidler(newbuilder);
+
 
                         }
                     }
@@ -242,64 +240,64 @@
 
             $("body").on('change', '.select-builder', function () {
                 var nerbuilder = $(this).val();
-				var ifnfield = $('[data-formslug="slug"]').val('')
-				
-				if(oldstduio!=''){
-					
-					if(ifnfield!=' '){
-						
-					
-						bootbox.confirm({
-							message: "You want to keep last changed",
-							buttons: {
-								confirm: {
-									label: 'Yes',
-									className: 'btn-success'
-								},
-								cancel: {
-									label: 'No',
-									className: 'btn-danger'
-								}
-							},
-							callback: function (result) {
-								if (result) {
-									//$('.select-builder').val(oldstduio);
-									savedata(nerbuilder);
+                var ifnfield = $('[data-formslug="slug"]').val('')
+
+                if (oldstduio != '') {
+
+                    if (ifnfield != ' ') {
 
 
-								} else {
-									
-									oldstduio = nerbuilder;
-									loadbuidler(oldstduio);
-								}
-							}
-						});
-						}else{
-							$('[data-formslug="slug"]').val('')
-									
-									oldstduio = nerbuilder;
-									loadbuidler(oldstduio);
-						}
-					}else{
-						$('[data-formslug="slug"]').val('')
-								
-									oldstduio = nerbuilder;
-									loadbuidler(oldstduio);
-					}
+                        bootbox.confirm({
+                            message: "You want to keep last changed",
+                            buttons: {
+                                confirm: {
+                                    label: 'Yes',
+                                    className: 'btn-success'
+                                },
+                                cancel: {
+                                    label: 'No',
+                                    className: 'btn-danger'
+                                }
+                            },
+                            callback: function (result) {
+                                if (result) {
+                                    //$('.select-builder').val(oldstduio);
+                                    savedata(nerbuilder);
+
+
+                                } else {
+
+                                    oldstduio = nerbuilder;
+                                    loadbuidler(oldstduio);
+                                }
+                            }
+                        });
+                    } else {
+                        $('[data-formslug="slug"]').val('')
+
+                        oldstduio = nerbuilder;
+                        loadbuidler(oldstduio);
+                    }
+                } else {
+                    $('[data-formslug="slug"]').val('')
+
+                    oldstduio = nerbuilder;
+                    loadbuidler(oldstduio);
+                }
 
             })
 
             function loadbuidler(builder) {
-				var value = builder;
-				var url = '?slug='+builder
+                var value = builder;
+                var url = '?slug=' + builder
                 var form = "{!! $form->id !!}";
-				
-				 window.location.assign(url)
-				
-               /* $('[data-installbuilder] script').remove();
-                $('[data-installbuilder]').empty();
-                $.ajax({
-                    url: "{!! url('/admin/console/structure/forms/get-builder-render') !!}",
+
+                window.location.assign(url)
+
+                /* $('[data-installbuilder] script').remove();
+                 $('[data-installbuilder]').empty();
+                 $.ajax({
+                     url: "{!! url('/admin/console/structure/forms/get-builder-render') !!}",
                     type: 'POST',
                     dataType: 'JSON',
                     headers: {
@@ -319,7 +317,7 @@
                     }
                 });*/
             }
-			
+
 //            loadbuidler(oldstduio);
 
 

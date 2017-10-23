@@ -9,7 +9,6 @@
 namespace Sahakavatar\Console\Repository;
 
 use Sahakavatar\Cms\Repositories\GeneralRepository;
-use Sahakavatar\Console\Models\Fields;
 use Sahakavatar\Console\Models\FormFields;
 
 class FormFieldsRepository extends GeneralRepository

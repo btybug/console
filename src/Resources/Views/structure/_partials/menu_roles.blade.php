@@ -15,7 +15,7 @@
                                                                   aria-hidden="true"></i> {!! $role->name!!}</span>
                     <div class=" templates-buttons text-center ">
                         <span class="authorColumn"><i class="fa fa-user author-icon" aria-hidden="true"></i>
-                           {{ $menu->creator->username }}, {!! BBgetDateFormat($menu->created_at) !!}</span>
+                            {{ $menu->creator->username }}, {!! BBgetDateFormat($menu->created_at) !!}</span>
 
                     </div>
                 </div>

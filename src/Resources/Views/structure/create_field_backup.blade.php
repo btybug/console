@@ -53,7 +53,7 @@
                 {!! Form::select('type',[null=>'Select Field']+$types,null,['class' => 'form-control field-type']) !!}
             </div>
         </div>
-       
+
         <div class="form-group hide field-units  col-md-12">
             <label class="col-md-3">Select unit</label>
             <div class="col-md-9">
@@ -65,7 +65,7 @@
         <input type="hidden" name="settings">
         <input type="text" class="hide" data-fieldtype="form" name="fieldhtmltype" value="no">
         <input type="text" class="hide" data-fieldtype="formdefutl" name="custom_field_html" value="no">
-        
+
         {!! Form::close() !!}
         <div class="row">
             <div class="col-md-12">
@@ -79,32 +79,32 @@
         </div>
 
         <div class="col-md-6 live-prev-wrapper">
-          	 <div class="row hidden" data-previewoption>
-           	 <div class="form-group col-sm-12">
-				<label class="col-sm-3">Field Html</label>
-				<div class="col-sm-6">
-					<div class="for_button_1 ">
-						<select class="form-control" name="fieldhtmltype" data-selectcustomfield>
-							<option value="no">No Html</option>
-							<option value="default">default html</option>
-							<option value="custom">custom html</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-sm-3" data-selectcustomfieldhtml="custom">
-						{!! BBbutton('units','default_field_html','Select Field Html',[
-							'class' => 'form-control input-md btn-success',
-							"data-type" => 'frontend',
-							'data-sub' => "component",
-							'model' => $defaultFieldHtml->val
-						]) !!}
-				 </div>
-			</div>
-			
-			</div>
+            <div class="row hidden" data-previewoption>
+                <div class="form-group col-sm-12">
+                    <label class="col-sm-3">Field Html</label>
+                    <div class="col-sm-6">
+                        <div class="for_button_1 ">
+                            <select class="form-control" name="fieldhtmltype" data-selectcustomfield>
+                                <option value="no">No Html</option>
+                                <option value="default">default html</option>
+                                <option value="custom">custom html</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" data-selectcustomfieldhtml="custom">
+                        {!! BBbutton('units','default_field_html','Select Field Html',[
+                            'class' => 'form-control input-md btn-success',
+                            "data-type" => 'frontend',
+                            'data-sub' => "component",
+                            'model' => $defaultFieldHtml->val
+                        ]) !!}
+                    </div>
+                </div>
+
+            </div>
             <div class="m-b-20 live-preview hidden"></div>
             <div class=" hidden" data-previewoption="" data-fieldsetting="setting">
-            	
+
             </div>
         </div>
 
@@ -173,9 +173,9 @@
     {!! HTML::script("js/UiElements/bb_styles.js?v.5") !!}
     <script>
         var dd = console.log;
-		var activefieldtype = ''
-		var htmlsdata = {default:'', custom:'' , field:''}
-		
+        var activefieldtype = ''
+        var htmlsdata = {default: '', custom: '', field: ''}
+
         $(document).ready(function () {
 
             $("body").on('change', '.table-columns', function () {
@@ -276,7 +276,7 @@
                     return '<div class="form-group"><label class="col-md-4 control-label" for="textarea"></label><div class="col-md-4"><textarea class="form-control" id="textarea" name="textarea"></textarea> </div> </div>';
                 }
             }
-				
+
 
             function sendajaxvar(url, data, success) {
                 $.ajax({
@@ -295,8 +295,8 @@
                     }
                 });
             }
-			
-			function getajaxvar(url, data, success) {
+
+            function getajaxvar(url, data, success) {
                 $.ajax({
                     type: "GET",
                     datatype: "json",
@@ -346,7 +346,7 @@
                 if (typeof value != "undefined" && value != '') {
                     $('.tab-options-area').removeClass('hidden');
                     $('.live-preview').removeClass('hidden');
-					$('[data-previewoption]').removeClass('hidden');
+                    $('[data-previewoption]').removeClass('hidden');
 
                     var data = {value: value}
                     sendajaxvar('/admin/modules/bburl/get-field-units', data, function (d) {
@@ -366,7 +366,7 @@
                     $('.field-units').addClass('hide');
                     $('.tab-options-area').addClass('hidden');
                     $('.live-preview').addClass('hidden');
-					$('[data-previewoption]').addClass('hidden');
+                    $('[data-previewoption]').addClass('hidden');
                 }
             });
 
@@ -376,7 +376,7 @@
                     var data = {value: value}
                     sendajaxvar('/admin/modules/bburl/get-field-unit', data, function (d) {
                         if (!d.error) {
-							htmlsdata['field'] = d.html
+                            htmlsdata['field'] = d.html
                             htmlpreview()
                             $('#unit-data').html(d.options);
                             $('#unit-data').removeClass('hide');
@@ -461,8 +461,8 @@
                 if (!noajax) {
                     sendajaxvar('/admin/modules/bburl/get-field-unit', optiondata, function (d) {
                         if (d) {
-                           htmlsdata['field'] = d.html;
-							htmlpreview()
+                            htmlsdata['field'] = d.html;
+                            htmlpreview()
                         }
                     })
                 }
@@ -485,60 +485,60 @@
                     $('.plugin_validations').addClass('hide');
                 }
             })
-			
-			function htmlpreview (){
-				$('[data-fieldsetting="setting"]').html('')
-				if(htmlsdata[activefieldtype]){
-					var htmlsfidl = $('<div></div>')
-					htmlsfidl.html(htmlsdata[activefieldtype].html)
-					if(htmlsdata['field']){
-						htmlsfidl.find('[data-fcontrol="input"]').html(htmlsdata['field'])
-					}
-					if(htmlsdata[activefieldtype].settings){
-						$('[data-fieldsetting="setting"]').html(htmlsdata[activefieldtype].settings)
-					}
-					$('.live-preview').html(htmlsfidl.html());
-				}else{
-					$('.live-preview').html(htmlsdata['field']);
-				}
-			}
-			
-			function selecthtmls (){
-				var gethtmlv = $('[data-selectcustomfield]').val()
-				
-				$('[data-fieldtype="form"]').val(gethtmlv)
-				activefieldtype = gethtmlv
-				$('[data-selectcustomfieldhtml]').addClass('hide')
-				$('[data-selectcustomfieldhtml="'+gethtmlv+'"]').removeClass('hide')
-				htmlpreview ()
-			}
-			
-			var fieldhtmlsty = $('[data-fieldtype="form"]').val()
-			
-			$('[data-selectcustomfield]').val(fieldhtmlsty)
-			selecthtmls ()
-			
-			$('[data-selectcustomfield]').change(function(){
-				selecthtmls()
-			})
-			
-			$('body').on('click', '.item-unit[data-key="default_field_html"]', function(){
-				var gtid = $(this).find('input').data('value')
-				$('[data-fieldtype="formdefutl"]').val(gtid)
-				var data = {'slug':gtid}
-				sendajaxvar('/admin/console/structure/get-custom-html', data, function (d) {
-					if(d){
-						htmlsdata['custom'] = d;
-						 htmlpreview ()
-					}
-				});
-			})
-			
-			getajaxvar('/admin/console/structure/get-default-html', {}, function (d) {
-					if(d){
-						htmlsdata['default'] = d;
-					}
-				});
+
+            function htmlpreview() {
+                $('[data-fieldsetting="setting"]').html('')
+                if (htmlsdata[activefieldtype]) {
+                    var htmlsfidl = $('<div></div>')
+                    htmlsfidl.html(htmlsdata[activefieldtype].html)
+                    if (htmlsdata['field']) {
+                        htmlsfidl.find('[data-fcontrol="input"]').html(htmlsdata['field'])
+                    }
+                    if (htmlsdata[activefieldtype].settings) {
+                        $('[data-fieldsetting="setting"]').html(htmlsdata[activefieldtype].settings)
+                    }
+                    $('.live-preview').html(htmlsfidl.html());
+                } else {
+                    $('.live-preview').html(htmlsdata['field']);
+                }
+            }
+
+            function selecthtmls() {
+                var gethtmlv = $('[data-selectcustomfield]').val()
+
+                $('[data-fieldtype="form"]').val(gethtmlv)
+                activefieldtype = gethtmlv
+                $('[data-selectcustomfieldhtml]').addClass('hide')
+                $('[data-selectcustomfieldhtml="' + gethtmlv + '"]').removeClass('hide')
+                htmlpreview()
+            }
+
+            var fieldhtmlsty = $('[data-fieldtype="form"]').val()
+
+            $('[data-selectcustomfield]').val(fieldhtmlsty)
+            selecthtmls()
+
+            $('[data-selectcustomfield]').change(function () {
+                selecthtmls()
+            })
+
+            $('body').on('click', '.item-unit[data-key="default_field_html"]', function () {
+                var gtid = $(this).find('input').data('value')
+                $('[data-fieldtype="formdefutl"]').val(gtid)
+                var data = {'slug': gtid}
+                sendajaxvar('/admin/console/structure/get-custom-html', data, function (d) {
+                    if (d) {
+                        htmlsdata['custom'] = d;
+                        htmlpreview()
+                    }
+                });
+            })
+
+            getajaxvar('/admin/console/structure/get-default-html', {}, function (d) {
+                if (d) {
+                    htmlsdata['default'] = d;
+                }
+            });
 
         });
     </script>

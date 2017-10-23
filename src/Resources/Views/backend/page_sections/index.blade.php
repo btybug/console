@@ -1,5 +1,5 @@
 @extends('cms::layouts.mTabs',['index'=>'backend_gears'])
-        <!-- Nav tabs -->
+<!-- Nav tabs -->
 @section('tab')
     {!! HTML::style('app/Modules/Uploads/Resources/assets/css/new-store.css') !!}
     <div class="row">
@@ -81,7 +81,9 @@
                         <ul class="editIcons list-unstyled ">
                             @if($currentPageSection && !$currentPageSection->is_core)
                                 <li>
-                                    <a data-href="{!! url('/admin/console/backend/page-section/delete') !!}" data-key="{!! $currentPageSection->slug !!}" data-type="Page Section" class="delete-button btn trashBtn"><i class="fa fa-trash-o"></i></a>
+                                    <a data-href="{!! url('/admin/console/backend/page-section/delete') !!}"
+                                       data-key="{!! $currentPageSection->slug !!}" data-type="Page Section"
+                                       class="delete-button btn trashBtn"><i class="fa fa-trash-o"></i></a>
                                 </li>
                             @endif
                             <li><a href="#" class="btn copyBtn"><i class="fa fa-clone"></i></a></li>

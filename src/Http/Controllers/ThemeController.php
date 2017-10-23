@@ -12,20 +12,18 @@
 namespace Sahakavatar\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
-use Sahakavatar\Cms\Models\Themes\Themes;
-use Sahakavatar\Cms\Models\Widgets as UiElements;
 use App\Models\Themes\BackendTh;
 use App\Modules\Console\Models\ThUpload;
-use App\Modules\Console\Models\Validation as thValid;
-
+use App\Modules\Create\Models\Menu;
 use App\Modules\Resources\Models\StyleItems;
 use App\Modules\Resources\Models\Styles;
 use App\Modules\Settings\Models\LayoutUpload;
-use App\Modules\Create\Models\Menu;
 use App\Modules\Users\Models\Roles;
 use File;
 use Illuminate\Http\Request;
+use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
+use Sahakavatar\Cms\Models\Themes\Themes;
+use Sahakavatar\Cms\Models\Widgets as UiElements;
 use Sahakavatar\Console\Services\VersionsService;
 use view;
 
@@ -40,7 +38,7 @@ class ThemeController extends Controller
     )
     {
         $themes = Themes::all();
-        $current = $themeService->getCurrent($themes,$request->p);
+        $current = $themeService->getCurrent($themes, $request->p);
         return view("console::backend.theme.index", compact(['themes', 'current']));
     }
 
@@ -142,7 +140,7 @@ class ThemeController extends Controller
     public function getSettings($slug)
     {
         $variation = BackendTh::findVariation($slug);
-        if(! $variation) {
+        if (!$variation) {
             $variation = BackendTh::createRoleEmptyVariation($slug);
         }
 
@@ -151,7 +149,7 @@ class ThemeController extends Controller
         return BackendTh::findByVariation($slug)->renderSettings($data);
     }
 
-    public function postThemeSettings(Request $request, $slug, $save=false)
+    public function postThemeSettings(Request $request, $slug, $save = false)
     {
         $theme = BackendTh::findByVariation($slug);
         $html = $theme->renderLive($request->except('_token'));
@@ -197,15 +195,6 @@ class ThemeController extends Controller
 
         $html = View::make('settings::_partials.widgets', compact(['items', 'key', 'widget', 'ajax']))->render();
         return ['html' => $html];
-    }
-
-    protected function settingser($slug, $role)
-    {
-        $theme = BackendTh::find($slug);
-        $roles = Roles::where('slug', $role)->where('slug', '!=', 'user')->first();
-        if (!$theme or !$roles) return redirect()->back();
-        \Config::set('activeThem', $theme->slug);
-        return View::make("settings::backend_theme.settings", compact(['theme', 'slug', 'role']))->render();
     }
 
     public function postSettingsLive(Request $request, $slug, $role)
@@ -311,24 +300,6 @@ class ThemeController extends Controller
 
     }
 
-
-    protected function editTheme($data, $theme, $role)
-    {
-        $settings = $theme->settings['data'][$role];
-        $edit = array();
-        foreach ($data['data'] as $key) {
-            if (isset($settings[$key['key']])) {
-                $item = StyleItems::find($settings[$key['key']]);
-                if ($item) {
-                    $edit[$key['value']]['par'] = $item->classe->id;
-                    $edit[$key['value']]['ch'] = $settings[$key['key']];
-                }
-
-            }
-        }
-        return \Response::json(['edit' => $edit]);
-    }
-
     public function postLiveSave(Request $request)
     {
         $data = $request->except(['slug', 'role', '_token']);
@@ -371,6 +342,32 @@ class ThemeController extends Controller
             }
         }
 
+        return \Response::json(['edit' => $edit]);
+    }
+
+    protected function settingser($slug, $role)
+    {
+        $theme = BackendTh::find($slug);
+        $roles = Roles::where('slug', $role)->where('slug', '!=', 'user')->first();
+        if (!$theme or !$roles) return redirect()->back();
+        \Config::set('activeThem', $theme->slug);
+        return View::make("settings::backend_theme.settings", compact(['theme', 'slug', 'role']))->render();
+    }
+
+    protected function editTheme($data, $theme, $role)
+    {
+        $settings = $theme->settings['data'][$role];
+        $edit = array();
+        foreach ($data['data'] as $key) {
+            if (isset($settings[$key['key']])) {
+                $item = StyleItems::find($settings[$key['key']]);
+                if ($item) {
+                    $edit[$key['value']]['par'] = $item->classe->id;
+                    $edit[$key['value']]['ch'] = $settings[$key['key']];
+                }
+
+            }
+        }
         return \Response::json(['edit' => $edit]);
     }
 }

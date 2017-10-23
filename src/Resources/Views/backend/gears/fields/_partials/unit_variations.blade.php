@@ -1,5 +1,6 @@
 @if($unit)
-    <a href="{!! url('/admin/console/backend/general-fields/settings', $unit->slug) !!}" id="viewType" class="col-xs-4 add_unit_variation">
+    <a href="{!! url('/admin/console/backend/general-fields/settings', $unit->slug) !!}" id="viewType"
+       class="col-xs-4 add_unit_variation">
         <div class="add_item_div">
             <i class="fa fa-plus" aria-hidden="true"></i>
             <p>Add </p>
@@ -16,11 +17,14 @@
                         @if($ui->default == 0)
                             <div>
                                 @if(count($unit->variations()) > 1)
-                                <a data-href="{!! url('/admin/console/backend/general-fields/delete-variation') !!}" data-key="{!! $ui->id !!}" data-type="Field unit Variation"  class="delete-button addons-delete delete_layout"><i
-                                            class="fa fa-trash-o f-s-14 "></i></a>
+                                    <a data-href="{!! url('/admin/console/backend/general-fields/delete-variation') !!}"
+                                       data-key="{!! $ui->id !!}" data-type="Field unit Variation"
+                                       class="delete-button addons-delete delete_layout"><i
+                                                class="fa fa-trash-o f-s-14 "></i></a>
                                 @endif
-                                <a href="{!! url('admin/resources/units/make-default-variation',[$ui->id,$unit->id]) !!}" class="addons-delete"><i
-                                                class="fa fa-legal f-s-14 "></i></a>
+                                <a href="{!! url('admin/resources/units/make-default-variation',[$ui->id,$unit->id]) !!}"
+                                   class="addons-delete"><i
+                                            class="fa fa-legal f-s-14 "></i></a>
                             </div>
                         @endif
                     </div>
@@ -31,7 +35,9 @@
                                                                   aria-hidden="true"></i> {!! $ui->title!!}</span>
                     <div class=" templates-buttons text-center ">
                         <span class="authorColumn"><i class="fa fa-user author-icon" aria-hidden="true"></i>
-                        {!! @$unit->author !!},</span> <span class="dateColumn"><i class="fa fa-calendar calendar-icon" aria-hidden="true"></i> {!! BBgetDateFormat($ui->created_at) !!}</span>
+                            {!! @$unit->author !!},</span> <span class="dateColumn"><i
+                                    class="fa fa-calendar calendar-icon"
+                                    aria-hidden="true"></i> {!! BBgetDateFormat($ui->created_at) !!}</span>
 
                     </div>
                 </div>

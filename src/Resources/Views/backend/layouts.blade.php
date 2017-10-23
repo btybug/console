@@ -1,6 +1,6 @@
 @extends('cms::layouts.mTabs',['index'=>'backend_console'])
 @section('tab')
- Layouts
+    Layouts
 @stop
 @section('CSS')
 @stop

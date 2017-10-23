@@ -1,4 +1,4 @@
-@extends('cms::layouts.uiPreview')
+@extends('cms::layouts.units')
 
 @section('content')
     <div class="previewlivesettingifream">

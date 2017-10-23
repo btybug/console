@@ -1,4 +1,5 @@
-<a href="{!! url('/admin/console/backend/page-section/settings',$currentPageSection->slug) !!}" id="viewType" class="col-xs-4 add_unit_variation">
+<a href="{!! url('/admin/console/backend/page-section/settings',$currentPageSection->slug) !!}" id="viewType"
+   class="col-xs-4 add_unit_variation">
     <div class="add_item_div">
         <i class="fa fa-plus" aria-hidden="true"></i>
         <p>Add </p>
@@ -14,17 +15,20 @@
                         <div><a href="{!! url('/admin/console/backend/page-section/settings',$variation->id) !!}"
                                 class="m-r-10"><i class="fa fa-pencil f-s-14"></i> </a></div>
                         @if($variation->active)
-                            <div> <i style="color: green;" class="fa fa-check f-s-14"></i> </div>
+                            <div><i style="color: green;" class="fa fa-check f-s-14"></i></div>
                         @else
                             <div>
-                                <a href="javascript:void(0)" class="m-r-10 make-active-section" data-slug="{!! $variation->id !!}" data-type="page_section_variation">
+                                <a href="javascript:void(0)" class="m-r-10 make-active-section"
+                                   data-slug="{!! $variation->id !!}" data-type="page_section_variation">
                                     <i class="fa fa-thumbs-up f-s-14"></i>
                                 </a>
                             </div>
                         @endif
                         @if(count($variations)>1)
                             <div>
-                                <a data-href="{!! url('/admin/console/backend/page-section/delete-variation') !!}" data-key="{!! $variation->id !!}" data-type="Page Section Variation"  class="delete-button addons-delete delete_layout">
+                                <a data-href="{!! url('/admin/console/backend/page-section/delete-variation') !!}"
+                                   data-key="{!! $variation->id !!}" data-type="Page Section Variation"
+                                   class="delete-button addons-delete delete_layout">
                                     <i class="fa fa-trash-o f-s-14 "></i>
                                 </a>
                             </div>

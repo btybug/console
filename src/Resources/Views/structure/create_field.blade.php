@@ -58,7 +58,7 @@
                         <div class="col-md-6">
                             <label class="col-md-3 p-l-0">Core Validation</label>
                             <div class="col-md-9">
-                                <div class="form-control core-val" readonly="true" disabled="true"> </div>
+                                <div class="form-control core-val" readonly="true" disabled="true"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -74,8 +74,9 @@
                                 Select Input
                             </label>
                             <div class="col-md-9" data-unitname="btnunit">
-                                <div class="col-sm-8 p-l-0" >
-                                    <input name="selcteunit" data-unitname="title"  readonly="readonly" class="form-control" value="Nothing selected">
+                                <div class="col-sm-8 p-l-0">
+                                    <input name="selcteunit" data-unitname="title" readonly="readonly"
+                                           class="form-control" value="Nothing selected">
 
                                 </div>
                                 {!! BBbutton('units','unit','Select input',[
@@ -111,7 +112,7 @@
                         <div class="col-md-6">
                             <label class="col-sm-3 p-l-0">Required</label>
                             <div class="col-md-6">
-                            {!! Form::select('required',['No', 'Yes'],null,['class' => 'form-control']) !!}
+                                {!! Form::select('required',['No', 'Yes'],null,['class' => 'form-control']) !!}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -273,10 +274,10 @@
                 var data;
                 if (!variation) {
                     variation = $('input[data-name="unit"]').val();
-					 data_action='units';
+                    data_action = 'units';
                 }
                 $('input[name="selcteunit"]').val(variation)
-                data = {'variation_id': variation, 'data_action':data_action};
+                data = {'variation_id': variation, 'data_action': data_action};
                 sendajaxvar('/admin/modules/bburl/get-page-layout-config-toarray', data, function (d) {
                     if (!d.error) {
                         $('[data-unitname="btnunit"] [data-action="units"]').text('change');
@@ -284,12 +285,12 @@
                         $.each(d.data, function (key, val) {
                             if (typeof val == 'string') {
                                 $('[data-unitname="' + key + '"]').html(val)
-								$('[data-unitname="' + key + '"]').val(val)
+                                $('[data-unitname="' + key + '"]').val(val)
                             }
                             if (typeof val == 'object') {
                                 $.each(val, function (k, v) {
                                     $('[data-unitname="' + k + '"]').html(v)
-									$('[data-unitname="' + k + '"]').val(v)
+                                    $('[data-unitname="' + k + '"]').val(v)
                                 })
                             }
                         })
@@ -302,7 +303,7 @@
             $('body').on('change', 'input[data-name="unit"]', function () {
                 $('[data-unitname="btnunit"] [data-action="units"]').text('change');
                 var button = $(this).prev();
-				layoutData($(this).val(), button.attr('data-action'));
+                layoutData($(this).val(), button.attr('data-action'));
             });
 
 

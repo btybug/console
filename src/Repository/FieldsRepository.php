@@ -19,6 +19,12 @@ class FieldsRepository extends GeneralRepository
 {
 
     const ACTIVE = 1;
+
+    public function getByTableNameAndActive($table_name)
+    {
+        return $this->model()->where('table_name', $table_name)->where('status', self::ACTIVE)->get();
+    }
+
     /**
      * @return Fields
      */
@@ -27,12 +33,8 @@ class FieldsRepository extends GeneralRepository
         return new Fields();
     }
 
-    public function getByTableNameAndActive($table_name)
+    public function getByTableNameActiveAndAvailablity($table_name)
     {
-        return $this->model()->where('table_name', $table_name)->where('status', self::ACTIVE)->get();
-    }
-
-    public function getByTableNameActiveAndAvailablity($table_name){
         return $this->model()->where('table_name', $table_name)->where('status', self::ACTIVE)->where('available_for_users', '!=', 0)->get();
     }
 }

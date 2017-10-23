@@ -18,14 +18,6 @@ use Sahakavatar\Console\Models\AdminPages;
 class AdminPagesRepository extends GeneralRepository
 {
     /**
-     * @return AdminPages
-     */
-    public function model()
-    {
-        return new AdminPages();
-    }
-
-    /**
      * @return mixed
      */
     public function getGroupedWithModule()
@@ -42,6 +34,13 @@ class AdminPagesRepository extends GeneralRepository
         return $this->model()->permission_role()->where('role_id', $role->id)->first();
     }
 
+    /**
+     * @return AdminPages
+     */
+    public function model()
+    {
+        return new AdminPages();
+    }
 
     public function getRolesByPage(int $id, bool $imploded = true)
     {
@@ -76,7 +75,8 @@ class AdminPagesRepository extends GeneralRepository
         }
     }
 
-    public function main(){
+    public function main()
+    {
         return $this->model()->main()->get();
     }
 
@@ -85,22 +85,24 @@ class AdminPagesRepository extends GeneralRepository
         return self::model()->where('module_id', $module->slug)->where('parent_id', 0)->get();
     }
 
-    public function parent(){
-        return $this->model()->parent;
-    }
-
-    public function childs(){
-        return $this->model()->childs;
-    }
-
-    public function parent_permission_role()
+    public function childs()
     {
-        return $this->parent()->pepermission_role;
+        return $this->model()->childs;
     }
 
     public function parent_permission_role_with_role($roleID)
     {
         return $this->parent_permission_role()->where('role_id', $roleID)->first();
+    }
+
+    public function parent_permission_role()
+    {
+        return $this->parent()->permission_role;
+    }
+
+    public function parent()
+    {
+        return $this->model()->parent;
     }
 
     public function getByUrl($url)

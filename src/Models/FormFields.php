@@ -1,4 +1,5 @@
 <?php
+
 namespace Sahakavatar\Console\Models;
 
 use Illuminate\Database\Eloquent\Model;

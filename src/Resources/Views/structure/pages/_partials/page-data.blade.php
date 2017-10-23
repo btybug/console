@@ -196,10 +196,10 @@
             $('body').on('change', '.content_type', function () {
                 var value = $(this).val();
 
-                if(value == 1){
+                if (value == 1) {
                     $('.iframe-page-content').removeClass('show').addClass('hide');
                     $('.editor-page-content').removeClass('hide').addClass('show');
-                }else{
+                } else {
                     $('.editor-page-content').removeClass('show').addClass('hide');
                     $('.iframe-page-content').removeClass('hide').addClass('show');
                 }

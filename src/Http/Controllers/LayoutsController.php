@@ -19,14 +19,13 @@
 namespace Sahakavatar\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
-use Sahakavatar\Cms\Models\Templates\Units;
-use Sahakavatar\Cms\Models\Widgets;
-use Sahakavatar\Modules\Models\Models\AdminPages;
 use App\Modules\Resources\Models\LayoutUpload;
 use App\Modules\Resources\Models\Validation as thValid;
 use File;
 use Illuminate\Http\Request;
+use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
+use Sahakavatar\Cms\Models\Widgets;
+use Sahakavatar\Modules\Models\Models\AdminPages;
 use view;
 
 
@@ -60,6 +59,7 @@ class LayoutsController extends Controller
         $this->up = config('paths.backend_themes_upl');
         $this->unitTypes = @json_decode(File::get(config('paths.unit_path') . 'configTypes.json'), 1)['types'];
     }
+
     /**
      * @return view
      */
@@ -67,7 +67,8 @@ class LayoutsController extends Controller
     {
 
     }
-    public function getBackendIndex ()
+
+    public function getBackendIndex()
     {
         $layouts = ContentLayouts::findByType('admin_template');
         return view('uploads::gears.backend.layouts.index', compact(['layouts']));

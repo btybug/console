@@ -8,16 +8,16 @@
         </div>
         <div class="row layouts_row">
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 items_links">
-                    <a href="{!! url('admin/console/backend/theme') !!}" class="ly_items">
-                        <h3>theme</h3>
-                        <h2><i class="fa fa-trello" aria-hidden="true"></i></h2>
-                    </a>
+                <a href="{!! url('admin/console/backend/theme') !!}" class="ly_items">
+                    <h3>theme</h3>
+                    <h2><i class="fa fa-trello" aria-hidden="true"></i></h2>
+                </a>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 items_links">
-                    <a href="{!! url('admin/console/backend/page-section') !!}" class="ly_items">
-                        <h3>Page Section</h3>
-                        <h2><i class="fa fa-columns" aria-hidden="true"></i></h2>
-                    </a>
+                <a href="{!! url('admin/console/backend/page-section') !!}" class="ly_items">
+                    <h3>Page Section</h3>
+                    <h2><i class="fa fa-columns" aria-hidden="true"></i></h2>
+                </a>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 items_links">
                 <a href="{!! url('admin/console/backend/sections') !!}" class="ly_items">
@@ -26,16 +26,16 @@
                 </a>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 items_links">
-                    <a href="{!! url('admin/console/backend/units') !!}" class="ly_items">
-                        <h3>units</h3>
-                        <h2><i class="fa fa-square-o" aria-hidden="true"></i></h2>
-                    </a>
+                <a href="{!! url('admin/console/backend/units') !!}" class="ly_items">
+                    <h3>units</h3>
+                    <h2><i class="fa fa-square-o" aria-hidden="true"></i></h2>
+                </a>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 items_links">
-                    <a href="{!! url('admin/console/backend/templates') !!}" class="ly_items">
-                        <h3>Templates</h3>
-                        <h2><i class="fa fa-television" aria-hidden="true"></i></h2>
-                    </a>
+                <a href="{!! url('admin/console/backend/templates') !!}" class="ly_items">
+                    <h3>Templates</h3>
+                    <h2><i class="fa fa-television" aria-hidden="true"></i></h2>
+                </a>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 items_links">
                 <a href="{!! url('admin/console/backend/settings') !!}" class="ly_items">

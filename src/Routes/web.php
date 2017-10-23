@@ -56,7 +56,7 @@ Route::group(['prefix' => 'structure'], function () {
     Route::post('/get-saved-html-type', 'StructureController@getSavedHtmlType');
 
 
-    Route::group(['prefix' => 'forms'],function () {
+    Route::group(['prefix' => 'forms'], function () {
         Route::get('/', 'StructureController@getForms');
         Route::get('/edit/{id}', 'StructureController@getFormEdit');
         Route::get('/entries/{id}', 'StructureController@getFormEntries');
@@ -83,18 +83,18 @@ Route::group(['prefix' => 'structure'], function () {
         Route::post('/get-builder-render', 'StructureController@postBuilder');
     });
 
-    Route::group(['prefix' => 'settings'],function () {
+    Route::group(['prefix' => 'settings'], function () {
         Route::get('/', 'GeneralController@getIndex');
         Route::post('/', 'GeneralController@postSettings');
     });
 
 
-    Route::group(['prefix' => 'menus'], function (){
-        Route::get('/', 'StructureController@getMenus');
-        Route::get('/edit/{menu}/{role}', 'StructureController@getMenuEdit');
-        Route::post('/edit/{menu}/{role}', 'StructureController@postMenuEdit');
-        Route::post('/create', 'StructureController@postMenuCreate');
-        Route::post('/delete', 'StructureController@postDelete');
+    Route::group(['prefix' => 'menus'], function () {
+        Route::get('/', 'MenusController@getIndex');
+        Route::get('/edit/{menu}/{role}', 'MenusController@getEdit');
+        Route::post('/edit/{menu}/{role}', 'MenusController@postEdit');
+        Route::post('/create', 'MenusController@postCreate');
+        Route::post('/delete', 'MenusController@postDelete');
     });
 });
 

@@ -21,7 +21,7 @@
                                 {!! Form::select('fields_type',['' => 'Select Fields type'] +BBGetTables(),null,['class' => 'form-control table-change']) !!}
                             </div>
                             <div class="col-md-3 p-b-10">
-                                    {!! Form::select('form_builder',['' => 'Select Builder'] +  $builders , $slug,['class'=>'select-builder', 'data-btnrole'=>'formtype', 'title'=>'Select Builder']) !!}
+                                {!! Form::select('form_builder',['' => 'Select Builder'] +  $builders , $slug,['class'=>'select-builder', 'data-btnrole'=>'formtype', 'title'=>'Select Builder']) !!}
                             </div>
                         </div>
 
@@ -61,99 +61,100 @@
                 @endif
             </div>
 
-            <input type="hidden" id="current_form_group_value" value="@if(isset($form)) {!!  $form->fields_type !!} @endif"/>
+            <input type="hidden" id="current_form_group_value"
+                   value="@if(isset($form)) {!!  $form->fields_type !!} @endif"/>
             <input type="hidden" id="current_form_id" value="@if(isset($form)) {!!  $form->id !!} @endif"/>
 
         </div>
         <div id="settingModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Setting Modal</h4>
-                </div>
-                <div class="modal-body">
-                    <form action="#" class="form-horizontal " data-setting="builder">
-                        <div class="form-group m-l-0 m-r-0">
-                            <label for="success_message" class="col-sm-4 ">Success Message</label>
-                            <div class="col-sm-8">
-                                <input class="form-control " placeholder="Custom" name="message"
-                                       id="success_message" type="text">
-                            </div>
-                        </div>
-
-                        <div class="form-group m-l-0 m-r-0">
-                            <label for="" class="col-sm-4">Redirect Page</label>
-                            <div class="col-sm-8">
-                                <select id="target" class="form-control" name="redirect_Page" title="Select Target">
-                                    <option value="alert">BB get page</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group m-l-0 m-r-0">
-                            <label for="" class="col-sm-4">Is Ajax</label>
-
-                            <div class="col-sm-8">
-                                <div class="customelement radio-inline"><input name="is_ajax" id="is_ajax_yes"
-                                                                               value="yes" type="radio"> <label
-                                            for="is_ajax_yes">Yes</label>
-                                </div>
-                                <div class="customelement radio-inline"><input name="is_ajax" id="is_ajax_no"
-                                                                               value="no" type="radio"> <label
-                                            for="is_ajax_no">No</label>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Setting Modal</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" class="form-horizontal " data-setting="builder">
+                            <div class="form-group m-l-0 m-r-0">
+                                <label for="success_message" class="col-sm-4 ">Success Message</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control " placeholder="Custom" name="message"
+                                           id="success_message" type="text">
                                 </div>
                             </div>
-                        </div>
+
+                            <div class="form-group m-l-0 m-r-0">
+                                <label for="" class="col-sm-4">Redirect Page</label>
+                                <div class="col-sm-8">
+                                    <select id="target" class="form-control" name="redirect_Page" title="Select Target">
+                                        <option value="alert">BB get page</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group m-l-0 m-r-0">
+                                <label for="" class="col-sm-4">Is Ajax</label>
+
+                                <div class="col-sm-8">
+                                    <div class="customelement radio-inline"><input name="is_ajax" id="is_ajax_yes"
+                                                                                   value="yes" type="radio"> <label
+                                                for="is_ajax_yes">Yes</label>
+                                    </div>
+                                    <div class="customelement radio-inline"><input name="is_ajax" id="is_ajax_no"
+                                                                                   value="no" type="radio"> <label
+                                                for="is_ajax_no">No</label>
+                                    </div>
+                                </div>
+                            </div>
 
 
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div id="fieldModalcustom" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Fields</h4>
-                </div>
-                <div class="modal-body" >
-                    <textarea name="fieldjson" class="hide">{!! $fieldJson !!}</textarea>
-                    <div class="panel panel-default custompanel ">
-                        <div class="panel-heading">Available Field</div>
-                        <div class="panel-body  p-10">
-                            <div data-setting="fieldgroupcustom"></div>
-                        </div>
+                        </form>
                     </div>
-
-
-                    <div class="panel panel-default custompanel m-t-10">
-                        <div class="panel-heading">Used Field</div>
-                        <div class="panel-body  p-10">
-                            <div data-setting="fieldgroupcustomused"></div>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
+                </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
             </div>
-
         </div>
-    </div>
+
+
+        <div id="fieldModalcustom" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Fields</h4>
+                    </div>
+                    <div class="modal-body">
+                        <textarea name="fieldjson" class="hide">{!! $fieldJson !!}</textarea>
+                        <div class="panel panel-default custompanel ">
+                            <div class="panel-heading">Available Field</div>
+                            <div class="panel-body  p-10">
+                                <div data-setting="fieldgroupcustom"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="panel panel-default custompanel m-t-10">
+                            <div class="panel-heading">Used Field</div>
+                            <div class="panel-body  p-10">
+                                <div data-setting="fieldgroupcustomused"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
     </div>
     @include('resources::assests.magicModal')
@@ -181,9 +182,9 @@
             position: relative;
         }
 
-
-
-        .zindex9999{ z-index: 10;}
+        .zindex9999 {
+            z-index: 10;
+        }
 
     </style>
 
@@ -203,11 +204,9 @@
         $(document).ready(function () {
 
 
-
-
             var allowed_memberships = $('.allowed_memberships').select2({tags: true});
             var allowMeber = $('#allowed_memberships_defaults').val();
-            if(allowMeber){
+            if (allowMeber) {
                 var allowed_memberships_defaults = JSON.parse(allowMeber);
                 allowed_memberships.val(allowed_memberships_defaults).trigger("change");
             }
@@ -215,10 +214,10 @@
             $('.select-builder').selectpicker();
 
 
-            $("body").on('click','.allow_membership',function () {
-                if($('.allow_membership:checkbox:checked').length > 0){
+            $("body").on('click', '.allow_membership', function () {
+                if ($('.allow_membership:checkbox:checked').length > 0) {
                     $('.memberships').removeClass('hide');
-                }else{
+                } else {
                     $('.memberships').addClass('hide');
                 }
             });
@@ -260,9 +259,9 @@
                 var nerbuilder = $(this).val();
                 var ifnfield = $('[data-formslug="slug"]').val('')
 
-                if(oldstduio!=''){
+                if (oldstduio != '') {
 
-                    if(ifnfield!=' '){
+                    if (ifnfield != ' ') {
 
 
                         bootbox.confirm({
@@ -290,13 +289,13 @@
                                 }
                             }
                         });
-                    }else{
+                    } else {
                         $('[data-formslug="slug"]').val('')
 
                         oldstduio = nerbuilder;
                         loadbuidler(oldstduio);
                     }
-                }else{
+                } else {
                     $('[data-formslug="slug"]').val('')
 
                     oldstduio = nerbuilder;
@@ -307,7 +306,7 @@
 
             function loadbuidler(builder) {
                 var value = builder;
-                var url = '?slug='+builder
+                var url = '?slug=' + builder
                 var form = null;
 
                 window.location.assign(url)

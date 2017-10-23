@@ -36,7 +36,8 @@
                                 @if($field->structured_by == 'custom')
                                     {!! Form::select('table_name',['' => 'Select table'] +BBGetTables(),null,['class' => 'form-control table-change']) !!}
                                 @else
-                                    <div class="form-control" readonly="true" disabled="true"> {!! $field->table_name !!} </div>
+                                    <div class="form-control" readonly="true"
+                                         disabled="true"> {!! $field->table_name !!} </div>
                                 @endif
                             </div>
                         </div>
@@ -45,7 +46,8 @@
                                 @if($field->structured_by == 'custom')
                                     {!! Form::select('column_name',BBGetTableColumn($field->table_name ),null,['class' => 'form-control table-columns']) !!}
                                 @else
-                                    <div class="form-control" readonly="true" disabled="true"> {!! $field->column_name !!} </div>
+                                    <div class="form-control" readonly="true"
+                                         disabled="true"> {!! $field->column_name !!} </div>
                                 @endif
                             </div>
                         </div>
@@ -72,7 +74,8 @@
                                 @if($field->structured_by == 'custom')
                                     {!! Form::select('second_table',['' => 'Select table'] +BBGetTables(),null,['class' => 'form-control second-table-change']) !!}
                                 @else
-                                    <div class="form-control" readonly="true" disabled="true"> {!! $field->second_table !!} </div>
+                                    <div class="form-control" readonly="true"
+                                         disabled="true"> {!! $field->second_table !!} </div>
                                 @endif
                             </div>
                         </div>
@@ -81,7 +84,8 @@
                                 @if($field->structured_by == 'custom')
                                     {!! Form::select('second_column',BBGetTableColumn($field->second_table ),null,['class' => 'form-control second-table-columns']) !!}
                                 @else
-                                    <div class="form-control" readonly="true" disabled="true"> {!! $field->second_column !!} </div>
+                                    <div class="form-control" readonly="true"
+                                         disabled="true"> {!! $field->second_column !!} </div>
                                 @endif
                             </div>
                         </div>
@@ -91,7 +95,8 @@
                         <div class="col-md-6">
                             <label class="col-md-3 p-l-0">Core Validation</label>
                             <div class="col-md-9">
-                                <div class="form-control core-val" readonly="true" disabled="true"> {!! $rule or null !!} </div>
+                                <div class="form-control core-val" readonly="true"
+                                     disabled="true"> {!! $rule or null !!} </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -108,7 +113,8 @@
                             </label>
                             <div class="col-md-9" data-unitname="btnunit">
                                 <div class="col-sm-8 p-l-0" data-unitname="name">
-                                    <input name="selcteunit" class="form-control" readonly="readonly" value="{!! ($unit) ? $unit->title : 'Nothing selected' !!}">
+                                    <input name="selcteunit" class="form-control" readonly="readonly"
+                                           value="{!! ($unit) ? $unit->title : 'Nothing selected' !!}">
                                 </div>
                                 {!! BBbutton('units','unit','Select input',[
                                      'class' => 'btn btn-default btn-dblue',
@@ -226,7 +232,8 @@
 
         <input type="hidden" name="settings">
         <input type="text" class="hide" data-fieldtype="form" name="fieldhtmltype" value="{!! $field->field_html !!}">
-        <input type="text" class="hide" data-fieldtype="formdefutl" name="custom_field_html" value="{!! $field->custom_html !!}">
+        <input type="text" class="hide" data-fieldtype="formdefutl" name="custom_field_html"
+               value="{!! $field->custom_html !!}">
 
         {!! Form::close() !!}
     </div>

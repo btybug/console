@@ -5,8 +5,9 @@
                 <div class=" topRow p-l-0 p-r-0">
                     <img src="{!! url('resources/assets/images/template-3.png')!!}" class="img-responsive"/>
                     <div class="tempalte_icon">
-                        <div><a href="{!! url('/admin/console/backend/theme/settings',$curentTheme->slug.'.'.$role->slug) !!}"
-                                class="m-r-10"><i class="fa fa-pencil f-s-14"></i> </a></div>
+                        <div>
+                            <a href="{!! url('/admin/console/backend/theme/settings',$curentTheme->slug.'.'.$role->slug) !!}"
+                               class="m-r-10"><i class="fa fa-pencil f-s-14"></i> </a></div>
 
                     </div>
                 </div>
@@ -21,5 +22,5 @@
                 </div>
             </div>
         </div>
-        @endforeach
+    @endforeach
 @endif

@@ -1,4 +1,5 @@
 <?php
+
 namespace Sahakavatar\Console\Http\Requests\Structure;
 
 use Sahakavatar\Cms\Http\Requests\Request;

@@ -11,12 +11,10 @@
 
 namespace Sahakavatar\Console\Http\Controllers;
 
-use Sahakavatar\Cms\Helpers\helpers;
 use App\Http\Controllers\Controller;
+use Sahakavatar\Cms\Helpers\helpers;
 use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
 use Sahakavatar\Cms\Models\Widgets;
-use File;
-use Illuminate\Http\Request;
 
 /**
  * Class ModulesController
@@ -39,7 +37,7 @@ class LayoutController extends Controller
      * @param Upload $upload
      * @param validateUpl $v
      */
-    public function __construct ()
+    public function __construct()
     {
         $this->helper = new helpers();
     }
@@ -48,11 +46,11 @@ class LayoutController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
 
-    public function getBackendIndex ()
+    public function getBackendIndex()
     {
         $layouts = ContentLayouts::findByType('admin_layout');
 
-        return view('console::backend.gears.layouts.index',compact('layouts'));
+        return view('console::backend.gears.layouts.index', compact('layouts'));
     }
 
 }

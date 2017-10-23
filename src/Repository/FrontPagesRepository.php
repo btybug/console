@@ -10,6 +10,7 @@ namespace Sahakavatar\Console\Repository;
 
 use Sahakavatar\Cms\Repositories\GeneralRepository;
 use Sahakavatar\Manage\Models\FrontendPage;
+use Sahakavatar\User\Repository\RoleRepository;
 
 /**
  * Class AdminPagesRepository
@@ -17,13 +18,7 @@ use Sahakavatar\Manage\Models\FrontendPage;
  */
 class FrontPagesRepository extends GeneralRepository
 {
-    /**
-     * @return AdminPages
-     */
-    public function model()
-    {
-        return new FrontendPage();
-    }
+    private $rolesPerm;
 
     /**
      * @return mixed
@@ -31,6 +26,11 @@ class FrontPagesRepository extends GeneralRepository
     public function getGroupedWithModule()
     {
         return $this->model->where('parent_id', NULL)->groupBy("module_id")->get();
+    }
+
+    public function getMain()
+    {
+        return $this->model->where('parent_id', NULL)->get();
     }
 
     public function getRolesByPage(int $id, bool $imploded = true)
@@ -62,5 +62,51 @@ class FrontPagesRepository extends GeneralRepository
         } else {
             return [];
         }
+    }
+
+    public function getRolesByParent(int $id, bool $imploded = true)
+    {
+        $page = $this->model->find($id);
+        $pageRoles = [];
+        if ($page) {
+            $parent = $page->parent;
+            $rolesPerm = new RoleRepository();
+            $roles = $rolesPerm->getFrontRoles();
+            if (count($roles)) {
+                foreach ($roles as $role) {
+                    if ($parent) {
+                        if ($parent->permission_role->where('role_id', $role->id)->first()) {
+                            $pageRoles[] = $role->slug;
+                        }
+                    } else {
+                        $pageRoles[] = $role->slug;
+                    }
+                }
+
+                if ($imploded) {
+                    return implode(',', $pageRoles);
+                } else {
+                    return $pageRoles;
+                }
+            }
+        }
+        if ($imploded) {
+            return null;
+        } else {
+            return [];
+        }
+    }
+
+    public function PagesByModulesParent($module)
+    {
+        return self::model()->where('module_id', $module->slug)->where('parent_id', 0)->get();
+    }
+
+    /**
+     * @return FrontendPage
+     */
+    public function model()
+    {
+        return new FrontendPage();
     }
 }

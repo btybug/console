@@ -15,9 +15,9 @@
                     $('.additional-data').removeClass('hide');
                     var text = '<div class="form-group"><label class="col-md-4 control-label" for="checkboxes">' + label + '</label><div class="col-md-4">';
                     $.each(data, function (k, v) {
-                        if(typeof with_key != "undefined" && with_key ==true){
+                        if (typeof with_key != "undefined" && with_key == true) {
                             text += '<div class="radio"><label><input type="radio" name="' + name + '" value="' + k + '">' + v + ' </label></div>';
-                        }else{
+                        } else {
                             text += '<div class="radio"><label><input type="radio" name="' + name + '" value="' + v + '">' + v + ' </label></div>';
                         }
 
@@ -29,9 +29,9 @@
                     $('.additional-data').removeClass('hide');
                     var text = '<div class="form-group"><label class="col-md-4 control-label" for="checkboxes">' + label + '</label><div class="col-md-4">';
                     $.each(data, function (k, v) {
-                        if(typeof with_key != "undefined" && with_key ==true){
+                        if (typeof with_key != "undefined" && with_key == true) {
                             text += '<div class="checkbox"><label ><input type="checkbox" name="' + name + '"  value="' + k + '">' + v + ' </label></div>';
-                        }else{
+                        } else {
                             text += '<div class="checkbox"><label ><input type="checkbox" name="' + name + '"  value="' + v + '">' + v + ' </label></div>';
                         }
 
@@ -43,9 +43,9 @@
                     $('.additional-data').removeClass('hide');
                     var text = '<div class="form-group"><label class="col-md-4 control-label" >' + label + '</label><div class="col-md-4"><select  name="' + name + '" class="form-control">';
                     $.each(data, function (k, v) {
-                        if(typeof with_key != "undefined" && with_key ==true){
+                        if (typeof with_key != "undefined" && with_key == true) {
                             text += ' <option value="' + k + '">' + v + '</option>';
-                        }else{
+                        } else {
                             text += ' <option value="' + v + '">' + v + '</option>';
                         }
                     });
@@ -56,9 +56,9 @@
                     $('.additional-data').removeClass('hide');
                     var text = '<div class="form-group"><label class="col-md-4 control-label" >' + label + '</label><div class="col-md-4"><select  name="' + name + '"multiple="multiple" class="form-control">';
                     $.each(data, function (k, v) {
-                        if(typeof with_key != "undefined" && with_key ==true){
+                        if (typeof with_key != "undefined" && with_key == true) {
                             text += ' <option value="' + k + '">' + v + '</option>';
-                        }else{
+                        } else {
                             text += ' <option value="' + v + '">' + v + '</option>';
                         }
                     });
@@ -193,15 +193,15 @@
                 var id = $('[data-name="file"]').val();
                 if (typeof key != "undefined" && typeof value != "undefined"
                     && typeof id != "undefined" && key != '' && value != '' && id != '') {
-                    var data = {key : key, value : value, id : id};
+                    var data = {key: key, value: value, id: id};
                     sendajaxvar('/admin/modules/bburl/get-file-list', data, function (d) {
-                        if(! d.error){
+                        if (!d.error) {
                             var type = $('.field-type').val();
                             var name = $('input[name=name]').val();
                             var label = $('input[name=label]').val();
 
                             if ($.isFunction(elements[type])) {
-                                $('.live-preview').html(elements[type](d.data, name, label,true))
+                                $('.live-preview').html(elements[type](d.data, name, label, true))
                             }
                         }
                     });

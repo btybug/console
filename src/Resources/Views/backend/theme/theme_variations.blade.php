@@ -1,6 +1,6 @@
 @if($themes)
     @foreach($themes as $th)
-        <div  class="col-md-4">
+        <div class="col-md-4">
             <div class="row templates m-b-10 ">
                 <div class=" topRow p-l-0 p-r-0">
                     <img src="{!! url('/images/template-3.png')!!}" class="img-responsive"/>
@@ -17,7 +17,9 @@
                                                                   aria-hidden="true"></i> {!! $th->title!!}</span>
                     <div class=" templates-buttons text-center ">
                         <span class="authorColumn"><i class="fa fa-user author-icon" aria-hidden="true"></i>
-                        {!! @$th->author !!},</span> <span class="dateColumn"><i class="fa fa-calendar calendar-icon" aria-hidden="true"></i> {!! BBgetDateFormat($th->created_at) !!}</span>
+                            {!! @$th->author !!},</span> <span class="dateColumn"><i
+                                    class="fa fa-calendar calendar-icon"
+                                    aria-hidden="true"></i> {!! BBgetDateFormat($th->created_at) !!}</span>
 
                     </div>
                 </div>

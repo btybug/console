@@ -1,4 +1,5 @@
 <?php
+
 namespace Sahakavatar\Console\Services;
 
 use Sahakavatar\Cms\Models\Themes\Themes;
@@ -20,12 +21,13 @@ class ThemeService extends GeneralService
      */
     private $result;
 
-   public function getCurrent($themes,$p){
-       if (count($themes) && !$p) {
-           $curentTheme = $themes[0];
-       }
-       if ($p) {
-           $curentTheme = Themes::find($p);
-       }
-   }
+    public function getCurrent($themes, $p)
+    {
+        if (count($themes) && !$p) {
+            $curentTheme = $themes[0];
+        }
+        if ($p) {
+            $curentTheme = Themes::find($p);
+        }
+    }
 }

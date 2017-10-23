@@ -32,7 +32,8 @@
                                 <li class="">
                                     @endif
                                     @endif
-                                    <a href="?p={!! $ui->slug !!}{!! ($type)? "&type=".$type : "" !!}"  rel="unit" data-slug="{{ $ui->slug }}" class="tpl-left-items">
+                                    <a href="?p={!! $ui->slug !!}{!! ($type)? "&type=".$type : "" !!}" rel="unit"
+                                       data-slug="{{ $ui->slug }}" class="tpl-left-items">
                                         <span class="module_icon"></span> {{ $ui->name }}
                                     </a>
                                 </li>
@@ -42,7 +43,6 @@
                                 @endif
             </ul>
         </div>
-
 
 
         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
@@ -55,7 +55,8 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 template-search-box m-t-10 m-b-10">
                     <form class="form-horizontal">
                         <div class="form-group m-b-0  ">
-                            <label for="inputEmail3" class="control-label text-left"><i class="fa fa-sort-amount-desc"></i> Sort By</label>
+                            <label for="inputEmail3" class="control-label text-left"><i
+                                        class="fa fa-sort-amount-desc"></i> Sort By</label>
                             <select class="selectpicker" data-style="selectCatMenu" data-width="50%">
                                 <option>Recently Added</option>
                             </select>
@@ -79,8 +80,9 @@
                             <li><a href="#" class="btn editBtn"><i class="fa fa-pencil"></i></a></li>
                         </ul>
 
-                        <a href="{!! url('/admin/settings/admin-templates/settings',$unit->slug) !!}" class="btn btn-sm pull-right btnUploadWidgets" type="button"
-                                data-target="#uploadfile">
+                        <a href="{!! url('/admin/settings/admin-templates/settings',$unit->slug) !!}"
+                           class="btn btn-sm pull-right btnUploadWidgets" type="button"
+                           data-target="#uploadfile">
                             <i class="fa fa-cloud-upload module_upload_icon"></i> <span class="upload_module_text">Create Variation</span>
                         </a>
                     </div>
@@ -112,7 +114,10 @@
                     </li>
                 </ul>
             </nav>
-            <div class="text-center"><button type="button" class="btn btn-lg btn-primary btnLoadmore"><em class="loadImg"></em> Load more</button></div>
+            <div class="text-center">
+                <button type="button" class="btn btn-lg btn-primary btnLoadmore"><em class="loadImg"></em> Load more
+                </button>
+            </div>
 
         </div>
     </div>
@@ -121,7 +126,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Upload</h4>
                 </div>
                 <div class="modal-body">
@@ -154,35 +160,35 @@
             {!! HTML::script('js/dropzone/js/dropzone.js') !!}
             {!! HTML::script('js/bootstrap-select/js/bootstrap-select.min.js') !!}
             <script>
-//                Dropzone.options.myAwesomeDropzone = {
-//                    init: function() {
-//                        this.on("success", function(file) {
-//                            location.reload();
-//
-//                        });
-//                    }
-//                };
+                //                Dropzone.options.myAwesomeDropzone = {
+                //                    init: function() {
+                //                        this.on("success", function(file) {
+                //                            location.reload();
+                //
+                //                        });
+                //                    }
+                //                };
 
                 $(document).ready(function () {
 
-                    $('body').on("change",".select-type",function(){
+                    $('body').on("change", ".select-type", function () {
                         var val = $(this).val();
-                        var url = window.location.pathname +"?type="+val;
+                        var url = window.location.pathname + "?type=" + val;
 
                         window.location = url;
                     });
 
-                    $('.rightButtons a').click(function(e){
+                    $('.rightButtons a').click(function (e) {
                         e.preventDefault();
                         $(this).addClass('active').siblings().removeClass('active');
                     });
 
-                    $('.btnListView').click(function(e){
+                    $('.btnListView').click(function (e) {
                         e.preventDefault();
                         $('#viewType').addClass('listView');
                     });
 
-                    $('.btnGridView').click(function(e){
+                    $('.btnGridView').click(function (e) {
                         e.preventDefault();
                         $('#viewType').removeClass('listView');
                     });
@@ -190,10 +196,9 @@
 
                     $('.selectpicker').selectpicker();
 
-                    var p="{!! $_GET['p'] or null !!}";
+                    var p = "{!! $_GET['p'] or null !!}";
 
-                    $("a[main-type="+p+"]").click();
-
+                    $("a[main-type=" + p + "]").click();
 
 
                 });

@@ -1,17 +1,15 @@
 <?php namespace Sahakavatar\Console\Http\Controllers;
 
-use Sahakavatar\Cms\Services\CmsItemReader;
-use Sahakavatar\Cms\Services\CmsItemRegister;
-use Sahakavatar\Cms\Services\CmsItemUploader;
 use App\Http\Controllers\Controller;
-use Sahakavatar\Cms\Models\Templates\Units;
-use App\Modules\Resources\Models\Files\FileUpload;
-use App\Modules\Resources\Models\TemplateVariations as TemplateVariations;
 use App\Modules\Console\Models\UnitUpload;
+use App\Modules\Resources\Models\Files\FileUpload;
 use App\Modules\Resources\Models\Validation as validateUpl;
 use File;
 use Illuminate\Http\Request;
 use Resources;
+use Sahakavatar\Cms\Models\Templates\Units;
+use Sahakavatar\Cms\Services\CmsItemReader;
+use Sahakavatar\Cms\Services\CmsItemUploader;
 use View;
 
 
@@ -62,7 +60,7 @@ class UnitsController extends Controller
                     ->where('type', $type)
                     ->where('slug', $slug)
                     ->first();
-            } elseif(count($ui_elemements)) {
+            } elseif (count($ui_elemements)) {
                 $unit = CmsItemReader::getAllGearsByType('units')
                     ->where('place', 'backend')
                     ->where('type', $type)
@@ -71,7 +69,6 @@ class UnitsController extends Controller
         }
         return view("console::backend.gears.units.index", compact(['ui_elemements', 'types', 'unit', 'type']));
     }
-
 
 
     public function getUnit($type)
@@ -122,9 +119,10 @@ class UnitsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postDeleteVariation(Request $request) {
+    public function postDeleteVariation(Request $request)
+    {
         $result = false;
-        if($request->slug) {
+        if ($request->slug) {
             $result = Units::deleteVariation($request->slug);
         }
         return \Response::json(['success' => $result]);
@@ -149,14 +147,15 @@ class UnitsController extends Controller
             ->where('place', 'backend')
             ->where('slug', $slug)
             ->first();
-        if($unit) {
+        if ($unit) {
             $deleted = $unit->deleteGear();
             return \Response::json(['success' => $deleted, 'url' => url('/admin/console/backend/units')]);
         }
     }
 
-    public function getSettings(Request $request) {
-        if($request->slug) {
+    public function getSettings(Request $request)
+    {
+        if ($request->slug) {
             $view = Units::renderLivePreview($request->slug, 'backend');
             return $view ? $view : abort('404');
         } else {
@@ -203,7 +202,7 @@ class UnitsController extends Controller
     public function postSettings(Request $request)
     {
         $output = Units::saveSettings($request->id, $request->itemname, $request->except(['_token', 'itemname']), $request->save);
-        $result =  $output ? ['html' => $output['html'], 'error' => false, 'url' => url('/admin/console/backend/units/settings', ['slug' => $output['slug']])] : ['error' => true];
+        $result = $output ? ['html' => $output['html'], 'error' => false, 'url' => url('/admin/console/backend/units/settings', ['slug' => $output['slug']])] : ['error' => true];
         return \Response::json($result);
     }
 

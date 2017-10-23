@@ -70,6 +70,7 @@
                 })
             }
             fixbar()
+
             function fixbar() {
                 var targetselector = $('.vertical-text');
                 if (targetselector.length > 0) {
@@ -105,7 +106,7 @@
 
                 });
             });
-        
+
 
             $("body").on('change', '.page_layout', function () {
                 var layoutID = $(this).val();

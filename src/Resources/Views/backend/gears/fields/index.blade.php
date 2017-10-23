@@ -25,19 +25,19 @@
                                 <li class="active">
                             @else
                                 <li class="">
-                            @endif
-                        @endif
-                                <a href="?p={!! $ui->slug !!}"  rel="unit" data-slug="{{ $ui->slug }}" class="tpl-left-items">
-                                    <span class="module_icon"></span> {{ $ui->title }}
-                                </a>
-                            </li>
-                    @endforeach
-                @else
-                    No Units
-                @endif
+                                    @endif
+                                    @endif
+                                    <a href="?p={!! $ui->slug !!}" rel="unit" data-slug="{{ $ui->slug }}"
+                                       class="tpl-left-items">
+                                        <span class="module_icon"></span> {{ $ui->title }}
+                                    </a>
+                                </li>
+                                @endforeach
+                                @else
+                                    No Units
+                                @endif
             </ul>
         </div>
-
 
 
         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
@@ -50,7 +50,8 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 template-search-box m-t-10 m-b-10">
                     <form class="form-horizontal">
                         <div class="form-group m-b-0  ">
-                            <label for="inputEmail3" class="control-label text-left"><i class="fa fa-sort-amount-desc"></i> Sort By</label>
+                            <label for="inputEmail3" class="control-label text-left"><i
+                                        class="fa fa-sort-amount-desc"></i> Sort By</label>
                             <select class="selectpicker" data-style="selectCatMenu" data-width="50%">
                                 <option>Recently Added</option>
                             </select>
@@ -71,7 +72,9 @@
                         <ul class="editIcons list-unstyled ">
                             @if($unit && !$unit->is_core)
                                 <li>
-                                    <a data-href="{!! url('/admin/console/backend/general-fields/delete') !!}" data-key="{!! $unit->slug !!}" data-type="Unit" class="delete-button btn trashBtn"><i class="fa fa-trash-o"></i></a>
+                                    <a data-href="{!! url('/admin/console/backend/general-fields/delete') !!}"
+                                       data-key="{!! $unit->slug !!}" data-type="Unit"
+                                       class="delete-button btn trashBtn"><i class="fa fa-trash-o"></i></a>
                                 </li>
                             @endif
                             <li><a href="#" class="btn copyBtn"><i class="fa fa-clone"></i></a></li>
@@ -111,7 +114,10 @@
                     </li>
                 </ul>
             </nav>
-            <div class="text-center"><button type="button" class="btn btn-lg btn-primary btnLoadmore"><em class="loadImg"></em> Load more</button></div>
+            <div class="text-center">
+                <button type="button" class="btn btn-lg btn-primary btnLoadmore"><em class="loadImg"></em> Load more
+                </button>
+            </div>
 
         </div>
     </div>
@@ -120,104 +126,105 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Upload</h4>
                 </div>
                 <div class="modal-body">
                     {!! Form::open(['url'=>'/admin/console/backend/general-fields/upload','class'=>'dropzone', 'id'=>'my-awesome-dropzone']) !!}
-                        {!! Form::hidden('data_type','files',['id'=>"dropzone_hiiden_data"]) !!}
+                    {!! Form::hidden('data_type','files',['id'=>"dropzone_hiiden_data"]) !!}
                     {!! Form::close() !!}
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 
     @include('cms::_partials.delete_modal')
 
-        @stop
-        @section('CSS')
-            {!! HTML::style('js/bootstrap-select/css/bootstrap-select.min.css') !!}
-            <style>
-                .child-tpl {
-                    width: 95% !important;
-                }
+@stop
+@section('CSS')
+    {!! HTML::style('js/bootstrap-select/css/bootstrap-select.min.css') !!}
+    <style>
+        .child-tpl {
+            width: 95% !important;
+        }
 
-                .img-loader {
-                    width: 70px;
-                    height: 70px;
-                    position: absolute;
-                    top: 50px;
-                    left: 40%;
-                }
+        .img-loader {
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            top: 50px;
+            left: 40%;
+        }
 
-            </style>
-        @stop
-        @section('JS')
-            {!! HTML::script('js/dropzone/js/dropzone.js') !!}
-            {!! HTML::script('js/bootstrap-select/js/bootstrap-select.min.js') !!}
-            <script>
-                Dropzone.options.myAwesomeDropzone = {
-                    init: function() {
-                        this.on("success", function(file) {
-                            location.reload();
-                        });
-                    }
-                };
-
-                function confirm_delete(data){
-                    var r = confirm("Are you sure !!!");
-                    if (r == true) {
-                        var slug = $(data).data('slug');
-                        $.ajax({
-                            url: '/admin/console/backend/general-fields/delete',
-                            data: {
-                                slug: slug
-                            },headers: {
-                                'X-CSRF-TOKEN':$("input[name='_token']").val()
-                            },
-                            dataType: 'json',
-                            success: function (data) {
-                                 location.reload();
-                            },
-                            type: 'POST'
-                        });
-                    }
-                }
-
-                $(document).ready(function () {
-
-                    $('body').on("change",".select-type",function(){
-                        var val = $(this).val();
-                        var url = window.location.pathname +"?type="+val;
-
-                        window.location = url;
-                    });
-
-                    $('.rightButtons a').click(function(e){
-                        e.preventDefault();
-                        $(this).addClass('active').siblings().removeClass('active');
-                    });
-
-                    $('.btnListView').click(function(e){
-                        e.preventDefault();
-                        $('#viewType').addClass('listView');
-                    });
-
-                    $('.btnGridView').click(function(e){
-                        e.preventDefault();
-                        $('#viewType').removeClass('listView');
-                    });
-
-
-                    $('.selectpicker').selectpicker();
-
-                    var p="{!! $_GET['p'] or null !!}";
-
-                    if(p.length) {
-                        $("a[main-type="+p+"]").click();
-                    }
-
+    </style>
+@stop
+@section('JS')
+    {!! HTML::script('js/dropzone/js/dropzone.js') !!}
+    {!! HTML::script('js/bootstrap-select/js/bootstrap-select.min.js') !!}
+    <script>
+        Dropzone.options.myAwesomeDropzone = {
+            init: function () {
+                this.on("success", function (file) {
+                    location.reload();
                 });
+            }
+        };
 
-            </script>
+        function confirm_delete(data) {
+            var r = confirm("Are you sure !!!");
+            if (r == true) {
+                var slug = $(data).data('slug');
+                $.ajax({
+                    url: '/admin/console/backend/general-fields/delete',
+                    data: {
+                        slug: slug
+                    }, headers: {
+                        'X-CSRF-TOKEN': $("input[name='_token']").val()
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        location.reload();
+                    },
+                    type: 'POST'
+                });
+            }
+        }
+
+        $(document).ready(function () {
+
+            $('body').on("change", ".select-type", function () {
+                var val = $(this).val();
+                var url = window.location.pathname + "?type=" + val;
+
+                window.location = url;
+            });
+
+            $('.rightButtons a').click(function (e) {
+                e.preventDefault();
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+
+            $('.btnListView').click(function (e) {
+                e.preventDefault();
+                $('#viewType').addClass('listView');
+            });
+
+            $('.btnGridView').click(function (e) {
+                e.preventDefault();
+                $('#viewType').removeClass('listView');
+            });
+
+
+            $('.selectpicker').selectpicker();
+
+            var p = "{!! $_GET['p'] or null !!}";
+
+            if (p.length) {
+                $("a[main-type=" + p + "]").click();
+            }
+
+        });
+
+    </script>
 @stop

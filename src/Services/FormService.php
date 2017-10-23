@@ -21,11 +21,11 @@ use Sahakavatar\Console\Repository\FormsRepository;
  */
 class FormService extends GeneralService
 {
-    private $form,$formFields,$fieldValidation,$fieldRepo,$entries;
+    const GET_AUTO = 3;
     public static $form_path = 'resources' . DS . 'views' . DS . 'forms' . DS;
     public static $form_file_ext = '.blade.php';
-    public $slug,$conf,$formData,$fields,$form_type,$id,$collected,$fields_type,$required_fields,$formObject;
-    const GET_AUTO = 3;
+    public $slug, $conf, $formData, $fields, $form_type, $id, $collected, $fields_type, $required_fields, $formObject;
+    private $form, $formFields, $fieldValidation, $fieldRepo, $entries;
 
     public function __construct(
         FormsRepository $formsRepository,
@@ -40,18 +40,6 @@ class FormService extends GeneralService
         $this->fieldValidation = $fieldValidationService;
         $this->fieldRepo = $fieldsRepository;
         $this->entries = $entriesRepository;
-    }
-
-    public function generateBlade($id, $blade)
-    {
-        $this->formObject = $this->form->find($id);
-
-        if ($this->formObject) {
-            \File::put(self::$form_path . $this->formObject->slug . self::$form_file_ext, $blade);
-
-            return true;
-        }
-        return false;
     }
 
     public static function checkFields($json)
@@ -97,6 +85,18 @@ class FormService extends GeneralService
         \File::put($form_path, $html);
     }
 
+    public function generateBlade($id, $blade)
+    {
+        $this->formObject = $this->form->find($id);
+
+        if ($this->formObject) {
+            \File::put(self::$form_path . $this->formObject->slug . self::$form_file_ext, $blade);
+
+            return true;
+        }
+        return false;
+    }
+
     public function syncFields($form_id, $fields)
     {
         $this->formFields->deleteByCondition('form_id', $form_id);
@@ -116,7 +116,7 @@ class FormService extends GeneralService
 
     public function render($id = null)
     {
-        if(! $this->formObject) $this->formObject = $this->form->find($id);
+        if (!$this->formObject) $this->formObject = $this->form->find($id);
 
         if (\File::exists(self::$form_path . $this->formObject->slug . self::$form_file_ext)) {
             $content = \File::get(self::$form_path . $this->formObject->slug . self::$form_file_ext);
@@ -180,7 +180,7 @@ class FormService extends GeneralService
 
     public function renderBlade($id = null)
     {
-        if(! $this->formObject) $this->formObject = $this->form->find($id);
+        if (!$this->formObject) $this->formObject = $this->form->find($id);
         if (\File::exists(self::$form_path . $this->formObject->slug . self::$form_file_ext)) {
             return \File::get(self::$form_path . $this->formObject->slug . self::$form_file_ext);
         }
@@ -188,8 +188,19 @@ class FormService extends GeneralService
         return null;
     }
 
+    public static function renderFormBlade($slug = null)
+    {
+        if ($slug){
+            if (\View::exists("forms.".$slug)) {
+                return view("forms.".$slug)->render();
+            }
+        }
 
-    public function validate($id,$data)
+        return null;
+    }
+
+
+    public function validate($id, $data)
     {
         $this->formObject = $this->form->find($id);
 
@@ -322,7 +333,7 @@ class FormService extends GeneralService
         return $data;
     }
 
-    public function validateColumns($id,$fields)
+    public function validateColumns($id, $fields)
     {
         $this->formObject = $this->form->find($id);
         $error = false;
@@ -404,17 +415,17 @@ class FormService extends GeneralService
         return null;
     }
 
-    public function newEntry($request,$entries,$form,$model=null)
+    public function newEntry($request, $entries, $form, $model = null)
     {
         $user_id = 0;
         if (\Auth::check()) $user_id = \Auth::user()->id;
 
         return $this->entries->create([
-           'data' =>  @serialize($entries),
-           'form_id' =>  $form->id,
-           'user_id' =>  $user_id,
-           'ip' =>  $request->getClientIp(),
-           'created_at' =>  date('Y-m-d h:i:s'),
+            'data' => @serialize($entries),
+            'form_id' => $form->id,
+            'user_id' => $user_id,
+            'ip' => $request->getClientIp(),
+            'created_at' => date('Y-m-d h:i:s'),
         ]);
     }
 }

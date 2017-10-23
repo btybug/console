@@ -31,7 +31,7 @@
             </div>
 
             <div class="form-group col-md-12">
-                <div  class="col-md-6">
+                <div class="col-md-6">
                     <label class="col-md-3 p-l-0">Saving Target</label>
                     <div class="col-md-9">
                         @if($field->structured_by == 'custom')
@@ -48,7 +48,8 @@
                         @if($field->structured_by == 'custom')
                             {!! Form::select('column_name',BBGetTableColumn($field->table_name ),null,['class' => 'form-control table-columns']) !!}
                         @else
-                            <div class="form-control" readonly="true" disabled="true"> {!! $field->column_name !!} </div>
+                            <div class="form-control" readonly="true"
+                                 disabled="true"> {!! $field->column_name !!} </div>
                         @endif
 
                     </div>
@@ -95,12 +96,12 @@
             </div>
 
 
-
-            <div class="col-md-6 m-b-25 {!! ($unit) ? '' : 'hide' !!} tab-options-area" data-role="optionsetting" id="unit-data">
+            <div class="col-md-6 m-b-25 {!! ($unit) ? '' : 'hide' !!} tab-options-area" data-role="optionsetting"
+                 id="unit-data">
                 {!! Form::model(@json_decode($field->json_data,true)) !!}
-                    @if($unit)
-                     {!! $unit->renderSettings($field->json_data ? ['settings' =>json_decode($field->json_data,true)] : []) !!}
-                    @endif
+                @if($unit)
+                    {!! $unit->renderSettings($field->json_data ? ['settings' =>json_decode($field->json_data,true)] : []) !!}
+                @endif
                 {!! Form::close() !!}
             </div>
         </div>
@@ -242,12 +243,14 @@
             text-align: center;
             margin-bottom: 15px;
         }
-        ul.tabs{
+
+        ul.tabs {
             margin: 0px;
             padding: 0px;
             list-style: none;
         }
-        ul.tabs li{
+
+        ul.tabs li {
             background: none;
             color: #222;
             display: inline-block;
@@ -255,28 +258,31 @@
             cursor: pointer;
         }
 
-        ul.tabs li.current{
+        ul.tabs li.current {
             background: #ededed;
             color: #222;
         }
 
-        .tab-content{
+        .tab-content {
             display: none;
             padding: 15px;
         }
 
-        .tab-content.current{
+        .tab-content.current {
             display: inherit;
         }
-        #add-new-fields{
+
+        #add-new-fields {
             position: relative;
         }
-        .live-prev-wrapper{
+
+        .live-prev-wrapper {
             position: absolute;
             top: 300px;
             right: -28px;
         }
-        .live-preview{
+
+        .live-preview {
             min-height: 247px;
             border: 1px solid #d0d1d3;
             padding: 20px;
@@ -290,22 +296,22 @@
     <script>
         var dd = console.log;
         $(document).ready(function () {
-            $("body").on('click','.allow_membership',function () {
-                if($('.allow_membership:checkbox:checked').length > 0){
+            $("body").on('click', '.allow_membership', function () {
+                if ($('.allow_membership:checkbox:checked').length > 0) {
                     $('.memberships').removeClass('hide');
-                }else{
+                } else {
                     $('.memberships').addClass('hide');
                 }
             });
 
-            $('ul.tabs li').click(function(){
+            $('ul.tabs li').click(function () {
                 var tab_id = $(this).attr('data-tab');
 
                 $('ul.tabs li').removeClass('current');
                 $('.tab-content').removeClass('current');
 
                 $(this).addClass('current');
-                $("#"+tab_id).addClass('current');
+                $("#" + tab_id).addClass('current');
             });
 
             var elements = {
@@ -314,9 +320,9 @@
                     $('[data-tab=tab-2]').click();
                     var text = '<div class="form-group"><label class="col-md-4 control-label" for="checkboxes"></label><div class="col-md-4">';
                     $.each(data, function (k, v) {
-                        if(typeof with_key != "undefined" && with_key ==true){
+                        if (typeof with_key != "undefined" && with_key == true) {
                             text += '<div class="radio"><label><input type="radio" name="' + name + '" value="' + k + '">' + v + ' </label></div>';
-                        }else{
+                        } else {
                             text += '<div class="radio"><label><input type="radio" name="' + name + '" value="' + v + '">' + v + ' </label></div>';
                         }
 
@@ -324,14 +330,14 @@
                     text += '</div></div>';
                     return text;
                 },
-                radio: function (data, name,  with_key) {
+                radio: function (data, name, with_key) {
                     $('.additional-data').removeClass('hide');
                     $('[data-tab=tab-2]').click();
                     var text = '<div class="form-group"><label class="col-md-4 control-label" for="checkboxes"></label><div class="col-md-4">';
                     $.each(data, function (k, v) {
-                        if(typeof with_key != "undefined" && with_key ==true){
+                        if (typeof with_key != "undefined" && with_key == true) {
                             text += '<div class="checkbox"><label ><input type="checkbox" name="' + name + '"  value="' + k + '">' + v + ' </label></div>';
-                        }else{
+                        } else {
                             text += '<div class="checkbox"><label ><input type="checkbox" name="' + name + '"  value="' + v + '">' + v + ' </label></div>';
                         }
 
@@ -344,34 +350,34 @@
                     $('[data-tab=tab-2]').click();
                     var text = '<div class="form-group"><label class="col-md-4 control-label" ></label><div class="col-md-4"><select  name="' + name + '" class="form-control">';
                     $.each(data, function (k, v) {
-                        if(typeof with_key != "undefined" && with_key ==true){
+                        if (typeof with_key != "undefined" && with_key == true) {
                             text += ' <option value="' + k + '">' + v + '</option>';
-                        }else{
+                        } else {
                             text += ' <option value="' + v + '">' + v + '</option>';
                         }
                     });
                     text += '</select></div></div>';
                     return text;
                 },
-                multy_select: function (data, name,  with_key) {
+                multy_select: function (data, name, with_key) {
                     $('.additional-data').removeClass('hide');
                     var text = '<div class="form-group"><label class="col-md-4 control-label" ></label><div class="col-md-4"><select  name="' + name + '"multiple="multiple" class="form-control">';
                     $.each(data, function (k, v) {
-                        if(typeof with_key != "undefined" && with_key ==true){
+                        if (typeof with_key != "undefined" && with_key == true) {
                             text += ' <option value="' + k + '">' + v + '</option>';
-                        }else{
+                        } else {
                             text += ' <option value="' + v + '">' + v + '</option>';
                         }
                     });
                     text += '</select></div></div>';
                     return text;
                 },
-                text: function (data, name,  with_key) {
+                text: function (data, name, with_key) {
 
                     $('.additional-data').addClass('hide');
                     return '<div class="form-group"><label class="col-md-4 control-label" for="textinput"></label><div class="col-md-4"><input id="textinput" name="textinput" type="text" class="form-control input-md"></div></div>';
                 },
-                textarea: function (data, name,  with_key) {
+                textarea: function (data, name, with_key) {
                     $('.additional-data').addClass('hide');
                     return '<div class="form-group"><label class="col-md-4 control-label" for="textarea"></label><div class="col-md-4"><textarea class="form-control" id="textarea" name="textarea"></textarea> </div> </div>';
                 }
@@ -434,11 +440,11 @@
             $("body").on('change', '.field-type', function () {
                 var value = $(this).val();
                 console.log(value)
-                if(typeof value != "undefined" && value != ''){
+                if (typeof value != "undefined" && value != '') {
                     $('.tab-options-area').removeClass('hidden');
                     $('.live-preview').removeClass('hidden');
 
-                    var data = {value : value}
+                    var data = {value: value}
                     sendajaxvar('/admin/modules/bburl/get-field-units', data, function (d) {
                         if (d) {
                             var option;
@@ -452,7 +458,7 @@
                             $('.field-units').removeClass('hide')
                         }
                     })
-                }else{
+                } else {
                     $('.field-units').addClass('hide');
                     $('.tab-options-area').addClass('hidden');
                     $('.live-preview').addClass('hidden');
@@ -461,10 +467,10 @@
 
             $("body").on('change', '.field-type-units', function () {
                 var value = $(this).val();
-                if(typeof value != "undefined" && value != ''){
-                    var data = {value : value}
+                if (typeof value != "undefined" && value != '') {
+                    var data = {value: value}
                     sendajaxvar('/admin/modules/bburl/get-field-unit', data, function (d) {
-                        if (! d.error) {
+                        if (!d.error) {
                             $('.live-preview').html(d.html);
                             $('#unit-data').html(d.options);
                             $('#unit-data').removeClass('hide');
@@ -530,24 +536,23 @@
 //                })
 //            })
 
-            function getoptiondata (noajax){
+            function getoptiondata(noajax) {
                 var optiondata = {};
                 optiondata['options'] = {}
-                $('[data-role="optionsetting"] select[name], [data-role="optionsetting"] input[name], [data-role="optionsetting"] textarea[name]').each(function(){
+                $('[data-role="optionsetting"] select[name], [data-role="optionsetting"] input[name], [data-role="optionsetting"] textarea[name]').each(function () {
                     var name = $(this).attr('name');
-                    if($(this).is('[type="radio"]')){
-                        var	value = $('[data-role="optionsetting"] input[name="'+name+'"][type="radio"]:checked').val();
-                    }else{
-                        var	value = $(this).val();
+                    if ($(this).is('[type="radio"]')) {
+                        var value = $('[data-role="optionsetting"] input[name="' + name + '"][type="radio"]:checked').val();
+                    } else {
+                        var value = $(this).val();
                     }
-                    optiondata['options'][name]= value;
+                    optiondata['options'][name] = value;
                 })
-
 
 
                 optiondata['value'] = $('select[name="unit"]').val();
                 $('[name="settings"]').val(JSON.stringify(optiondata['options']));
-                if(!noajax){
+                if (!noajax) {
                     sendajaxvar('/admin/modules/bburl/get-field-unit', optiondata, function (d) {
                         if (d) {
                             $('.live-preview').html(d.html);
@@ -556,22 +561,20 @@
                 }
             }
 
-            $('[data-role="optionsetting"]').on('change', 'select,   [type="checkbox"], [type="radio"]', function(){
-                getoptiondata ()
+            $('[data-role="optionsetting"]').on('change', 'select,   [type="checkbox"], [type="radio"]', function () {
+                getoptiondata()
 
-            }).on('keyup', 'input, textarea', function(){
-                getoptiondata ()
+            }).on('keyup', 'input, textarea', function () {
+                getoptiondata()
 
             })
 
 
-
-
-            $('body').on('change','.field-validation', function () {
+            $('body').on('change', '.field-validation', function () {
                 var value = $(this).val();
-                if(typeof value != "undefined" && value =='custom'){
+                if (typeof value != "undefined" && value == 'custom') {
                     $('.plugin_validations').removeClass('hide');
-                }else{
+                } else {
                     $('.plugin_validations').addClass('hide');
                 }
             })

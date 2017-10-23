@@ -14,7 +14,7 @@
                 'data-sub' => "component",
                 'model' => (isset($model['uislug'])) ? $model['uislug'] : null
                 ]) !!}
-                
+
                 <input type="text" data-inputfidid value="" readonly>
             </div>
             <div class="modal-body" style="padding: 0px;">
@@ -50,9 +50,9 @@
                         <div class="tab-content p-10">
                             <div role="tabpanel" class="tab-pane active" id="generaltab">
                                 {!! Form::model($model,['id' => 'generalTabForm']) !!}
-                                    @if(isset($uiUnit) && $uiUnit)
-                                        {!! $uiUnit->renderSettings($model) !!}
-                                    @endif
+                                @if(isset($uiUnit) && $uiUnit)
+                                    {!! $uiUnit->renderSettings($model) !!}
+                                @endif
                                 {!! Form::close() !!}
                             </div>
                             <div role="tabpanel" class="tab-pane" id="optionstab">
@@ -73,13 +73,13 @@
                                         <div class="panel-heading">Save Target</div>
                                         <div class="panel-body">
                                             @if(isset($unit->options['table']))
-                                            <div class="form-group">
-                                                <label for="savetargettabe"
-                                                       class="col-sm-4 control-label m-0">Table</label>
-                                                <div class="col-sm-8">
-                                                    {!! Form::text('table',$unit->options['table'],['class' => 'form-control', 'id' => 'savetargettabe','readonly' => 'readonly']) !!}
+                                                <div class="form-group">
+                                                    <label for="savetargettabe"
+                                                           class="col-sm-4 control-label m-0">Table</label>
+                                                    <div class="col-sm-8">
+                                                        {!! Form::text('table',$unit->options['table'],['class' => 'form-control', 'id' => 'savetargettabe','readonly' => 'readonly']) !!}
+                                                    </div>
                                                 </div>
-                                            </div>
                                                 @if(isset($unit->options['column']))
                                                     <div class="form-group" data-selectoption="columns">
                                                         <label for="savetargetcolumn"
@@ -105,7 +105,8 @@
                                                     <label for="savetargetcolumn"
                                                            class="col-sm-4 control-label m-0">Columns</label>
                                                     <div class="col-sm-8">
-                                                        <select class="form-control" id="savetargetcolumn" name="columns"
+                                                        <select class="form-control" id="savetargetcolumn"
+                                                                name="columns"
                                                                 data-ajaxselect="columns">
 
                                                         </select>

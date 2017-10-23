@@ -51,11 +51,11 @@ class Forms extends Model
      */
     public function fields()
     {
-        return $this->belongsToMany('\App\Models\Fields', 'form_fields', 'form_id', 'field_slug');
+        return $this->belongsToMany('\Sahakavatar\Console\Models\Fields', 'form_fields', 'form_id', 'field_slug');
     }
 
     public function entries()
     {
-        return $this->hasMany('\App\Models\FormEntries', 'form_id', 'id');
+        return $this->hasMany('\Sahakavatar\Console\Models\FormEntries', 'form_id', 'id');
     }
 }

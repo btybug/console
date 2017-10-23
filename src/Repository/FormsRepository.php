@@ -26,16 +26,21 @@ class FormsRepository extends GeneralRepository
         return $this->model()->where('type', 'new')->where('created_by', 'core')->where('id', $slug)->first();
     }
 
-    public function getByTypeNewPluck()
-    {
-       return $this->model()->where('type', 'new')->pluck('name', 'slug') ;
-    }
-
     /**
      * @return Forms
      */
     public function model()
     {
         return new Forms();
+    }
+
+    public function getByTypeNewPluck()
+    {
+        return $this->model()->where('type', 'new')->pluck('name', 'slug');
+    }
+
+    public function findByIdOrSlug($data)
+    {
+        return $this->model()->where('id', $data)->orWhere('slug', $data)->first();
     }
 }

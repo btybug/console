@@ -27,21 +27,26 @@
                                 <li class="active">
                             @else
                                 <li class="">
-                            @endif
-                        @endif
-                                    <a href="?p={!! $layout->slug !!}"  rel="unit" data-slug="{{ $layout->slug }}" class="tpl-left-items">
+                                    @endif
+                                    @endif
+                                    <a href="?p={!! $layout->slug !!}" rel="unit" data-slug="{{ $layout->slug }}"
+                                       class="tpl-left-items">
                                         <span class="module_icon"></span> {{ $layout->name }}
                                     </a>
                                     @if($layout->active)
-                                        <div class="pull-right"> <i style="color: green;" class="fa fa-check fa-2x"></i> </div>
+                                        <div class="pull-right"><i style="color: green;" class="fa fa-check fa-2x"></i>
+                                        </div>
                                     @else
-                                        <div data-slug="{!! $layout->slug !!}" data-type="page_section" class="pull-right make-active-section"> <i style="color: #0fc5ff;cursor: pointer;" class="fa fa-thumbs-up fa-2x"></i> </div>
+                                        <div data-slug="{!! $layout->slug !!}" data-type="page_section"
+                                             class="pull-right make-active-section"><i
+                                                    style="color: #0fc5ff;cursor: pointer;"
+                                                    class="fa fa-thumbs-up fa-2x"></i></div>
                                     @endif
                                 </li>
-                    @endforeach
-                @else
-                    No Units
-                @endif
+                                @endforeach
+                                @else
+                                    No Units
+                                @endif
             </ul>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
@@ -54,7 +59,8 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 template-search-box m-t-10 m-b-10">
                     <form class="form-horizontal">
                         <div class="form-group m-b-0  ">
-                            <label for="inputEmail3" class="control-label text-left"><i class="fa fa-sort-amount-desc"></i> Sort By</label>
+                            <label for="inputEmail3" class="control-label text-left"><i
+                                        class="fa fa-sort-amount-desc"></i> Sort By</label>
                             <select class="selectpicker" data-style="selectCatMenu" data-width="50%">
                                 <option>Recently Added</option>
                             </select>
@@ -78,7 +84,9 @@
                             <li><a href="#" class="btn editBtn"><i class="fa fa-pencil"></i></a></li>
                         </ul>
 
-                        <a class="btn btn-sm pull-right btnUploadWidgets" href="{!! url('/admin/console/backend/page-section/settings',$curentLayout->slug) !!}" type="button"
+                        <a class="btn btn-sm pull-right btnUploadWidgets"
+                           href="{!! url('/admin/console/backend/page-section/settings',$curentLayout->slug) !!}"
+                           type="button"
                            data-target="#uploadfile">
                             <i class="fa fa-cloud-upload module_upload_icon"></i> <span class="upload_module_text">Create Variation</span>
                         </a>
@@ -111,7 +119,10 @@
                     </li>
                 </ul>
             </nav>
-            <div class="text-center"><button type="button" class="btn btn-lg btn-primary btnLoadmore"><em class="loadImg"></em> Load more</button></div>
+            <div class="text-center">
+                <button type="button" class="btn btn-lg btn-primary btnLoadmore"><em class="loadImg"></em> Load more
+                </button>
+            </div>
 
         </div>
     </div>
@@ -120,7 +131,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Upload</h4>
                 </div>
                 <div class="modal-body">
@@ -165,7 +177,7 @@
 
         $(document).ready(function () {
 
-            $("body").on('click',".make-active-section", function() {
+            $("body").on('click', ".make-active-section", function () {
                 var slug = $(this).data('slug');
                 var type = $(this).data('type');
                 $.ajax({
@@ -188,24 +200,24 @@
                 });
             });
 
-            $('body').on("change",".select-type",function(){
+            $('body').on("change", ".select-type", function () {
                 var val = $(this).val();
-                var url = window.location.pathname +"?type="+val;
+                var url = window.location.pathname + "?type=" + val;
 
                 window.location = url;
             });
 
-            $('.rightButtons a').click(function(e){
+            $('.rightButtons a').click(function (e) {
                 e.preventDefault();
                 $(this).addClass('active').siblings().removeClass('active');
             });
 
-            $('.btnListView').click(function(e){
+            $('.btnListView').click(function (e) {
                 e.preventDefault();
                 $('#viewType').addClass('listView');
             });
 
-            $('.btnGridView').click(function(e){
+            $('.btnGridView').click(function (e) {
                 e.preventDefault();
                 $('#viewType').removeClass('listView');
             });
@@ -213,9 +225,9 @@
 
             $('.selectpicker').selectpicker();
 
-            var p="{!! $_GET['p'] or null !!}";
-            if(p.length != 0) {
-                $("a[main-type="+p+"]").click();
+            var p = "{!! $_GET['p'] or null !!}";
+            if (p.length != 0) {
+                $("a[main-type=" + p + "]").click();
             }
         });
 

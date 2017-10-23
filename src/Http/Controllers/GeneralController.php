@@ -13,7 +13,6 @@ namespace Sahakavatar\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
 use Sahakavatar\Console\Http\Requests\Account\GeneralSettingsRequest;
 use Sahakavatar\Console\Repository\AdminPagesRepository;
 use Sahakavatar\Settings\Repository\AdminsettingRepository;
@@ -42,12 +41,12 @@ class GeneralController extends Controller
         AdminsettingRepository $adminsettingRepository
     )
     {
-        $data = $request->except('_token','admin_login_url');
-        if($request->admin_login_url){
-            $adminsettingRepository->createOrUpdate($request->admin_login_url,'setting_system','admin-login-url');
+        $data = $request->except('_token', 'admin_login_url');
+        if ($request->admin_login_url) {
+            $adminsettingRepository->createOrUpdate($request->admin_login_url, 'setting_system', 'admin-login-url');
         }
 
-        $adminsettingRepository->createOrUpdateToJson($data,'backend_settings','backend_settings');
+        $adminsettingRepository->createOrUpdateToJson($data, 'backend_settings', 'backend_settings');
         return redirect()->back();
     }
 

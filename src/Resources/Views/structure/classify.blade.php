@@ -1,6 +1,6 @@
 @extends('cms::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
- classify
+    classify
 @stop
 @section('CSS')
 @stop

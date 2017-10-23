@@ -31,15 +31,16 @@
                                 <li class="">
                                     @endif
                                     @endif
-                                    <a href="?type={{ $type }}&p={!! $section->slug !!}" rel="unit" data-slug="{{ $section->slug }}"
+                                    <a href="?type={{ $type }}&p={!! $section->slug !!}" rel="unit"
+                                       data-slug="{{ $section->slug }}"
                                        class="tpl-left-items">
                                         <span class="module_icon"></span> {{ $section->title }}
                                     </a>
                                 </li>
                                 @endforeach
-                    @else
-                        No Sections
-                    @endif
+                                @else
+                                    No Sections
+                                @endif
             </ul>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
@@ -74,7 +75,9 @@
                         <ul class="editIcons list-unstyled ">
                             @if($current && !$current->is_core)
                                 <li>
-                                    <a data-href="{!! url('/admin/console/backend/sections/delete') !!}" data-key="{!! $current->slug !!}" data-type="Section" class="delete-button btn trashBtn"><i class="fa fa-trash-o"></i></a>
+                                    <a data-href="{!! url('/admin/console/backend/sections/delete') !!}"
+                                       data-key="{!! $current->slug !!}" data-type="Section"
+                                       class="delete-button btn trashBtn"><i class="fa fa-trash-o"></i></a>
                                 </li>
                             @endif
                             <li><a href="#" class="btn copyBtn"><i class="fa fa-clone"></i></a></li>
@@ -166,14 +169,14 @@
     {!! HTML::script('js/dropzone/js/dropzone.js') !!}
     {!! HTML::script('js/bootstrap-select/js/bootstrap-select.min.js') !!}
     <script>
-                Dropzone.options.myAwesomeDropzone = {
-                    init: function() {
-                        this.on("success", function(file) {
-                            location.reload();
+        Dropzone.options.myAwesomeDropzone = {
+            init: function () {
+                this.on("success", function (file) {
+                    location.reload();
 
-                        });
-                    }
-                };
+                });
+            }
+        };
 
         $(document).ready(function () {
 
@@ -204,7 +207,7 @@
 
             var p = "{!! $_GET['p'] or null !!}";
 
-            if(p.length) {
+            if (p.length) {
                 $("a[main-type=" + p + "]").click();
             }
 
