@@ -15,6 +15,6 @@
     {!! HTML::style("/css/preview-template.css") !!}
 @stop
 @section('JS')
-    {!! HTML::script("js/UiElements/ui-preview-setting.js") !!}
+    {!! HTML::script("js/UiElements/ui-preview-setting.js?v=999") !!}
     {!! HTML::script("js/UiElements/ui-settings.js") !!}
 @stop

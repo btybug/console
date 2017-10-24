@@ -1,18 +1,18 @@
 {
-    "name": "sahak.avatar/console",
-    "description": "Console package description",
-    "type": "module",
-    "route": "console",
-    "authors": [
-        {
-            "name": "Eduard",
-            "email": "edo.terakyan@gmail.com"
-        }
-    ],
-    "require": {},
-	"autoload": {
-        "psr-4": {
-            "Sahakavatar\\Console\\": "src/"
-        }
+  "name": "sahak.avatar/console",
+  "description": "Console package description",
+  "type": "module",
+  "route": "console",
+  "authors": [
+    {
+      "name": "Eduard",
+      "email": "edo.terakyan@gmail.com"
     }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Sahakavatar\\Console\\": "src/"
+    }
+  }
 }
