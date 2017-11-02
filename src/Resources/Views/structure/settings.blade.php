@@ -1,4 +1,4 @@
-@extends('cms::layouts.mTabs',['index'=>'structure_console'])
+@extends('btybug::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
     {!! Form::model(null,['class' => 'form-horizontal','files' => true]) !!}
     <div role="tabpanel" class="m-t-10" id="main">

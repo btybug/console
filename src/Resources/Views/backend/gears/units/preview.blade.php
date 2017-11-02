@@ -1,4 +1,4 @@
-@extends('cms::layouts.units')
+@extends('btybug::layouts.units')
 
 @section('content')
     <div class="previewlivesettingifream">

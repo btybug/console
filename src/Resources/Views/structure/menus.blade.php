@@ -1,4 +1,4 @@
-@extends('cms::layouts.mTabs',['index'=>'structure_console'])
+@extends('btybug::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
     {!! HTML::style('css/new-store.css') !!}
     <div class="row">

@@ -1,4 +1,4 @@
-@extends('cms::layouts.admin')
+@extends('btybug::layouts.admin')
 
 @section('content')
     {!! Breadcrumbs::render('template_settings') !!}

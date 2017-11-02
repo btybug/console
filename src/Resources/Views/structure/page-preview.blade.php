@@ -1,4 +1,4 @@
-@extends('cms::layouts.pagesPreview')
+@extends('btybug::layouts.pagesPreview')
 
 @section('content')
     <div class="previewlivesettingifream">

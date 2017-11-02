@@ -1,4 +1,4 @@
-@extends('cms::layouts.admin')
+@extends('btybug::layouts.admin')
 @section('content')
 
     {!! HTML::style('appdata/app/Modules/Cloud/Resources/assets/css/new-store.css') !!}

@@ -1,4 +1,4 @@
-@extends('cms::layouts.mTabs',['index'=>'structure_console'])
+@extends('btybug::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
     classify
 @stop
