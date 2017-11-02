@@ -16,7 +16,7 @@
 
 namespace Btybug\Console\Repository;
 
-use Sahakavatar\Cms\Repositories\GeneralRepository;
+use Btybug\btybug\Repositories\GeneralRepository;
 use Btybug\Console\Models\FormEntries;
 
 /**

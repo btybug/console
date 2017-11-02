@@ -2,12 +2,12 @@
 
 namespace Btybug\Console\Services;
 
-use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
-use Sahakavatar\Cms\Models\ExtraModules\Structures;
-use Sahakavatar\Cms\Models\Templates\Units;
-use Sahakavatar\Cms\Repositories\MenuRepository;
-use Sahakavatar\Cms\Services\CmsItemReader;
-use Sahakavatar\Cms\Services\GeneralService;
+use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
+use Btybug\btybug\Models\ExtraModules\Structures;
+use Btybug\btybug\Models\Templates\Units;
+use Btybug\btybug\Repositories\MenuRepository;
+use Btybug\btybug\Services\CmsItemReader;
+use Btybug\btybug\Services\GeneralService;
 use Btybug\Console\Models\FormEntries;
 use Btybug\Console\Repository\AdminPagesRepository;
 use Btybug\Console\Repository\FieldsRepository;

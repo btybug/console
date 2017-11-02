@@ -1,4 +1,4 @@
-@extends('cms::layouts.mTabs',['index'=>'backend_console'])
+@extends('btybug::layouts.mTabs',['index'=>'backend_console'])
 @section('tab')
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pages_layout">

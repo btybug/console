@@ -4,7 +4,7 @@ namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
+use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
 use Btybug\Console\Services\BackendService;
 
 /**

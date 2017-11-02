@@ -21,9 +21,9 @@ use App\Modules\Settings\Models\LayoutUpload;
 use App\Modules\Users\Models\Roles;
 use File;
 use Illuminate\Http\Request;
-use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
-use Sahakavatar\Cms\Models\Themes\Themes;
-use Sahakavatar\Cms\Models\Widgets as UiElements;
+use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
+use Btybug\btybug\Models\Themes\Themes;
+use Btybug\btybug\Models\Widgets as UiElements;
 use Btybug\Console\Services\VersionsService;
 use view;
 

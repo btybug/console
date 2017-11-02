@@ -7,9 +7,9 @@ use App\Modules\Resources\Models\Validation as validateUpl;
 use File;
 use Illuminate\Http\Request;
 use Resources;
-use Sahakavatar\Cms\Models\Templates\Units;
-use Sahakavatar\Cms\Services\CmsItemReader;
-use Sahakavatar\Cms\Services\CmsItemUploader;
+use Btybug\btybug\Models\Templates\Units;
+use Btybug\btybug\Services\CmsItemReader;
+use Btybug\btybug\Services\CmsItemUploader;
 use View;
 
 

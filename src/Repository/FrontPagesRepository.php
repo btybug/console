@@ -8,7 +8,7 @@
 
 namespace Btybug\Console\Repository;
 
-use Sahakavatar\Cms\Repositories\GeneralRepository;
+use Btybug\btybug\Repositories\GeneralRepository;
 use Sahakavatar\Manage\Models\FrontendPage;
 use Sahakavatar\User\Repository\RoleRepository;
 

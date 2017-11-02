@@ -13,8 +13,8 @@ namespace Btybug\Console\Models;
 
 use File;
 use Illuminate\Http\Request;
-use Sahakavatar\Cms\Helpers\helpers;
-use Sahakavatar\Cms\Models\Templates\Units;
+use Btybug\btybug\Helpers\helpers;
+use Btybug\btybug\Models\Templates\Units;
 use Zipper;
 
 class UnitUpload

@@ -114,7 +114,7 @@
                         </div>
                     </div>
                 </div>
-                {!! Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts::getAdminPageLayoutPlaceholders($page) !!}
+                {!! Btybug\btybug\Models\ContentLayouts\ContentLayouts::getAdminPageLayoutPlaceholders($page) !!}
                 {{--<div class="panel panel-default custompanel m-t-20">--}}
                 {{--<div class="panel-heading">Select Page Layout</div>--}}
                 {{--<div class="panel-body">--}}

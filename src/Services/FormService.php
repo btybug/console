@@ -9,7 +9,7 @@
 
 namespace Btybug\Console\Services;
 
-use Sahakavatar\Cms\Services\GeneralService;
+use Btybug\btybug\Services\GeneralService;
 use Btybug\Console\Repository\FieldsRepository;
 use Btybug\Console\Repository\FormEntriesRepository;
 use Btybug\Console\Repository\FormFieldsRepository;

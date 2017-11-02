@@ -2,8 +2,8 @@
 
 namespace Btybug\Console\Services;
 
-use Sahakavatar\Cms\Models\Themes\Themes;
-use Sahakavatar\Cms\Services\GeneralService;
+use Btybug\btybug\Models\Themes\Themes;
+use Btybug\btybug\Services\GeneralService;
 
 /**
  * Class ThemeService

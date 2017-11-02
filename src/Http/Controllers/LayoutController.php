@@ -12,9 +12,9 @@
 namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Sahakavatar\Cms\Helpers\helpers;
-use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
-use Sahakavatar\Cms\Models\Widgets;
+use Btybug\btybug\Helpers\helpers;
+use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
+use Btybug\btybug\Models\Widgets;
 
 /**
  * Class ModulesController

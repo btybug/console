@@ -23,8 +23,8 @@ use App\Modules\Resources\Models\LayoutUpload;
 use App\Modules\Resources\Models\Validation as thValid;
 use File;
 use Illuminate\Http\Request;
-use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
-use Sahakavatar\Cms\Models\Widgets;
+use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
+use Btybug\btybug\Models\Widgets;
 use Sahakavatar\Modules\Models\Models\AdminPages;
 use view;
 

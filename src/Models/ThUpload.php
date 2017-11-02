@@ -13,7 +13,7 @@ namespace Btybug\Console\Models;
 
 use File;
 use Illuminate\Http\Request;
-use Sahakavatar\Cms\Helpers\helpers;
+use Btybug\btybug\Helpers\helpers;
 use Zipper;
 
 /**

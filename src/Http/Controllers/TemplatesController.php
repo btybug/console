@@ -7,10 +7,10 @@ use App\Modules\Resources\Models\Validation as validateUpl;
 use File;
 use Illuminate\Http\Request;
 use Resources;
-use Sahakavatar\Cms\Models\BackendTpl;
-use Sahakavatar\Cms\Models\BackendTpl as Templates;
-use Sahakavatar\Cms\Services\CmsItemReader;
-use Sahakavatar\Cms\Services\CmsItemUploader;
+use Btybug\btybug\Models\BackendTpl;
+use Btybug\btybug\Models\BackendTpl as Templates;
+use Btybug\btybug\Services\CmsItemReader;
+use Btybug\btybug\Services\CmsItemUploader;
 
 
 class TemplatesController extends Controller

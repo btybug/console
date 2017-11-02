@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Sahakavatar\Cms\Models\Templates\Sections;
-use Sahakavatar\Cms\Services\CmsItemReader;
+use Btybug\btybug\Models\Templates\Sections;
+use Btybug\btybug\Services\CmsItemReader;
 use Btybug\Console\Services\SectionsService;
 use View;
 

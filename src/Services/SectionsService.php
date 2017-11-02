@@ -9,10 +9,10 @@
 
 namespace Btybug\Console\Services;
 
-use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
-use Sahakavatar\Cms\Services\CmsItemReader;
-use Sahakavatar\Cms\Services\CmsItemUploader;
-use Sahakavatar\Cms\Services\GeneralService;
+use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
+use Btybug\btybug\Services\CmsItemReader;
+use Btybug\btybug\Services\CmsItemUploader;
+use Btybug\btybug\Services\GeneralService;
 
 
 class SectionsService extends GeneralService
