@@ -6,14 +6,14 @@
  * Time: 1:31 PM
  */
 
-namespace Sahakavatar\Console\Repository;
+namespace Btybug\Console\Repository;
 
 use Sahakavatar\Cms\Repositories\GeneralRepository;
-use Sahakavatar\Console\Models\Forms;
+use Btybug\Console\Models\Forms;
 
 /**
  * Class FormsRepository
- * @package Sahakavatar\Console\Repository
+ * @package Btybug\Console\Repository
  */
 class FormsRepository extends GeneralRepository
 {

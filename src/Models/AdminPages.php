@@ -1,6 +1,6 @@
 <?php
 
-namespace Sahakavatar\Console\Models;
+namespace Btybug\Console\Models;
 
 //use Sahakavatar\Cms\Models\UiElements;
 use Illuminate\Database\Eloquent\Model;
@@ -209,7 +209,7 @@ class AdminPages extends Model
      */
     public function parent()
     {
-        return $this->belongsTo('Sahakavatar\Console\Models\AdminPages', 'parent_id');
+        return $this->belongsTo('Btybug\Console\Models\AdminPages', 'parent_id');
     }
 
     /**
@@ -217,7 +217,7 @@ class AdminPages extends Model
      */
     public function childs()
     {
-        return $this->hasMany('Sahakavatar\Console\Models\AdminPages', 'parent_id');
+        return $this->hasMany('Btybug\Console\Models\AdminPages', 'parent_id');
     }
 
     public function children()

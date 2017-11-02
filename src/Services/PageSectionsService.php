@@ -7,7 +7,7 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-namespace Sahakavatar\Console\Services;
+namespace Btybug\Console\Services;
 
 use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
 use Sahakavatar\Cms\Services\CmsItemReader;

@@ -1,5 +1,5 @@
 {
-  "name": "sahak.avatar/console",
+  "name": "btybug/console",
   "description": "Console package description",
   "type": "module",
   "route": "console",
@@ -12,7 +12,7 @@
   "require": {},
   "autoload": {
     "psr-4": {
-      "Sahakavatar\\Console\\": "src/"
+      "Btybug\\Console\\": "src/"
     }
   }
 }

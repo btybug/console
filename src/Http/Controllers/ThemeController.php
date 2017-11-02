@@ -9,7 +9,7 @@
  *
  */
 
-namespace Sahakavatar\Console\Http\Controllers;
+namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Themes\BackendTh;
@@ -24,7 +24,7 @@ use Illuminate\Http\Request;
 use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
 use Sahakavatar\Cms\Models\Themes\Themes;
 use Sahakavatar\Cms\Models\Widgets as UiElements;
-use Sahakavatar\Console\Services\VersionsService;
+use Btybug\Console\Services\VersionsService;
 use view;
 
 class ThemeController extends Controller

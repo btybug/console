@@ -1,6 +1,6 @@
 <?php
 
-namespace Sahakavatar\Console\Services;
+namespace Btybug\Console\Services;
 
 use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
 use Sahakavatar\Cms\Models\ExtraModules\Structures;
@@ -8,17 +8,17 @@ use Sahakavatar\Cms\Models\Templates\Units;
 use Sahakavatar\Cms\Repositories\MenuRepository;
 use Sahakavatar\Cms\Services\CmsItemReader;
 use Sahakavatar\Cms\Services\GeneralService;
-use Sahakavatar\Console\Models\FormEntries;
-use Sahakavatar\Console\Repository\AdminPagesRepository;
-use Sahakavatar\Console\Repository\FieldsRepository;
-use Sahakavatar\Console\Repository\FormsRepository;
+use Btybug\Console\Models\FormEntries;
+use Btybug\Console\Repository\AdminPagesRepository;
+use Btybug\Console\Repository\FieldsRepository;
+use Btybug\Console\Repository\FormsRepository;
 use Sahakavatar\Framework\Repository\VersionsRepository;
 use Sahakavatar\Settings\Repository\AdminsettingRepository;
 use Sahakavatar\User\Repository\RoleRepository;
 
 /**
  * Class BackendService
- * @package Sahakavatar\Console\Services
+ * @package Btybug\Console\Services
  */
 class StructureService extends GeneralService
 {

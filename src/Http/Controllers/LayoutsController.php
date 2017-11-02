@@ -16,7 +16,7 @@
  * Time: 9:35 PM
  */
 
-namespace Sahakavatar\Console\Http\Controllers;
+namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Resources\Models\LayoutUpload;

@@ -39,7 +39,7 @@
                                     <i class="fa fa-file-o" aria-hidden="true"></i><span
                                             class="labls">Children Pages</span>
                                     {!! Form::select('child_status',
-                                        \Sahakavatar\Console\Services\StructureService::getAdminPagesChildStatues(),
+                                        \Btybug\Console\Services\StructureService::getAdminPagesChildStatues(),
                                         null,[]) !!}
                                 </div>
                             </div>

@@ -7,7 +7,7 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-namespace Sahakavatar\Console\Http\Requests\Structure;
+namespace Btybug\Console\Http\Requests\Structure;
 
 use Sahakavatar\Cms\Http\Requests\Request;
 

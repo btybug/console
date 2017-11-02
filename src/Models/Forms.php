@@ -6,7 +6,7 @@
  * Time: 6:03 AM
  */
 
-namespace Sahakavatar\Console\Models;
+namespace Btybug\Console\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -51,11 +51,11 @@ class Forms extends Model
      */
     public function fields()
     {
-        return $this->belongsToMany('\Sahakavatar\Console\Models\Fields', 'form_fields', 'form_id', 'field_slug');
+        return $this->belongsToMany('\Btybug\Console\Models\Fields', 'form_fields', 'form_id', 'field_slug');
     }
 
     public function entries()
     {
-        return $this->hasMany('\Sahakavatar\Console\Models\FormEntries', 'form_id', 'id');
+        return $this->hasMany('\Btybug\Console\Models\FormEntries', 'form_id', 'id');
     }
 }

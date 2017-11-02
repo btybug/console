@@ -9,7 +9,7 @@
  *
  */
 
-namespace Sahakavatar\Console\Models;
+namespace Btybug\Console\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Sahakavatar\Cms\Models\Templates\Units;

@@ -1,10 +1,10 @@
-<?php namespace Sahakavatar\Console\Http\Controllers;
+<?php namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Sahakavatar\Cms\Models\Templates\Sections;
 use Sahakavatar\Cms\Services\CmsItemReader;
-use Sahakavatar\Console\Services\SectionsService;
+use Btybug\Console\Services\SectionsService;
 use View;
 
 

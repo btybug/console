@@ -7,7 +7,7 @@
  * Time: 3:40 PM
  */
 
-namespace Sahakavatar\Console\Http\Requests\Structure;
+namespace Btybug\Console\Http\Requests\Structure;
 
 use Sahakavatar\Cms\Http\Requests\Request;
 

@@ -6,7 +6,7 @@
  * Time: 1:26 PM
  */
 
-namespace Sahakavatar\Console\Services;
+namespace Btybug\Console\Services;
 
 use Avatar\Avatar\Repositories\Plugins;
 

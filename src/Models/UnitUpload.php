@@ -9,7 +9,7 @@
  *
  */
 
-namespace Sahakavatar\Console\Models;
+namespace Btybug\Console\Models;
 
 use File;
 use Illuminate\Http\Request;

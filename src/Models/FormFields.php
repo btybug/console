@@ -1,6 +1,6 @@
 <?php
 
-namespace Sahakavatar\Console\Models;
+namespace Btybug\Console\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,11 +17,11 @@ class FormFields extends Model
 
     public function form()
     {
-        return $this->belongsTo(\Sahakavatar\Console\Models\Forms::class, 'form_id');
+        return $this->belongsTo(\Btybug\Console\Models\Forms::class, 'form_id');
     }
 
     public function field()
     {
-        return $this->belongsTo(\Sahakavatar\Console\Models\Fields::class, 'field_slug');
+        return $this->belongsTo(\Btybug\Console\Models\Fields::class, 'field_slug');
     }
 }

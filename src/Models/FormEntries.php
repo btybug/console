@@ -1,6 +1,6 @@
 <?php
 
-namespace Sahakavatar\Console\Models;
+namespace Btybug\Console\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,7 +28,7 @@ class FormEntries extends Model
 
     public function form()
     {
-        return $this->belongsTo(\Sahakavatar\Console\Models\Forms::class, 'form_id');
+        return $this->belongsTo(\Btybug\Console\Models\Forms::class, 'form_id');
     }
 
     public function user()

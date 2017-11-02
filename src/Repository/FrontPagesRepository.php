@@ -6,7 +6,7 @@
  * Time: 1:31 PM
  */
 
-namespace Sahakavatar\Console\Repository;
+namespace Btybug\Console\Repository;
 
 use Sahakavatar\Cms\Repositories\GeneralRepository;
 use Sahakavatar\Manage\Models\FrontendPage;
@@ -14,7 +14,7 @@ use Sahakavatar\User\Repository\RoleRepository;
 
 /**
  * Class AdminPagesRepository
- * @package Sahakavatar\Console\Repository
+ * @package Btybug\Console\Repository
  */
 class FrontPagesRepository extends GeneralRepository
 {

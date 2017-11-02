@@ -1,15 +1,15 @@
 <?php
 
-namespace Sahakavatar\Console\Http\Controllers;
+namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
-use Sahakavatar\Console\Services\BackendService;
+use Btybug\Console\Services\BackendService;
 
 /**
  * Class BackendController
- * @package Sahakavatar\Console\Http\Controllers
+ * @package Btybug\Console\Http\Controllers
  */
 class BackendController extends Controller
 {

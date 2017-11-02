@@ -1,13 +1,13 @@
 <?php
 
-namespace Sahakavatar\Console\Services;
+namespace Btybug\Console\Services;
 
 use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
 use Sahakavatar\Cms\Services\GeneralService;
 
 /**
  * Class BackendService
- * @package Sahakavatar\Console\Services
+ * @package Btybug\Console\Services
  */
 class BackendService extends GeneralService
 {

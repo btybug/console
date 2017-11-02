@@ -1,13 +1,13 @@
-<?php namespace Sahakavatar\Console\Http\Controllers;
+<?php namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Sahakavatar\Cms\Repositories\MenuRepository;
-use Sahakavatar\Console\Http\Requests\Structure\MenuCreateRequest;
-use Sahakavatar\Console\Http\Requests\Structure\MenuDeleteRequest;
-use Sahakavatar\Console\Http\Requests\Structure\MenuEditRequest;
-use Sahakavatar\Console\Repository\AdminPagesRepository;
-use Sahakavatar\Console\Services\StructureService;
+use Btybug\Console\Http\Requests\Structure\MenuCreateRequest;
+use Btybug\Console\Http\Requests\Structure\MenuDeleteRequest;
+use Btybug\Console\Http\Requests\Structure\MenuEditRequest;
+use Btybug\Console\Repository\AdminPagesRepository;
+use Btybug\Console\Services\StructureService;
 use Sahakavatar\User\Repository\RoleRepository;
 
 

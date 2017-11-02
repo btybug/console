@@ -6,10 +6,10 @@
  * Time: 1:31 PM
  */
 
-namespace Sahakavatar\Console\Repository;
+namespace Btybug\Console\Repository;
 
 use Sahakavatar\Cms\Repositories\GeneralRepository;
-use Sahakavatar\Console\Models\FormFields;
+use Btybug\Console\Models\FormFields;
 
 class FormFieldsRepository extends GeneralRepository
 {

@@ -1,16 +1,16 @@
-<?php namespace Sahakavatar\Console\Http\Controllers;
+<?php namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Sahakavatar\Cms\Models\ContentLayouts\ContentLayouts;
 use Sahakavatar\Cms\Services\CmsItemReader;
-use Sahakavatar\Console\Services\PageSectionsService;
+use Btybug\Console\Services\PageSectionsService;
 use View;
 
 
 /**
  * Class PageSectionsController
- * @package Sahakavatar\Console\Http\Controllers
+ * @package Btybug\Console\Http\Controllers
  */
 class PageSectionsController extends Controller
 {

@@ -9,12 +9,12 @@
  *
  */
 
-namespace Sahakavatar\Console\Http\Controllers;
+namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Sahakavatar\Console\Http\Requests\Account\GeneralSettingsRequest;
-use Sahakavatar\Console\Repository\AdminPagesRepository;
+use Btybug\Console\Http\Requests\Account\GeneralSettingsRequest;
+use Btybug\Console\Repository\AdminPagesRepository;
 use Sahakavatar\Settings\Repository\AdminsettingRepository;
 
 class GeneralController extends Controller

@@ -1,4 +1,4 @@
-<?php namespace Sahakavatar\Console\Http\Controllers;
+<?php namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Console\Models\UnitUpload;
