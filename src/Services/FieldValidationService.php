@@ -8,7 +8,7 @@
 
 namespace Btybug\Console\Services;
 
-use Avatar\Avatar\Repositories\Plugins;
+use Btybug\Installer\Repositories\Plugins;
 
 
 /**

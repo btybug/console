@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Forms
- * @package Sahakavatar\Modules\Models\Models
+ * @package Btybug\Modules\Models\Models
  */
 class Forms extends Model
 {

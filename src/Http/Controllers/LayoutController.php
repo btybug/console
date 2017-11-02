@@ -18,7 +18,7 @@ use Btybug\btybug\Models\Widgets;
 
 /**
  * Class ModulesController
- * @package Sahakavatar\Modules\Models\Http\Controllers
+ * @package Btybug\Modules\Models\Http\Controllers
  */
 class LayoutController extends Controller
 {

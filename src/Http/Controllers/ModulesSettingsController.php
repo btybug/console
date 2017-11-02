@@ -21,13 +21,13 @@ use File;
 use Illuminate\Http\Request;
 use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
 use Btybug\btybug\Services\CmsItemReader;
-use Sahakavatar\Modules\Models\Models\AdminPages;
-use Sahakavatar\Modules\Models\Models\Forms;
-use Sahakavatar\Modules\Models\Models\Routes;
+use Btybug\Modules\Models\Models\AdminPages;
+use Btybug\Modules\Models\Models\Forms;
+use Btybug\Modules\Models\Models\Routes;
 
 /**
  * Class ModulesController
- * @package Sahakavatar\Modules\Models\Http\Controllers
+ * @package Btybug\Modules\Models\Http\Controllers
  */
 class ModulesSettingsController extends Controller
 {

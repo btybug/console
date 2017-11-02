@@ -33,6 +33,6 @@ class FormEntries extends Model
 
     public function user()
     {
-        return $this->belongsTo('Sahakavatar\User\User', 'user_id');
+        return $this->belongsTo('Btybug\User\User', 'user_id');
     }
 }

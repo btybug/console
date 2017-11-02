@@ -25,7 +25,7 @@ use File;
 use Illuminate\Http\Request;
 use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
 use Btybug\btybug\Models\Widgets;
-use Sahakavatar\Modules\Models\Models\AdminPages;
+use Btybug\Modules\Models\Models\AdminPages;
 use view;
 
 

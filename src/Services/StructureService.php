@@ -12,9 +12,9 @@ use Btybug\Console\Models\FormEntries;
 use Btybug\Console\Repository\AdminPagesRepository;
 use Btybug\Console\Repository\FieldsRepository;
 use Btybug\Console\Repository\FormsRepository;
-use Sahakavatar\Framework\Repository\VersionsRepository;
-use Sahakavatar\Settings\Repository\AdminsettingRepository;
-use Sahakavatar\User\Repository\RoleRepository;
+use Btybug\Framework\Repository\VersionsRepository;
+use Btybug\Settings\Repository\AdminsettingRepository;
+use Btybug\User\Repository\RoleRepository;
 
 /**
  * Class BackendService

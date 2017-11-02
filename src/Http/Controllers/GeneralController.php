@@ -15,7 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Btybug\Console\Http\Requests\Account\GeneralSettingsRequest;
 use Btybug\Console\Repository\AdminPagesRepository;
-use Sahakavatar\Settings\Repository\AdminsettingRepository;
+use Btybug\Settings\Repository\AdminsettingRepository;
 
 class GeneralController extends Controller
 {

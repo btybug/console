@@ -29,13 +29,13 @@ use Btybug\Console\Repository\VersionsRepository;
 use Btybug\Console\Services\FieldValidationService;
 use Btybug\Console\Services\FormService;
 use Btybug\Console\Services\StructureService;
-use Sahakavatar\Settings\Repository\AdminsettingRepository;
-use Sahakavatar\User\Services\RoleService;
-use Sahakavatar\User\Services\UserService;
+use Btybug\Settings\Repository\AdminsettingRepository;
+use Btybug\User\Services\RoleService;
+use Btybug\User\Services\UserService;
 
 /**
  * Class ModulesController
- * @package Sahakavatar\Modules\Models\Http\Controllers
+ * @package Btybug\Modules\Models\Http\Controllers
  */
 class StructureController extends Controller
 {

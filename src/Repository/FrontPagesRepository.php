@@ -9,8 +9,8 @@
 namespace Btybug\Console\Repository;
 
 use Btybug\btybug\Repositories\GeneralRepository;
-use Sahakavatar\Manage\Models\FrontendPage;
-use Sahakavatar\User\Repository\RoleRepository;
+use Btybug\Manage\Models\FrontendPage;
+use Btybug\User\Repository\RoleRepository;
 
 /**
  * Class AdminPagesRepository

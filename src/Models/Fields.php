@@ -13,7 +13,7 @@ namespace Btybug\Console\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Btybug\btybug\Models\Templates\Units;
-use Sahakavatar\User\User;
+use Btybug\User\User;
 
 class Fields extends Model
 {

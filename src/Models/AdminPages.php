@@ -4,7 +4,7 @@ namespace Btybug\Console\Models;
 
 //use Btybug\btybug\Models\UiElements;
 use Illuminate\Database\Eloquent\Model;
-use Sahakavatar\User\Models\Roles;
+use Btybug\User\Models\Roles;
 
 /**
  * Class AdminPages
@@ -171,7 +171,7 @@ class AdminPages extends Model
 
     public function permission_role()
     {
-        return $this->hasMany('Sahakavatar\User\Models\PermissionRole', 'page_id', 'id');
+        return $this->hasMany('Btybug\User\Models\PermissionRole', 'page_id', 'id');
     }
 
     public static function PagesByModulesParent($module)

@@ -8,7 +8,7 @@ use Btybug\Console\Http\Requests\Structure\MenuDeleteRequest;
 use Btybug\Console\Http\Requests\Structure\MenuEditRequest;
 use Btybug\Console\Repository\AdminPagesRepository;
 use Btybug\Console\Services\StructureService;
-use Sahakavatar\User\Repository\RoleRepository;
+use Btybug\User\Repository\RoleRepository;
 
 
 class MenusController extends Controller
