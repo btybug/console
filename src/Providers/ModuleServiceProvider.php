@@ -54,37 +54,8 @@ class ModuleServiceProvider extends ServiceProvider
                     'title' => 'Fields',
                     'url' => '/admin/console/structure/fields',
                 ]
-            ], 'backend_console' => [
-                [
-                    'title' => 'Theme',
-                    'url' => '/admin/console/backend/theme',
-                ],
-                [
-                    'title' => 'Units',
-                    'url' => '/admin/console/backend/units',
-                ],
             ],
             'backend_gears' => [
-                [
-                    'title' => 'Templates',
-                    'url' => '/admin/console/backend/templates',
-                    'icon' => 'fa fa-cub'
-                ],
-                [
-                    'title' => 'Page Section',
-                    'url' => '/admin/console/backend/page-section',
-                    'icon' => 'fa fa-cub'
-                ],
-                [
-                    'title' => 'Sections',
-                    'url' => '/admin/console/backend/sections',
-                    'icon' => 'fa fa-cub'
-                ],
-                [
-                    'title' => 'Units',
-                    'url' => '/admin/console/backend/units',
-                    'icon' => 'fa fa-cub'
-                ],
                 [
                     'title' => 'General Fields',
                     'url' => '/admin/console/backend/general-fields',
@@ -114,7 +85,7 @@ class ModuleServiceProvider extends ServiceProvider
         ]);
 
         //TODO; remove when finish all
-//        \Btybug\btybug\Models\Routes::registerPages('sahak.avatar/console');
+//        \Btybug\Cms\Models\Routes::registerPages('sahak.avatar/console');
     }
 
     /**

@@ -16,8 +16,8 @@
 
 namespace Btybug\Console\Http\Requests\Structure;
 
-use Btybug\btybug\Http\Requests\Request;
-use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
+use Btybug\Cms\Http\Requests\Request;
+use Btybug\Cms\Models\ContentLayouts\ContentLayouts;
 
 class SavePageSettingsRequest extends Request
 {

@@ -1,0 +1,26 @@
+{
+  "header_unit": "58d0f2d9858ae.58d0f2d9a95df",
+  "header_enabled": "1",
+  "footer_unit": null,
+  "footer_enabled": "1",
+  "backend_page_section": "backend_two_cols.two_def_4d4d4d4d",
+  "placeholders": {
+    "left_bar": "58d166ae1246f.58d166ae3d705"
+  }
+}
+{
+  "header": "1",
+  "selcteunit": null,
+  "header_unit": "58d0f2d9858ae.58d0f2d9a95df",
+  "backend_page_section": "default_page_section.main_v",
+  "placeholders": {
+    "left_bar": {
+      "enable": "1",
+      "value": "58d166ae1246f.58d166ae3d705"
+    },
+    "right_bar": {
+      "enable": "0",
+      "value": null
+    }
+  }
+},

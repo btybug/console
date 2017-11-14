@@ -13,10 +13,10 @@ namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
-use Btybug\btybug\Models\ExtraModules\Structures;
-use Btybug\btybug\Models\Routes;
-use Btybug\btybug\Services\CmsItemReader;
+use Btybug\Cms\Models\ContentLayouts\ContentLayouts;
+use Btybug\Cms\Models\ExtraModules\Structures;
+use Btybug\Cms\Models\Routes;
+use Btybug\Cms\Services\CmsItemReader;
 use Btybug\Console\Http\Requests\Structure\FieldCreateRequest;
 use Btybug\Console\Http\Requests\Structure\FormCreateRequest;
 use Btybug\Console\Http\Requests\Structure\FormSettingsUpdateRequest;
@@ -94,12 +94,12 @@ class StructureController extends Controller
         AdminPagesRepository $adminPagesRepository
     )
     {
-        $cotnentData = $request->only('header', 'header_unit', 'backend_page_section', 'placeholders');
-        $data = $request->except('_token', 'type', 'tags', 'classify', 'header', 'header_unit', 'backend_page_section', 'placeholders');
+        $cotnentData = $request->get('placeholders');
+        $data = $request->except('_token', 'type', 'tags', 'classify', 'header_unit', 'backend_page_section', 'placeholders');
         if (isset($data['url'])) {
             (starts_with($data['url'], '/')) ? false : $data['url'] = "/" . $data['url'];
         }
-        $data['settings'] = json_encode($cotnentData, true);
+        $data['settings'] = json_encode(['placeholders' => $cotnentData], true);
         $adminPagesRepository->update($id, $data);
         return redirect()->to('/admin/console/structure/pages')->with('message', 'Successfully Updated Page');
     }

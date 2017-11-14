@@ -1,27 +1,19 @@
 @if($page)
     {!! Form::model($page,['id' => 'page_settings_form']) !!}
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="pull-right">
-                <a data-href="{!! url('/admin/console/structure/pages/page-test-preview/'.
-                $page->id."?pl_live_settings=page_live&pl=" . $page->page_layout . '&' . $placeholders) !!}"
-                   class="live-preview-btn"><i class="fa fa-eye" aria-hidden="true"></i> View
-                </a>
-                {{ Form::button('<i class="fa fa-check" aria-hidden="true"></i> Save', array('type' => 'submit', 'class' => 'save_btn')) }}
-            </div>
-        </div>
-    </div>
+    {{--<div class="row">--}}
+        {{--<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">--}}
+            {{--<div class="pull-right">--}}
+                {{--<a data-href="{!! url('/admin/console/structure/pages/page-test-preview/'.--}}
+                {{--$page->id."?pl_live_settings=page_live&pl=" . $page->page_layout . '&' . $placeholders) !!}"--}}
+                   {{--class="live-preview-btn"><i class="fa fa-eye" aria-hidden="true"></i> View--}}
+                {{--</a>--}}
+                {{--{{ Form::button('<i class="fa fa-check" aria-hidden="true"></i> Save', array('type' => 'submit', 'class' => 'save_btn')) }}--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
     <div class="row">
         <div class="col-xs-12 col-sm-9 connected" data-bbsortable="target">
-
-            <div class="panel panel-default custompanel m-t-20">
-                <div class="panel-heading"> Page Content</div>
-                <div class="panel-body published_1">
-                    <div class="iframe-page-content">
-                        <iframe src="{!! url($page->url) !!}"></iframe>
-                    </div>
-                </div>
-            </div>
+            {{--{!! Btybug\Cms\Models\ContentLayouts\ContentLayouts::getAdminPageLayoutPlaceholders($page) !!}--}}
 
             <div class="panel panel-default custompanel m-t-20">
                 <div class="panel-heading"> Page Info</div>
@@ -46,11 +38,29 @@
                                         </div>
                                     </div>
                                     <div class="row rows">
+                                        <div class="form-group">
+                                            <label>Page Icon</label>
+
+                                            <div class="input-group">
+                                                {!! Form::text('page_icon',null,['class' => 'form-control icp icp-auto','data-placement' => 'bottomRight']) !!}
+                                                <span style="height: 34px;width: 60px;" class="pull-left input-group-addon"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            {!! Btybug\Cms\Models\ContentLayouts\ContentLayouts::getAdminPageLayout($page) !!}
+            {!! Btybug\Cms\Models\ContentLayouts\ContentLayouts::getAdminPageLayoutPlaceholders($page) !!}
+
+            <div class="panel panel-default custompanel m-t-20">
+                <div class="panel-heading">Main Content
+                </div>
+                <div class="panel-body template_body">
+                    Main content
                 </div>
             </div>
 
@@ -81,58 +91,13 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-3 create connected" data-bbsortable="source">
-            @if($page->type != 'classify' && $page->type != 'tags')
-                <div class="panel panel-default custompanel m-t-20">
-                    <div class="panel-heading"> Page Tags</div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
-                                {!! Form::text('tags','',['class' => 'form-control','id' =>'tags']) !!}
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 m-t-15">
-                                <div>
-                                    All Tags
-                                </div>
-                                <ul class="list-inline" id="temp">
-                                    @if (count($tags) > 0)
-                                        @foreach ($tags as $tag)
-                                            <li style="margin-top:5px;">
-                                                <div class="btn btn-default">
-                                                    {{ $tag->name }}
-                                                    <a data-key="{!! $tag->id.'.'.$page->id !!}"
-                                                       data-type="{!! $tag->name !!} Tag"
-                                                       class="delete-button"
-                                                       data-href="{{ url('admin/manage/frontend/pages/detach') }}">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    @endif
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+            <div class="panel panel-default custompanel m-t-20">
+                <div class="panel-heading">General</div>
+                <div class="panel-body">
+                    <a href="javascript:void(0)" class="btn btn-info btn-block full-page-view m-b-5">Full Preview</a>
+                    {{ Form::submit('Save', array('class' => 'save_btn m-b-5 btn-block','style' => "width:100%;")) }}
                 </div>
-                {!! Btybug\btybug\Models\ContentLayouts\ContentLayouts::getAdminPageLayoutPlaceholders($page) !!}
-                {{--<div class="panel panel-default custompanel m-t-20">--}}
-                {{--<div class="panel-heading">Select Page Layout</div>--}}
-                {{--<div class="panel-body">--}}
-                {{--<div class="row">--}}
-                {{--</div>--}}
-                {{--<div class="col-md-3">--}}
-                {{--{!! BBbutton('page_sections','page_section','Select Page Layout',['class'=>'btn selectGrayBtn rightSelectBtn change-layout','data-type'=>'frontend','model' => $page->page_section]) !!}--}}
-                {{--</div>--}}
-                {{--<div class="col-md-12 layout-data">--}}
-                {{--<p>Layout Data</p>--}}
-                {{--<p data-key="title">Title:<code class="language-php"></code></p>--}}
-                {{--<p data-key="author">Author:<code class="language-php"></code></p>--}}
-                {{--<p data-key="sidebars">Sidebars:<code class="language-php"></code></p>--}}
-                {{--<p data-key="id">Variation:<code class="language-php"></code></p>--}}
-                {{--</div>--}}
-                {{--</div>--}}
-                {{--</div>--}}
-            @endif
+            </div>
         </div>
     </div>
     {!! Form::close() !!}
@@ -146,7 +111,9 @@
 @endif
 
 @section('CSS')
-    {!! HTML::style('/css/create_pages.css') !!}
+    {!! HTML::style('public/css/fontawesome-iconpicker.min.css') !!}
+    {!! HTML::style('public/css/create_pages.css') !!}
+
     <style>
         #main-wrapper {
             min-height: 1000px;
@@ -174,12 +141,21 @@
     </style>
 @stop
 @section('JS')
-    {!! HTML::script("/js/UiElements/bb_styles.js?v.5") !!}
-    {!! HTML::script('/js/page-setting.js') !!}
-    {!! HTML::script("/js/UiElements/bb_div.js?v.5") !!}
-    {!! HTML::script('/js/tinymice/tinymce.min.js') !!}
+    {!! HTML::script("public/js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script('public/js/page-setting.js') !!}
+    {!! HTML::script("public/js/UiElements/bb_div.js?v.5") !!}
+    {!! HTML::script('public/js/tinymice/tinymce.min.js') !!}
+    {!! HTML::script('public/js/fontawesome-iconpicker.min.js') !!}
+
     <script>
 
+        $(function (){
+            $('.icp-auto').iconpicker();
+
+            $('.icp').on('iconpickerSelected', function(e) {
+                $(this).attr("value", e.iconpickerValue);
+            });
+        });
         $(document).ready(function () {
             tinymce.init({
                 selector: '#main_content', // change this value according to your HTML

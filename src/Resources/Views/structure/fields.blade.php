@@ -1,4 +1,4 @@
-@extends('btybug::layouts.mTabs',['index'=>'structure_console'])
+@extends('cms::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
     <div class="row m-b-10">
         <h3>All Fields</h3>
@@ -71,7 +71,7 @@
 @stop
 @section('JS')
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    {!! HTML::script("js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script("public/js/UiElements/bb_styles.js?v.5") !!}
     <script>
         $(document).ready(function () {
             $.ajaxSetup({

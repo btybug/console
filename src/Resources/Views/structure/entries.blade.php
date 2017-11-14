@@ -1,4 +1,4 @@
-@extends('btybug::layouts.admin')
+@extends('cms::layouts.admin')
 @section('content')
     <div class="row m-b-10">
         <h3>All Entries</h3>
@@ -65,7 +65,7 @@
 
 @stop
 @section('JS')
-    {!! HTML::script("js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script("public/js/UiElements/bb_styles.js?v.5") !!}
     <script>
         $(document).ready(function () {
             $('body').on('click', '.show-entry-data', function () {

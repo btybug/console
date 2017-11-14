@@ -16,7 +16,7 @@
 
 namespace Btybug\Console\Repository;
 
-use Btybug\btybug\Repositories\GeneralRepository;
+use Btybug\Cms\Repositories\GeneralRepository;
 use Btybug\Console\Models\FormEntries;
 
 /**

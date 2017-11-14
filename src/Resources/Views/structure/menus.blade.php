@@ -1,6 +1,6 @@
-@extends('btybug::layouts.mTabs',['index'=>'structure_console'])
+@extends('cms::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
-    {!! HTML::style('css/new-store.css') !!}
+    {!! HTML::style('public/css/new-store.css') !!}
     <div class="row">
 
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 cms_module_list">
@@ -177,7 +177,7 @@
     @include('cms::_partials.delete_modal')
 @stop
 @section('CSS')
-    {!! HTML::style('js/bootstrap-select/css/bootstrap-select.min.css') !!}
+    {!! HTML::style('public/js/bootstrap-select/css/bootstrap-select.min.css') !!}
     <style>
         .child-tpl {
             width: 95% !important;
@@ -194,8 +194,8 @@
     </style>
 @stop
 @section('JS')
-    {!! HTML::script('js/dropzone/js/dropzone.js') !!}
-    {!! HTML::script('js/bootstrap-select/js/bootstrap-select.min.js') !!}
+    {!! HTML::script('public/js/dropzone/js/dropzone.js') !!}
+    {!! HTML::script('public/js/bootstrap-select/js/bootstrap-select.min.js') !!}
     <script>
         Dropzone.options.myAwesomeDropzone = {
             init: function () {

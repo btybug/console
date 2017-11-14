@@ -4,8 +4,10 @@ namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
+use Btybug\Cms\Models\ContentLayouts\ContentLayouts;
 use Btybug\Console\Services\BackendService;
+use Btybug\Framework\Repository\VersionsRepository;
+use Btybug\Settings\Repository\AdminsettingRepository;
 
 /**
  * Class BackendController
@@ -75,6 +77,23 @@ class BackendController extends Controller
     /**
      * @param $slug
      */
+    public function settings()
+    {
+        $adminsettings = new AdminsettingRepository();
+        $settings = $adminsettings->getSettings('backend_settings', 'backend_settings');
+        $settings = json_decode($settings->val, true);
+        return view('console::backend.settings', compact('settings'));
+
+    }
+
+//{"header":"1","selcteunit":null,"header_unit":"58d0f2d9858ae.58d0f2d9a95df","backend_page_section":"default_page_section.main_v","placeholders":{"left_bar":{"enable":"1","value":"58d166ae1246f.58d166ae3d705"},"right_bar":{"enable":"0","value":null}}}
+    public function postSaveSettings(Request $request)
+    {
+        $adminsettings = new AdminsettingRepository();
+        $adminsettings->createOrUpdateToJson($request->except('_token'), 'backend_settings', 'backend_settings');
+        return redirect()->back()->with('message', 'sucsses');
+    }
+
     public function getSettings($slug)
     {
         if ($slug) {
@@ -114,4 +133,20 @@ class BackendController extends Controller
         $result = $backendService->makeActive($data);
         return \Response::json(['error' => $result]);
     }
+    public function getCssJs(VersionsRepository $versionsRepository, AdminsettingRepository $adminsettingRepository)
+    {
+        $cssData = $versionsRepository->wherePluck('type', 'css', 'name', 'id')->toArray();
+        $jsData = $versionsRepository->getJSLiveLinks(true)->toArray();
+        $model = $adminsettingRepository->getVersionsSettings('versions', 'backend');
+        return view('console::backend.css_js', compact(['cssData', 'model', 'jsData']));
+    }
+
+    public function postCssJs(Request $request, AdminsettingRepository $adminsettingRepository, SettingsService $service)
+    {
+        $data = $request->except('_token');
+        $adminsettingRepository->createOrUpdateToJson($data, 'versions', 'backend');
+
+        return back()->with('message', 'Settings are saved');
+    }
+
 }

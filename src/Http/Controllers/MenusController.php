@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Btybug\btybug\Repositories\MenuRepository;
+use Btybug\Cms\Repositories\MenuRepository;
 use Btybug\Console\Http\Requests\Structure\MenuCreateRequest;
 use Btybug\Console\Http\Requests\Structure\MenuDeleteRequest;
 use Btybug\Console\Http\Requests\Structure\MenuEditRequest;
@@ -14,18 +14,13 @@ use Btybug\User\Repository\RoleRepository;
 class MenusController extends Controller
 {
     public function getIndex(
-        Request $request,
-        StructureService $structureService,
         RoleRepository $roleRepository,
         MenuRepository $menuRepository
     )
     {
-        $slug = $request->p;
         $menus = $menuRepository->getWhereNotPlugins();
-        $roles = $roleRepository->getAll();
-        $menu = $structureService->getMenuByRequestOrFirst($request);
 
-        return view('console::structure.menus', compact('menus', 'roles', 'menu', 'slug'));
+        return view('console::structure.menus.index', compact('menus'));
     }
 
     public function postCreate(

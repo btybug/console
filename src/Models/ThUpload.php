@@ -13,7 +13,7 @@ namespace Btybug\Console\Models;
 
 use File;
 use Illuminate\Http\Request;
-use Btybug\btybug\Helpers\helpers;
+use Btybug\Cms\Helpers\helpers;
 use Zipper;
 
 /**

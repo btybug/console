@@ -1,4 +1,4 @@
-@extends('btybug::layouts.admin')
+@extends('cms::layouts.admin')
 @section('content')
     <div class="col-md-12" id="add-new-fields">
         {!! Form::open(['url'=>'/admin/console/structure/fields/new','class' => 'form-horizontal']) !!}
@@ -170,7 +170,7 @@
     </style>
 @stop
 @section('JS')
-    {!! HTML::script("js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script("public/js/UiElements/bb_styles.js?v.5") !!}
     <script>
         var dd = console.log;
         var activefieldtype = ''

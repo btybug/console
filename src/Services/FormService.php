@@ -9,7 +9,7 @@
 
 namespace Btybug\Console\Services;
 
-use Btybug\btybug\Services\GeneralService;
+use Btybug\Cms\Services\GeneralService;
 use Btybug\Console\Repository\FieldsRepository;
 use Btybug\Console\Repository\FormEntriesRepository;
 use Btybug\Console\Repository\FormFieldsRepository;

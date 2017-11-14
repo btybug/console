@@ -9,10 +9,10 @@
 
 namespace Btybug\Console\Services;
 
-use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
-use Btybug\btybug\Services\CmsItemReader;
-use Btybug\btybug\Services\CmsItemUploader;
-use Btybug\btybug\Services\GeneralService;
+use Btybug\Cms\Models\ContentLayouts\ContentLayouts;
+use Btybug\Cms\Services\CmsItemReader;
+use Btybug\Cms\Services\CmsItemUploader;
+use Btybug\Cms\Services\GeneralService;
 
 
 class SectionsService extends GeneralService

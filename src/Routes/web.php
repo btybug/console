@@ -13,6 +13,14 @@
 
 Route::get('/', 'ModulesController@getIndexUploads');
 Route::get('/modules', "ModulesController@getIndex");
+
+Route::group(['prefix' => 'settings'], function () {
+    Route::get('/', 'SettingsController@settings');
+    Route::post('/', 'SettingsController@postSaveSettings');
+    Route::post('/version', 'SettingsController@postVersion');
+});
+
+
 Route::get('/optimisation', function () {
     Artisan::call('plugin:optimaze');
 
@@ -105,54 +113,10 @@ Route::group(['prefix' => 'config'], function () {
 });
 Route::group(['prefix' => 'backend'], function () {
     Route::get('/', 'BackendController@getIndex');
-    // page section
-    Route::group(['prefix' => 'page-section'], function () {
-        Route::get('/', 'PageSectionsController@getIndex');
-        Route::get('/settings/{slug}', 'PageSectionsController@getSettings');
-        Route::post('/settings/{slug}/{save?}', 'PageSectionsController@postSettings');
-        Route::post('/make-active', 'PageSectionsController@postMakeActive');
-        Route::post('/upload', 'PageSectionsController@postUpload');
-        Route::post('/delete-variation', 'PageSectionsController@postDeleteVariation');
-        Route::post('/delete', 'PageSectionsController@postDelete');
-    });
-
-    //admin/console/backend/templates
-    Route::group(['prefix' => 'h-f'], function () {
-        Route::get('/', 'HfController@getIndex');
-        Route::get('/front-themes', 'HfController@gatFrontThemes');
-        Route::get('/front-themes-activate/{slug}', 'HfController@activateFrontTheme');
-        Route::get('/tpl-variations/{slug}', 'HfController@getTplVariations');
-        Route::post('/tpl-variations/{slug}', 'HfController@postTplVariations');
-        Route::post('/get-variations', 'HfController@postGetVariations');
-        Route::post('/edit-variation', 'HfController@postEditVariation');
-        Route::get('/delete-variation/{slug}', 'HfController@getDeleteVariation');
-        Route::get('/settings-live/{slug}', 'HfController@TemplatePerview');
-        Route::get('/settings-iframe/{slug}/{page_id}/{edit?}', 'HfController@TemplatePerviewIframe');
-        Route::get('/settings-edit-theme/{slug}/{settings?}', 'HfController@TemplatePerviewEditIframe');
-        Route::post('/settings/{id}/{save?}', 'HfController@postSettings');
-
-
-        Route::post('/new-type', 'HfController@postNewType');
-        Route::post('/delete-type', 'HfController@postDeleteType');
-        Route::post('/delete', 'HfController@postDelete');
-        Route::post('/upload-template', 'HfController@postUploadTemplate');
-        Route::post('/templates-with-type', 'HfController@postTemplatesWithType');
-        Route::post('/templates-in-modal', 'HfController@postTemplatesInModal');
-    });
-    Route::get('/layouts', 'LayoutController@getBackendIndex');
-    Route::get('/main-body', 'MainBodyController@getBackendIndex');
-
-
-    //units
-    Route::group(['prefix' => 'units'], function () {
-        Route::get('/', 'UnitsController@getIndex');
-        Route::post('/upload', 'UnitsController@postUploadUnit');
-        Route::post('/delete', 'UnitsController@postDelete');
-        Route::get('/settings/{slug?}', 'UnitsController@getSettings');
-        Route::get('/settings-iframe/{slug}/{settings?}', 'UnitsController@unitPreviewIframe');
-        Route::post('/settings/{id}/{save?}', 'UnitsController@postSettings');
-        Route::post('/delete-variation', 'UnitsController@postDeleteVariation');
-    });
+    Route::get('/settings', 'BackendController@settings');
+    Route::post('/settings', 'BackendController@postSaveSettings');
+    Route::get('/css-js', 'BackendController@getCssJs');
+    Route::post('/css-js', 'BackendController@postCssJs');
 
     //field units
     Route::group(['prefix' => 'general-fields'], function () {
@@ -166,38 +130,6 @@ Route::group(['prefix' => 'backend'], function () {
         Route::post('/delete-variation', 'FieldUnitsController@postDeleteVariation');
     });
     Route::get('/special-fields', 'FieldUnitsController@getSpecialFields');
-
-    //sections
-    Route::group(['prefix' => 'sections'], function () {
-        Route::get('/', 'SectionsController@getIndex');
-        Route::post('/upload', 'SectionsController@postUpload');
-        Route::get('/settings/{slug?}', 'SectionsController@getSettings');
-        Route::get('/settings-iframe/{slug}/{settings?}', 'SectionsController@unitPreviewIframe');
-        Route::post('/settings/{id}/{save?}', 'SectionsController@postSettings');
-        Route::post('/delete-variation', 'SectionsController@postDeleteVariation');
-        Route::post('/delete', 'SectionsController@postDelete');
-    });
-
-    Route::group(['prefix' => 'templates'], function () {
-        Route::get('/', 'TemplatesController@getIndex');
-        Route::post('/upload', 'TemplatesController@postUpload');
-        Route::get('/settings/{slug?}', 'TemplatesController@getSettings');
-
-        Route::get('/settings-iframe/{slug}/{settings?}', 'TemplatesController@previewIframe');
-        Route::post('/settings/{id}/{save?}', 'TemplatesController@postSettings');
-        Route::post('/delete-variation', 'TemplatesController@postDeleteVariation');
-        Route::post('/delete', 'TemplatesController@postDelete');
-    });
-    Route::group(['prefix' => 'theme'], function () {
-        Route::get('/', 'ThemeController@getIndex');
-        Route::post('/make-active', 'ThemeController@postMakeActive');
-        Route::get('/settings/{slug}', 'ThemeController@getSettings');
-        Route::post('/settings/{slug}/{save?}', 'ThemeController@postThemeSettings');
-        Route::post('/edit/live-save', 'ThemeController@postLiveSave');
-        Route::post('/theme-edit/checkboxes', 'ThemeController@postEditCheckboxes');
-        Route::post('/upload', 'ThemeController@postUploadTheme');
-        Route::post('/delete', 'ThemeController@postDeleteTheme');
-    });
 
 //    Route::get('/layouts', 'BackendController@getLayouts');
 //    Route::get('/units', 'BackendController@getUnits');

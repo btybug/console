@@ -1,4 +1,4 @@
-@extends('btybug::layouts.admin')
+@extends('cms::layouts.admin')
 @section('content')
 
     @include('console::structure._partials.new_form_modal')
@@ -1599,29 +1599,29 @@
     <!-- /.modal -->
 @section('CSS')
 
-    {!! HTML::style('js/bootstrap-select/css/bootstrap-select.min.css') !!}
-    {!! HTML::style('js/Bootstrap-Form-Builder3/assets/css/custom.css') !!}
-    {!! HTML::style('js/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') !!}
-    {!! HTML::style('js/bootstrap-touchspin/css/jquery.bootstrap-touchspin.css') !!}
-    {!! HTML::style('js/bootstrap-star-rating/css/star-rating.css') !!}
-    {!! HTML::style('js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') !!}
-    {!! HTML::style('js/gridstack/css/gridstack.min.css') !!}
-    {!! HTML::style('js/animate/css/animate.css') !!}
+    {!! HTML::style('public/js/bootstrap-select/css/bootstrap-select.min.css') !!}
+    {!! HTML::style('public/js/Bootstrap-Form-Builder3/assets/css/custom.css') !!}
+    {!! HTML::style('public/js/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') !!}
+    {!! HTML::style('public/js/bootstrap-touchspin/css/jquery.bootstrap-touchspin.css') !!}
+    {!! HTML::style('public/js/bootstrap-star-rating/css/star-rating.css') !!}
+    {!! HTML::style('public/js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') !!}
+    {!! HTML::style('public/js/gridstack/css/gridstack.min.css') !!}
+    {!! HTML::style('public/js/animate/css/animate.css') !!}
 
-    {!! HTML::style('css/form-builder.css?v=4.82') !!}
+    {!! HTML::style('public/css/form-builder.css?v=4.82') !!}
     <style data-css="load"></style>
 @stop
 @section('JS')
-    {!! HTML::script('js/bootstrap-select/js/bootstrap-select.min.js') !!}
+    {!! HTML::script('public/js/bootstrap-select/js/bootstrap-select.min.js') !!}
     {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js') !!}
-    {!! HTML::script('js/gridstack/js/gridstack2.min.js') !!}
-    {!! HTML::script('js/bootbox/js/bootbox.min.js') !!}
-    {!! HTML::script('js/bootstrap-touchspin/js/jquery.bootstrap-touchspin.js') !!}
-    {!! HTML::script('js/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') !!}
-    {!! HTML::script('js/bootstrap-datetimepicker/js/moment.min.js') !!}
-    {!! HTML::script('js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') !!}
-    {!! HTML::script('js/bootstrap-validator/js/validator.js') !!}
-    {!! HTML::script('js/bootstrap-star-rating/js/star-rating.js') !!}
+    {!! HTML::script('public/js/gridstack/js/gridstack2.min.js') !!}
+    {!! HTML::script('public/js/bootbox/js/bootbox.min.js') !!}
+    {!! HTML::script('public/js/bootstrap-touchspin/js/jquery.bootstrap-touchspin.js') !!}
+    {!! HTML::script('public/js/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') !!}
+    {!! HTML::script('public/js/bootstrap-datetimepicker/js/moment.min.js') !!}
+    {!! HTML::script('public/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') !!}
+    {!! HTML::script('public/js/bootstrap-validator/js/validator.js') !!}
+    {!! HTML::script('public/js/bootstrap-star-rating/js/star-rating.js') !!}
     <script>
         var form ={!!$form_json or null!!};
 
@@ -1631,7 +1631,7 @@
         }
         console.log(form);
     </script>
-    {!! HTML::script('js/form-builder.js?v=6.83') !!}
+    {!! HTML::script('public/js/form-builder.js?v=6.83') !!}
     <script>
         $("document").ready(function () {
 

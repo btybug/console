@@ -1,4 +1,4 @@
-@extends('btybug::layouts.admin')
+@extends('cms::layouts.admin')
 @section('content')
     <div class="row">
         <a href="{!! url('admin/console/structure/pages') !!}">

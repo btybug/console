@@ -1,4 +1,4 @@
-@extends('btybug::layouts.mTabs',['index'=>'console_general'])
+@extends('cms::layouts.mTabs',['index'=>'console_general'])
 @section('tab')
 
     <div class="row">
@@ -34,5 +34,5 @@
 
 @stop
 @section('JS')
-    {!! HTML::script("js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script("public/js/UiElements/bb_styles.js?v.5") !!}
 @stop

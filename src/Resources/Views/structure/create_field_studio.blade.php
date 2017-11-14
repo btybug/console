@@ -1,4 +1,4 @@
-@extends('btybug::layouts.admin')
+@extends('cms::layouts.admin')
 @section('content')
 
 @endsection
@@ -6,7 +6,7 @@
 
 @stop
 @section('JS')
-    {!! HTML::script("js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script("public/js/UiElements/bb_styles.js?v.5") !!}
     <script>
         var dd = console.log;
         $(document).ready(function () {

@@ -148,7 +148,7 @@
     {!!HTML::style( '/resources/assets/js/bootstrap-select/css/bootstrap-select.min.css' ) !!}
     {!!HTML::style( '/resources/assets/css/form-builder.css?v=4.89' ) !!}
 
-    {!! HTML::style("/js/select2/css/select2.css") !!}
+    {!! HTML::style("public/js/select2/css/select2.css") !!}
     <style>
         .btnCtrls {
             position: absolute;
@@ -176,13 +176,13 @@
 
 @section( 'JS' )
 
-    {!! HTML::script("js/UiElements/bb_styles.js") !!}
+    {!! HTML::script("public/js/UiElements/bb_styles.js") !!}
 
     {!!HTML::script( '/resources/assets/js/bootstrap-select/js/bootstrap-select.min.js' ) !!}
     {!!HTML::script( '/resources/assets/js/underscore-min.js' ) !!}
     {!!HTML::script( '/resources/assets/js/form-setting.js' ) !!}
 
-    {!! HTML::script("js/select2/js/select2.js") !!}
+    {!! HTML::script("public/js/select2/js/select2.js") !!}
     <script>
         $(document).ready(function () {
 

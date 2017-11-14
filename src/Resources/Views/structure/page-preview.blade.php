@@ -1,4 +1,4 @@
-@extends('btybug::layouts.pagesPreview')
+@extends('cms::layouts.pagesPreview')
 
 @section('content')
     <div class="previewlivesettingifream">
@@ -30,17 +30,17 @@
 @stop
 
 @section('CSS')
-    {!! HTML::style('css/create_pages.css') !!}
-    {!! HTML::style('css/preview-template.css') !!}
-    {!! HTML::style("/js/animate/css/animate.css") !!}
-    {!! HTML::style("/css/preview-template.css") !!}
+    {!! HTML::style('public/css/create_pages.css') !!}
+    {!! HTML::style('public/css/preview-template.css') !!}
+    {!! HTML::style("public/js/animate/css/animate.css") !!}
+    {!! HTML::style("public/css/preview-template.css") !!}
 @stop
 
 @section('JS')
-    {!! HTML::script("js/html2canvas/js/html2canvas.js") !!}
-    {!! HTML::script("js/canvas2image/js/canvas2image.js") !!}
-    {!! HTML::script("js/bootbox/js/bootbox.min.js") !!}
-    {!! HTML::script("js/UiElements/ui-page-preview-setting.js") !!}
+    {!! HTML::script("public/js/html2canvas/js/html2canvas.js") !!}
+    {!! HTML::script("public/js/canvas2image/js/canvas2image.js") !!}
+    {!! HTML::script("public/js/bootbox/js/bootbox.min.js") !!}
+    {!! HTML::script("public/js/UiElements/ui-page-preview-setting.js") !!}
 
 
     <script>

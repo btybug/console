@@ -2,7 +2,7 @@
 
 namespace Btybug\Console\Models;
 
-//use Btybug\btybug\Models\UiElements;
+//use Btybug\Cms\Models\UiElements;
 use Illuminate\Database\Eloquent\Model;
 use Btybug\User\Models\Roles;
 

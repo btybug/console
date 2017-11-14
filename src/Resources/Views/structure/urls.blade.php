@@ -1,4 +1,4 @@
-@extends('btybug::layouts.mTabs',['index'=>'structure_console'])
+@extends('cms::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
     urls
 @stop

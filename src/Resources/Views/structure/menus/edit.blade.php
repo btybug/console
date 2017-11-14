@@ -1,4 +1,4 @@
-@extends('btybug::layouts.admin')
+@extends('cms::layouts.admin')
 @section('content')
     {!! Form::open() !!}
     <div class="row">
@@ -13,11 +13,25 @@
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 right">
-        <article>
+        <div class="row">
+            {{--<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-3">--}}
+                {{--<div id="styles" class="panel_bd_styles">--}}
+                    {{--{!! hierarchyAdminPagesListWithModuleName($pageGrouped, null, true, $slug) !!}--}}
+                {{--</div>--}}
+            {{--</div>--}}
             <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-3">
-                <div id="styles" class="panel_bd_styles">
-                    {!! hierarchyAdminPagesListWithModuleName($pageGrouped, null, true, $slug) !!}
+                <div class="panel panel-default">
+                    <div class="panel-heading bg-black-darker text-white">
+                        <a href="#" class="btn btn-default btn-xs pull-right m-r-10" data-preview="menu"></a>
+                        Front Pages
+                    </div>
+                    <div class="panel-body">
+                        <ol id="sortable2" data-menulist="dropnew" class="dropfalse sortable sortable-mimheight">
+
+                        </ol>
+                    </div>
                 </div>
+
             </div>
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9 col-xl-9">
                 <div class="panel panel-default">
@@ -37,7 +51,7 @@
                 </div>
 
             </div>
-        </article>
+        </div>
     </div>
 
 
@@ -142,12 +156,12 @@
 @stop
 {{--@include('tools::common_inc')--}}
 @section('CSS')
-    {!! HTML::style('css/create_pages.css') !!}
-    {!! HTML::style('css/menu.css?v=0.16') !!}
-    {!! HTML::style('css/tool-css.css?v=0.23') !!}
-    {!! HTML::style('css/page.css?v=0.15') !!}
-    {!! HTML::style('css/admin_pages.css') !!}
-    {!! HTML::style('js/tag-it/css/jquery.tagit.css') !!}
+    {!! HTML::style('public/css/create_pages.css') !!}
+    {!! HTML::style('public/css/menu.css?v=0.16') !!}
+    {!! HTML::style('public/css/tool-css.css?v=0.23') !!}
+    {!! HTML::style('public/css/page.css?v=0.15') !!}
+    {!! HTML::style('public/css/admin_pages.css') !!}
+    {!! HTML::style('public/js/tag-it/css/jquery.tagit.css') !!}
     <style>
         .page_labels {
             overflow: hidden;
@@ -162,14 +176,14 @@
 @stop
 
 @section('JS')
-    {!! HTML::script('js/create_pages.js') !!}
-    {!! HTML::script("js/UiElements/bb_styles.js?v.5") !!}
-    {!! HTML::script('js/admin_pages.js') !!}
-    {!! HTML::script('js/nestedSortable/jquery.mjs.nestedSortable.js') !!}
-    {!! HTML::script('js/bootbox/js/bootbox.min.js') !!}
-    {!! HTML::script('js/icon-plugin.js?v=0.4') !!}
-    {!! HTML::script('js/backend-console-createmenu.js') !!}
-    {!! HTML::script('js/tag-it/tag-it.js') !!}
+    {!! HTML::script('public/js/create_pages.js') !!}
+    {!! HTML::script("public/js/UiElements/bb_styles.js?v.5") !!}
+    {!! HTML::script('public/js/admin_pages.js') !!}
+    {!! HTML::script('public/js/nestedSortable/jquery.mjs.nestedSortable.js') !!}
+    {!! HTML::script('public/js/bootbox/js/bootbox.min.js') !!}
+    {!! HTML::script('public/js/icon-plugin.js?v=0.4') !!}
+    {!! HTML::script('public/js/backend-console-createmenu.js') !!}
+    {!! HTML::script('public/js/tag-it/tag-it.js') !!}
     <script>
 
         $(document).ready(function () {

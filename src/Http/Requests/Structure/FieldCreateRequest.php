@@ -2,7 +2,7 @@
 
 namespace Btybug\Console\Http\Requests\Structure;
 
-use Btybug\btybug\Http\Requests\Request;
+use Btybug\Cms\Http\Requests\Request;
 
 class FieldCreateRequest extends Request
 {
