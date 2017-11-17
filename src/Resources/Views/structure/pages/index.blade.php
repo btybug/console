@@ -1,4 +1,4 @@
-@extends('cms::layouts.mTabs',['index'=>'structure_console'])
+@extends('btybug::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <article>
@@ -8,7 +8,7 @@
         </article>
     </div>
 
-    @include('cms::_partials.delete_modal')
+    @include('btybug::_partials.delete_modal')
 @stop
 {{--@include('tools::common_inc')--}}
 @section('CSS')

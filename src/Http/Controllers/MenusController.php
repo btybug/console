@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Btybug\Cms\Repositories\MenuRepository;
+use Btybug\btybug\Repositories\MenuRepository;
 use Btybug\Console\Http\Requests\Structure\MenuCreateRequest;
 use Btybug\Console\Http\Requests\Structure\MenuDeleteRequest;
 use Btybug\Console\Http\Requests\Structure\MenuEditRequest;

@@ -1,4 +1,4 @@
-@extends( 'cms::layouts.admin' )
+@extends( 'btybug::layouts.admin' )
 @section( 'content' )
     <div class="row">
         {!! Form::model($form,['class' => 'form-horizontal']) !!}

@@ -4,10 +4,10 @@ namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Btybug\Cms\Models\ContentLayouts\ContentLayouts;
+use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
 use Btybug\Console\Services\BackendService;
 use Btybug\Framework\Repository\VersionsRepository;
-use Btybug\Settings\Repository\AdminsettingRepository;
+use Btybug\btybug\Repositories\AdminsettingRepository;
 
 /**
  * Class BackendController
@@ -20,7 +20,7 @@ class BackendController extends Controller
      */
     public function getIndex()
     {
-        return view('console::backend.index');
+        return view('console::settings.index');
     }
 
     /**
@@ -82,7 +82,7 @@ class BackendController extends Controller
         $adminsettings = new AdminsettingRepository();
         $settings = $adminsettings->getSettings('backend_settings', 'backend_settings');
         $settings = json_decode($settings->val, true);
-        return view('console::backend.settings', compact('settings'));
+        return view('console::settings.settings', compact('settings'));
 
     }
 
@@ -138,7 +138,7 @@ class BackendController extends Controller
         $cssData = $versionsRepository->wherePluck('type', 'css', 'name', 'id')->toArray();
         $jsData = $versionsRepository->getJSLiveLinks(true)->toArray();
         $model = $adminsettingRepository->getVersionsSettings('versions', 'backend');
-        return view('console::backend.css_js', compact(['cssData', 'model', 'jsData']));
+        return view('console::settings.css_js', compact(['cssData', 'model', 'jsData']));
     }
 
     public function postCssJs(Request $request, AdminsettingRepository $adminsettingRepository, SettingsService $service)

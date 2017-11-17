@@ -2,8 +2,8 @@
 
 namespace Btybug\Console\Services;
 
-use Btybug\Cms\Models\Themes\Themes;
-use Btybug\Cms\Services\GeneralService;
+use Btybug\btybug\Models\Themes\Themes;
+use Btybug\btybug\Services\GeneralService;
 
 /**
  * Class ThemeService

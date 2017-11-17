@@ -69,7 +69,7 @@ class ModuleServiceProvider extends ServiceProvider
             ], 'console_general' => [
                 [
                     'title' => 'Validations',
-                    'url' => '/admin/console/general',
+                    'url' => '/admin/console/general/validations',
                 ],
                 [
                     'title' => 'Trigger & Events',
@@ -85,7 +85,7 @@ class ModuleServiceProvider extends ServiceProvider
         ]);
 
         //TODO; remove when finish all
-//        \Btybug\Cms\Models\Routes::registerPages('sahak.avatar/console');
+//        \Btybug\btybug\Models\Routes::registerPages('sahak.avatar/console');
     }
 
     /**

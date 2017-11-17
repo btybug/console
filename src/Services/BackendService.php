@@ -2,8 +2,8 @@
 
 namespace Btybug\Console\Services;
 
-use Btybug\Cms\Models\ContentLayouts\ContentLayouts;
-use Btybug\Cms\Services\GeneralService;
+use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
+use Btybug\btybug\Services\GeneralService;
 
 /**
  * Class BackendService

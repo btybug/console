@@ -11,42 +11,29 @@
 |
 */
 
-Route::get('/', 'ModulesController@getIndexUploads');
-Route::get('/modules', "ModulesController@getIndex");
-
-Route::group(['prefix' => 'settings'], function () {
-    Route::get('/', 'SettingsController@settings');
-    Route::post('/', 'SettingsController@postSaveSettings');
-    Route::post('/version', 'SettingsController@postVersion');
-});
-
+Route::get('/', function () {
+    return view('console::index');
+},true);
 
 Route::get('/optimisation', function () {
     Artisan::call('plugin:optimaze');
-
     return redirect()->back()->with(['flash' => ['message' => 'modules optimisation successfully!!!']]);
 });
 
-Route::group(['prefix' => 'general'], function () {
-    Route::get('/', 'GeneralController@getValidations');
-    Route::get('/trigger-events', 'GeneralController@getTriggerEvents');
-});
-
 Route::group(['prefix' => 'structure'], function () {
-    Route::get('/', 'StructureController@getIndex');
+    Route::get('/', 'StructureController@getIndex',true);
     Route::group(['prefix' => 'pages'], function () {
-        Route::get('/', 'StructureController@getPages');
-        Route::get('/settings/{id}', 'StructureController@getPageSettings');
+        Route::get('/', 'StructureController@getPages',true);
+        Route::get('/settings/{id}', 'StructureController@getPageSettings',true);
         Route::post('/settings/{id}', 'StructureController@postPageSettings');
         Route::post('/', 'StructureController@postEdit');
         Route::post('/get-data', 'StructureController@postPageData');
     });
 
-
-    Route::get('/urls', 'StructureController@getUrls');
-    Route::get('/classify', 'StructureController@getClassify');
+    Route::get('/urls', 'StructureController@getUrls',true);
+    Route::get('/classify', 'StructureController@getClassify',true);
 //    Route::get('/settings', 'StructureController@getSettings');
-    Route::get('/tables', 'StructureController@getTables');
+    Route::get('/tables', 'StructureController@getTables',true);
 
     Route::group(['prefix' => 'fields'], function () {
         Route::get('/', 'StructureController@getFields');
@@ -62,7 +49,6 @@ Route::group(['prefix' => 'structure'], function () {
     Route::get('/get-default-html', 'StructureController@getDefaultHtml');
     Route::post('/get-custom-html', 'StructureController@getCustomHtml');
     Route::post('/get-saved-html-type', 'StructureController@getSavedHtmlType');
-
 
     Route::group(['prefix' => 'forms'], function () {
         Route::get('/', 'StructureController@getForms');
@@ -92,14 +78,13 @@ Route::group(['prefix' => 'structure'], function () {
     });
 
     Route::group(['prefix' => 'settings'], function () {
-        Route::get('/', 'GeneralController@getIndex');
+        Route::get('/', 'GeneralController@getIndex',true);
         Route::post('/', 'GeneralController@postSettings');
     });
 
-
     Route::group(['prefix' => 'menus'], function () {
-        Route::get('/', 'MenusController@getIndex');
-        Route::get('/edit/{menu}/{role}', 'MenusController@getEdit');
+        Route::get('/', 'MenusController@getIndex',true);
+        Route::get('/edit/{menu}/{role}', 'MenusController@getEdit',true);
         Route::post('/edit/{menu}/{role}', 'MenusController@postEdit');
         Route::post('/create', 'MenusController@postCreate');
         Route::post('/delete', 'MenusController@postDelete');
@@ -107,66 +92,24 @@ Route::group(['prefix' => 'structure'], function () {
 });
 
 
+Route::group(['prefix' => 'settings'], function () {
+    Route::get('/', 'BackendController@getIndex',true);
+    Route::get('/general', 'BackendController@settings',true);
+    Route::post('/general', 'BackendController@postSaveSettings');
+    Route::get('/css-js', 'BackendController@getCssJs',true);
+    Route::post('/css-js', 'BackendController@postCssJs');
+});
+
+
+Route::group(['prefix' => 'general'], function () {
+    Route::get('/', function () {
+        return view('console::structure.general.index');
+    },true);
+    Route::get('/validations', 'GeneralController@getValidations',true);
+    Route::get('/trigger-events', 'GeneralController@getTriggerEvents',true);
+});
+
 Route::group(['prefix' => 'config'], function () {
     Route::get('/page-preview/{page_id}', 'StructureController@getPagePreview');
     Route::post('/page-preview/{page_id}', 'StructureController@postSavePageSettings');
-});
-Route::group(['prefix' => 'backend'], function () {
-    Route::get('/', 'BackendController@getIndex');
-    Route::get('/settings', 'BackendController@settings');
-    Route::post('/settings', 'BackendController@postSaveSettings');
-    Route::get('/css-js', 'BackendController@getCssJs');
-    Route::post('/css-js', 'BackendController@postCssJs');
-
-    //field units
-    Route::group(['prefix' => 'general-fields'], function () {
-        Route::get('/', 'FieldUnitsController@getIndex');
-        Route::post('/upload', 'FieldUnitsController@postUploadUnit');
-        Route::post('/delete', 'FieldUnitsController@postDelete');
-
-        Route::get('/settings/{slug?}', 'FieldUnitsController@getSettings');
-        Route::get('/settings-iframe/{slug}/{settings?}', 'FieldUnitsController@unitPreviewIframe');
-        Route::post('/settings/{id}/{save?}', 'FieldUnitsController@postSettings');
-        Route::post('/delete-variation', 'FieldUnitsController@postDeleteVariation');
-    });
-    Route::get('/special-fields', 'FieldUnitsController@getSpecialFields');
-
-//    Route::get('/layouts', 'BackendController@getLayouts');
-//    Route::get('/units', 'BackendController@getUnits');
-//    Route::get('/views', 'BackendController@getViews');
-});
-
-
-Route::group(['prefix' => 'modules'], function () {
-    Route::get('/', 'ModulesController@getIndex');
-    Route::post('/urls-pages-optimization', 'ModulesSettingsController@postoptimize');
-    Route::group(['prefix' => '{param}'], function () {
-        Route::get('/', 'ModulesSettingsController@getMain');
-        Route::get('/general', 'ModulesSettingsController@getIndex');
-        Route::get('/gears', 'ModulesSettingsController@getGears');
-        Route::get('/assets', 'ModulesSettingsController@getAssets');
-        Route::get('/permission', 'ModulesSettingsController@getPermission');
-        Route::post('/permission', 'ModulesSettingsController@postPermission');
-        Route::get('/code', 'ModulesSettingsController@getCode');
-        Route::get('/tables', 'ModulesSettingsController@getTables');
-        Route::get('/views', 'ModulesSettingsController@getViews');
-
-        Route::group(['prefix' => 'build'], function () {
-            Route::get('/', 'ModulesSettingsController@getBuild');
-            Route::get('/pages', 'ModulesSettingsController@getPages');
-            Route::post('/pages', 'ModulesSettingsController@postPages');
-            Route::post('/pages-data', 'ModulesSettingsController@postPageData');
-            Route::post('/create-menu', 'ModulesSettingsController@postCreateMenus');
-            Route::get('/urls', 'ModulesSettingsController@getUrls');
-            Route::get('/classify', 'ModulesSettingsController@getClassify');
-
-            Route::group(['prefix' => 'menus'], function () {
-                Route::get('/', 'ModulesSettingsController@getMenus');
-                Route::post('/create-menu', 'ModulesSettingsController@postCreateMenu');
-                Route::get('/edit/{menu}/{role}', 'ModulesSettingsController@getMenuEdit');
-            });
-        });
-
-    });
-
 });

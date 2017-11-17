@@ -1,4 +1,4 @@
-@extends('cms::layouts.mTabs',['index'=>'structure_console'])
+@extends('btybug::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
     {!! Form::model(null,['class' => 'form-horizontal','files' => true]) !!}
     <div role="tabpanel" class="m-t-10" id="main">
@@ -9,7 +9,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 main_container_11">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    @include('cms::_partials.admin_placeholders',['_this' => $data])
+                    @include('btybug::_partials.admin_placeholders',['_this' => $data])
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 panels_wrapper settings_panel">
                     <div class="panel panel-default panels accordion_panels" id="my-accordion">

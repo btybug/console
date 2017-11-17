@@ -8,8 +8,8 @@
 
 namespace Btybug\Console\Repository;
 
-use Btybug\Cms\Repositories\GeneralRepository;
-use Btybug\Manage\Models\FrontendPage;
+use Btybug\btybug\Repositories\GeneralRepository;
+use Btybug\FrontSite\Models\FrontendPage;
 use Btybug\User\Repository\RoleRepository;
 
 /**

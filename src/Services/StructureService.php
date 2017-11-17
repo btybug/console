@@ -2,18 +2,20 @@
 
 namespace Btybug\Console\Services;
 
-use Btybug\Cms\Models\ContentLayouts\ContentLayouts;
-use Btybug\Cms\Models\ExtraModules\Structures;
-use Btybug\Cms\Models\Templates\Units;
-use Btybug\Cms\Repositories\MenuRepository;
-use Btybug\Cms\Services\CmsItemReader;
-use Btybug\Cms\Services\GeneralService;
+use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
+use Btybug\btybug\Models\ExtraModules\Structures;
+use Btybug\btybug\Models\Routes;
+use Btybug\btybug\Models\Templates\Units;
+use Btybug\btybug\Repositories\MenuRepository;
+use Btybug\btybug\Services\CmsItemReader;
+use Btybug\btybug\Services\GeneralService;
 use Btybug\Console\Models\FormEntries;
 use Btybug\Console\Repository\AdminPagesRepository;
 use Btybug\Console\Repository\FieldsRepository;
 use Btybug\Console\Repository\FormsRepository;
 use Btybug\Framework\Repository\VersionsRepository;
-use Btybug\Settings\Repository\AdminsettingRepository;
+use Btybug\btybug\Repositories\AdminsettingRepository;
+use Btybug\Uploads\Repository\Plugins;
 use Btybug\User\Repository\RoleRepository;
 
 /**
@@ -32,6 +34,7 @@ class StructureService extends GeneralService
     private $settings = null;
     private $type = null;
     private $html = null;
+    private $plugins = null;
 
     public function __construct(
         AdminPagesRepository $adminPagesRepository,
@@ -41,7 +44,8 @@ class StructureService extends GeneralService
         FormService $formService,
         FormEntries $formEntries,
         RoleRepository $roleRepository,
-        MenuRepository $menuRepository
+        MenuRepository $menuRepository,
+        Plugins $plugins
     )
     {
         self::$admin_pages = $this->adminPages = $adminPagesRepository;
@@ -52,6 +56,7 @@ class StructureService extends GeneralService
         $this->formEntries = $formEntries;
         self::$roles_repo = $this->rolesRepo = $roleRepository;
         $this->menuRepository = $menuRepository;
+        $this->plugins = $plugins;
     }
 
     public static function getAdminPagesChildStatues()
@@ -628,4 +633,37 @@ class StructureService extends GeneralService
 
         return ['file' => $file, 'slug' => $slug, 'builder' => $builder];
     }
+
+    public function getUrls($method){
+        $this->plugins->modules();
+        $modules = $this->plugins->getPlugins();
+        $moduleRoutes = $this->collectRoutes($modules,$method);
+
+        $this->plugins->plugins();
+        $plugins = $this->plugins->getPlugins();
+        $pluginRoutes = $this->collectRoutes($plugins,$method);
+
+        return array_merge($moduleRoutes,$pluginRoutes);
+    }
+
+    private function collectRoutes($modules,$method){
+        $routes = [];
+        if(count($modules)){
+            foreach ($modules as $module){
+                if(isset($module['route'])){
+                    $url = strtolower('admin/' . $module['route']);
+                    if($method == 'all'){
+                        $routes['GET'][$module['route']] = Routes::getModuleRoutes('GET',$url);
+                        $routes['POST'][$module['route']] = Routes::getModuleRoutes('POST',$url);
+                    }else if($method == 'GET' || $method == 'POST'){
+                        $routes[$method][$module['route']] = Routes::getModuleRoutes($method,$url);
+                    }
+                }
+            }
+        }
+
+        return $routes;
+    }
+
+
 }

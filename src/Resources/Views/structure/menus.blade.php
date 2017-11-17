@@ -1,4 +1,4 @@
-@extends('cms::layouts.mTabs',['index'=>'structure_console'])
+@extends('btybug::layouts.mTabs',['index'=>'structure_console'])
 @section('tab')
     {!! HTML::style('public/css/new-store.css') !!}
     <div class="row">
@@ -174,7 +174,7 @@
         </div>
     </div>
 
-    @include('cms::_partials.delete_modal')
+    @include('btybug::_partials.delete_modal')
 @stop
 @section('CSS')
     {!! HTML::style('public/js/bootstrap-select/css/bootstrap-select.min.css') !!}

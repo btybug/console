@@ -13,10 +13,10 @@ namespace Btybug\Console\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Btybug\Cms\Models\ContentLayouts\ContentLayouts;
-use Btybug\Cms\Models\ExtraModules\Structures;
-use Btybug\Cms\Models\Routes;
-use Btybug\Cms\Services\CmsItemReader;
+use Btybug\btybug\Models\ContentLayouts\ContentLayouts;
+use Btybug\btybug\Models\ExtraModules\Structures;
+use Btybug\btybug\Models\Routes;
+use Btybug\btybug\Services\CmsItemReader;
 use Btybug\Console\Http\Requests\Structure\FieldCreateRequest;
 use Btybug\Console\Http\Requests\Structure\FormCreateRequest;
 use Btybug\Console\Http\Requests\Structure\FormSettingsUpdateRequest;
@@ -29,7 +29,7 @@ use Btybug\Console\Repository\VersionsRepository;
 use Btybug\Console\Services\FieldValidationService;
 use Btybug\Console\Services\FormService;
 use Btybug\Console\Services\StructureService;
-use Btybug\Settings\Repository\AdminsettingRepository;
+use Btybug\btybug\Repositories\AdminsettingRepository;
 use Btybug\User\Services\RoleService;
 use Btybug\User\Services\UserService;
 
@@ -109,9 +109,14 @@ class StructureController extends Controller
         return view('console::structure.classify');
     }
 
-    public function getUrls()
+    public function getUrls(
+        Request $request,
+        StructureService $service
+    )
     {
-        return view('console::structure.urls');
+        $method = $request->get('method','all');
+        $data = $service->getUrls($method);
+        return view('console::structure.urls',compact('data','method'));
     }
 
     public function getSettings()

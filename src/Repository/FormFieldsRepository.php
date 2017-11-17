@@ -8,7 +8,7 @@
 
 namespace Btybug\Console\Repository;
 
-use Btybug\Cms\Repositories\GeneralRepository;
+use Btybug\btybug\Repositories\GeneralRepository;
 use Btybug\Console\Models\FormFields;
 
 class FormFieldsRepository extends GeneralRepository

@@ -1,4 +1,4 @@
-@extends('cms::layouts.mTabs',['index'=>'backend_gears'])
+@extends('btybug::layouts.mTabs',['index'=>'backend_gears'])
 <!-- Nav tabs -->
 @section('tab')
     {!! HTML::style('app/Modules/Uploads/Resources/assets/css/new-store.css') !!}
@@ -9,7 +9,12 @@
                 <span class="module_icon_main"></span>
                 <span class="module_icon_main_text">Fields</span>
             </h3>
-
+            <div class=" menuBox">
+                <a href="#" class="btn btn-danger addBtn"><i class="fa fa-plus"></i></a>
+                <div class="selectCat">
+                    {!! Form::select('type',$types,$type,['class' => 'selectpicker select-type','data-style' => 'selectCatMenu',' data-width' => '100%']) !!}
+                </div>
+            </div>
             <hr>
             <ul class="list-unstyled menuList" id="components-list">
                 @if(count($ui_elemements))
@@ -27,8 +32,8 @@
                                 <li class="">
                                     @endif
                                     @endif
-                                    <a href="?p={!! $ui->slug !!}" rel="unit" data-slug="{{ $ui->slug }}"
-                                       class="tpl-left-items">
+                                    <a href="?p={!! $ui->slug !!}{!! ($type)? "&type=".$type : "" !!}" rel="unit"
+                                       data-slug="{{ $ui->slug }}" class="tpl-left-items">
                                         <span class="module_icon"></span> {{ $ui->title }}
                                     </a>
                                 </li>
@@ -55,7 +60,6 @@
                             <select class="selectpicker" data-style="selectCatMenu" data-width="50%">
                                 <option>Recently Added</option>
                             </select>
-
                         </div>
                     </form>
                 </div>
@@ -68,11 +72,10 @@
                             </div>
                             <a class="btn btn-default searchBtn"><i class="fa fa-search " aria-hidden="true"></i></a>
                         </div>
-
                         <ul class="editIcons list-unstyled ">
                             @if($unit && !$unit->is_core)
                                 <li>
-                                    <a data-href="{!! url('/admin/console/backend/general-fields/delete') !!}"
+                                    <a data-href="{!! url('/admin/console/backend/fields/delete') !!}"
                                        data-key="{!! $unit->slug !!}" data-type="Unit"
                                        class="delete-button btn trashBtn"><i class="fa fa-trash-o"></i></a>
                                 </li>
@@ -132,14 +135,13 @@
                 </div>
                 <div class="modal-body">
                     {!! Form::open(['url'=>'/admin/console/backend/general-fields/upload','class'=>'dropzone', 'id'=>'my-awesome-dropzone']) !!}
-                    {!! Form::hidden('data_type','files',['id'=>"dropzone_hiiden_data"]) !!}
                     {!! Form::close() !!}
                 </div>
             </div>
         </div>
     </div>
 
-    @include('cms::_partials.delete_modal')
+    @include('btybug::_partials.delete_modal')
 
 @stop
 @section('CSS')
@@ -176,7 +178,7 @@
             if (r == true) {
                 var slug = $(data).data('slug');
                 $.ajax({
-                    url: '/admin/console/backend/general-fields/delete',
+                    url: '/admin/console/backend/fields/delete',
                     data: {
                         slug: slug
                     }, headers: {

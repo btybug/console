@@ -1,4 +1,4 @@
-@extends('cms::layouts.mTabs',['index'=>'backend_console'])
+@extends('btybug::layouts.mTabs',['index'=>'backend_console'])
 @section('tab')
     Views
 @stop

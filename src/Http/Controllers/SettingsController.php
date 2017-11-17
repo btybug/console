@@ -8,7 +8,7 @@ namespace Btybug\Console\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Btybug\Framework\Repository\VersionsRepository;
-use Btybug\Settings\Repository\AdminsettingRepository;
+use Btybug\btybug\Repositories\AdminsettingRepository;
 
 /**
  * Class SettingsController

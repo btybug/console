@@ -1,27 +1,47 @@
-@extends('cms::layouts.admin')
+@extends('btybug::layouts.admin')
 @section('content')
-    <div class="row">
-        <a href="{!! url('admin/console/structure/pages') !!}">
-            <div class="pages col-md-5">Pages</div>
-        </a>
-        <a href="{!! url('admin/console/structure/menus') !!}">
-            <div class="pages col-md-5">Menus</div>
-        </a>
-        <a href="{!! url('admin/console/structure/classify') !!}">
-            <div class="pages col-md-5">Classify</div>
-        </a>
-        <a href="{!! url('admin/console/structure/urls') !!}">
-            <div class="pages col-md-5">Urls</div>
-        </a>
-        <a href="{!! url('admin/console/structure/settings') !!}">
-            <div class="pages col-md-5">Settings</div>
-        </a>
-        <a href="{!! url('admin/console/structure/tables') !!}">
-            <div class="pages col-md-5">Tables</div>
-        </a>
+    <div class="main_lay_cont">
+        <div class="row for_title_row">
+            <h1 class="text-center">Structures</h1>
+        </div>
+        <div class="row layouts_row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 items_links">
+                <a href="{!! url('/admin/console/structure/pages') !!}" class="ly_items">
+                    <h3>Pages</h3>
+                    <h2><i class="fa fa-columns" aria-hidden="true"></i></h2>
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 items_links">
+                <a href="{!! url('admin/console/structure/menus') !!}" class="ly_items">
+                    <h3>Menus</h3>
+                    <h2><i class="fa fa-television" aria-hidden="true"></i></h2>
+                </a>
+            </div><div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 items_links">
+                <a href="{!! url('admin/console/structure/classify') !!}" class="ly_items">
+                    <h3>Classify</h3>
+                    <h2><i class="fa fa-bank" aria-hidden="true"></i></h2>
+                </a>
+            </div><div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 items_links">
+                <a href="{!! url('admin/console/structure/urls') !!}" class="ly_items">
+                    <h3>Urls</h3>
+                    <h2><i class="fa fa-bank" aria-hidden="true"></i></h2>
+                </a>
+            </div><div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 items_links">
+                <a href="{!! url('admin/console/structure/settings') !!}" class="ly_items">
+                    <h3>Settings</h3>
+                    <h2><i class="fa fa-bank" aria-hidden="true"></i></h2>
+                </a>
+            </div><div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 items_links">
+                <a href="{!! url('admin/console/structure/tables') !!}" class="ly_items">
+                    <h3>Tables</h3>
+                    <h2><i class="fa fa-bank" aria-hidden="true"></i></h2>
+                </a>
+            </div>
+        </div>
     </div>
 @stop
 @section('CSS')
+    {!! HTML::style('public/css/backend_layouts_style.css') !!}
     <style>
         .pages.col-md-5 {
             border: 1px solid black;

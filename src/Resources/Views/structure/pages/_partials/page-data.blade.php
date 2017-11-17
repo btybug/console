@@ -13,7 +13,7 @@
     {{--</div>--}}
     <div class="row">
         <div class="col-xs-12 col-sm-9 connected" data-bbsortable="target">
-            {{--{!! Btybug\Cms\Models\ContentLayouts\ContentLayouts::getAdminPageLayoutPlaceholders($page) !!}--}}
+            {{--{!! Btybug\btybug\Models\ContentLayouts\ContentLayouts::getAdminPageLayoutPlaceholders($page) !!}--}}
 
             <div class="panel panel-default custompanel m-t-20">
                 <div class="panel-heading"> Page Info</div>
@@ -53,8 +53,8 @@
                     </div>
                 </div>
             </div>
-            {!! Btybug\Cms\Models\ContentLayouts\ContentLayouts::getAdminPageLayout($page) !!}
-            {!! Btybug\Cms\Models\ContentLayouts\ContentLayouts::getAdminPageLayoutPlaceholders($page) !!}
+            {!! Btybug\btybug\Models\ContentLayouts\ContentLayouts::getAdminPageLayout($page) !!}
+            {!! Btybug\btybug\Models\ContentLayouts\ContentLayouts::getAdminPageLayoutPlaceholders($page) !!}
 
             <div class="panel panel-default custompanel m-t-20">
                 <div class="panel-heading">Main Content
